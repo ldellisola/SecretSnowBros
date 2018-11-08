@@ -48,6 +48,7 @@ int main(void) {
 
 	EnemyDrawer enemyDrawer(window.getWidth() / 16, window.getHeight() / 12);
 	enemyDrawer.loadCrazyGuySprite("CrazyGuySprite.png");
+	enemyDrawer.loadFrozenSprites({ "FrozenState1.png","FrozenState2.png","FrozenState3.png","FrozenState4.png" });
 
 	snowbros.loadObserver(&enemyDrawer);
 	

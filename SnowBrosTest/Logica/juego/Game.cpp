@@ -42,7 +42,7 @@ void Game::selectNextMap()
 
 			switch (currentMap->map[fil][col])
 			{
-			case 'T':	this->createPlayer(Player1ID,col, fil);	break;
+			case 'T':	this->createPlayer(Player1ID,col, fil);		break;
 			case 'N':	this->createPlayer(Player2ID, col, fil);	break;
 			case 'P':	this->createPurpleGuy(col, fil);			break;
 			case 'G':	this->createGreenFatty(col, fil);			break;

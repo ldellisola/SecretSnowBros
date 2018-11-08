@@ -50,6 +50,12 @@ public:
 		this->greenFatty = new AllegroSprite(sprite, BlockHeight, BlockWidth);
 	}
 
+	void loadFrozenSprites(std::initializer_list<std::string>list) {
+		for (std::string str : list) {
+			frozenSprites.push_back(new AllegroSprite(str,BlockHeight,BlockWidth));
+		}
+	}
+
 
 	void draw(void * ptr) {
 
@@ -73,6 +79,10 @@ public:
 				crazyGuy->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
 			}
 
+			if (enemy->isFrozen()) {
+				frozenSprites[enemy->getFreezeState() - 1]->draw(enemy->getX() * BlockWidth, enemy->getY() * BlockHeight);
+			}
+
 			for (Observer * obs : observers) {
 				obs->draw(enemy);
 			}
@@ -93,7 +103,7 @@ private:
 	std::vector<Observer*> observers;
 
 	AllegroSprite* crazyGuy = nullptr,*purpleGuy = nullptr,* greenFatty = nullptr;
-
+	std::vector<AllegroSprite*>frozenSprites;
 
 };
 

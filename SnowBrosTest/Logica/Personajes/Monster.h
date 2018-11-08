@@ -14,29 +14,47 @@ public:
 	virtual ~Monster ();
 	virtual void chooseAction(void * ptr) = 0;
 	virtual void update(void * ptr);
-	void freeze();
-	void unfreeze();
+
 
 	virtual void setState(BeingState state);
+
+	
+	bool isFrozen();
+	uint16_t getFreezeState();
+
 	
 	void collition(Being * player);
 	void collition(Projectile* proy);
 
 protected:
 	std::queue<BeingState> futureDirections;
-	uint16_t freezeState = 0;
 
 	void updateWaitTick();
 	void resetWaitTick();
+	uint16_t getWaitTick();
 	bool isWaiting();
 	void startWating();
 	void stopWaiting();
-	uint16_t getWaitTick();
+
+	void freeze();
+	void unfreeze();
+	void updateFreezeTick();
+	void resetFreezeTick();
+	uint16_t getFreezeTick();
+
+	
 	uint16_t getPoints();
 
 private:
 	const uint16_t maxWaitTick;
 	uint16_t waitTick = 0;
+	uint16_t freezeState = 0;
+
+
+	const uint16_t maxFrozenTick;
+	uint16_t freezeTick = 0;
+
+
 	const uint16_t points;
 	bool waiting;
 };
