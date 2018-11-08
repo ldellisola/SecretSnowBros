@@ -6,32 +6,34 @@ enum class BeingDirection
    Left, Right
 };
 
+enum class BeingState
+{
+	StillWalk, StillJump, Walking, Jumping, Shooting, Falling, Frozen, Waiting
+};
+
 #ifdef _DEBUG
 const std::string _BeingDir[] = { "Left", "Right" };
 const std::string _BeingState[] = { "StillWalk","StillJump","Walking","Jumping","Shooting","Falling","Frozen","Waiting" };
 #endif // _DEBUG
 
 
-enum class BeingState
-{
-	StillWalk,StillJump, Walking, Jumping, Shooting, Falling, Frozen, Waiting
-};
+
 
 class Being
 {
 public:
 	Being(uint16_t maxJumpTick, uint16_t maxWalkTick, uint16_t maxFallTicks, uint16_t x, uint16_t y, uint16_t ID);
-	~Being(){}
+	virtual ~Being(){}
 
 	uint16_t getX() { return x; }
 	uint16_t getY() { return y; }
 	uint16_t getID() { return ID; }
 	bool isAlive() { return (lives > 0 ? true:false); }
-	void kill();
+	virtual void kill();
 	void setMovement(BeingDirection dir);
 	virtual void setState(BeingState state);
 	BeingDirection getDirection() { return dir; }
-	virtual void update(void * ptr) = 0;
+	virtual void update(void * ptr);
 
 	
 	BeingState getVerticalState() { return verticalState; }

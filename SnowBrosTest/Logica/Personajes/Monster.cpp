@@ -49,8 +49,10 @@ void Monster ::collition(Being * player)
 
 void Monster::collition(Projectile * proy)
 {
-	if (proy->getX() == this->x && proy->getY() == this->y) {
+	if (proy->getX() == this->x && proy->getY() == this->y ) {
 		this->freeze();
+		proy->kill();
+		proy->addScore(getPoints());
 		
 	}
 }
@@ -85,7 +87,29 @@ uint16_t Monster::getWaitTick()
 	return waitTick;
 }
 
+uint16_t Monster::getPoints()
+{
+	return points;
+}
+
 void Monster::update(void * ptr) {
+
+	if (getHorizontalState() == BeingState::StillWalk && getVerticalState() == BeingState::StillJump) {
+		if (!futureDirections.empty()) {
+			setState(futureDirections.front());
+			futureDirections.pop();
+		}
+
+	}
+	else if (getHorizontalTicks() == 0 && getVerticalTicks() == 0) {
+		if (!futureDirections.empty()) {
+			setState(futureDirections.front());
+			futureDirections.pop();
+		}
+	}
+
+
+	Being::update(ptr);
 
 	/*if (this->getState() == BeingState::Walking && this->getTick() == this->maxWalkTick) {
 

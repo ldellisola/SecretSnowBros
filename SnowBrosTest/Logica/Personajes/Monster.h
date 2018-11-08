@@ -1,17 +1,17 @@
 #pragma once
 #include <vector>
+#include <queue>
 #include <stdint.h>
 #include "Being.h"
 #include "Projectiles/Projectile.h"
 
-//enum class CGAction { Straight, Jump, Reverse, Still, Shooting,Chase,Random };
 
 class Monster  :
 	public Being
 {
 public:
 	Monster(uint16_t maxJumpTick, uint16_t maxWalkTick, uint16_t maxWaitTicks, uint16_t maxFallTicks, uint16_t x, uint16_t y,uint16_t ID, uint16_t scorePoints);
-	~Monster ();
+	virtual ~Monster ();
 	virtual void chooseAction(void * ptr) = 0;
 	virtual void update(void * ptr);
 	void freeze();
@@ -23,7 +23,7 @@ public:
 	void collition(Projectile* proy);
 
 protected:
-	std::vector<BeingState> futureDirections;
+	std::queue<BeingState> futureDirections;
 	uint16_t freezeState = 0;
 
 	void updateWaitTick();

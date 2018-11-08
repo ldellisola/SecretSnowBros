@@ -28,6 +28,20 @@ public:
 	
 	void setState(BeingState state);
 
+#ifdef _DEBUG
+	void kill(){
+		log("Player Killed at [" + std::to_string(x) + ", " + std::to_string(y) + "]");
+
+		Being::kill();
+
+		if (lives > 0) {
+			log("Player spawned at [" + std::to_string(x) + ", " + std::to_string(y) + "]");
+		}
+	}
+
+#endif
+
+
 	Score* getScoreCounter() { return &points; }
 
 

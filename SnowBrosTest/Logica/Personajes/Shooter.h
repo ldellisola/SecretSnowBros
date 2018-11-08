@@ -37,7 +37,7 @@ public:
 	}
 
 
-	~Shooter()
+	virtual ~Shooter()
 	{
 		for (Projectile * proj : projectiles)
 			delete proj;

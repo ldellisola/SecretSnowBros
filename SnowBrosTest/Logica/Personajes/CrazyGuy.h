@@ -1,5 +1,6 @@
 #pragma once
 #include "Monster.h"
+
 #include<cstdlib>
 #include<ctime>
 #include <stdint.h>
@@ -12,8 +13,18 @@ por 0,5 segs.*/
 //	/		MONO AMARILLO		/	//
 #define WaitingTimeCG 7
 
+#ifdef _DEBUG
+#include "../../Logger.h"
+#endif
+
 class CrazyGuy :
 	public Monster
+
+#ifdef _DEBUG
+	,Logger
+#endif // _DEBUG
+
+
 {
 public:
 	CrazyGuy(uint32_t x, uint32_t y,uint32_t ID=0);

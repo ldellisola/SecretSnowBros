@@ -8,7 +8,7 @@ Game::Game(uint32_t Player1ID, uint32_t Player2ID)
 	, Logger("Logs/Game Model", true)
 #endif
 {
-
+	srand(time(NULL));
 }
 
 Game::~Game()
@@ -114,6 +114,7 @@ int Game::dispatchEvent(GameEvent * ev)
 
 			// Actualizo la posicion de los malos
 			for (Monster  * monster : this->Enemies) {
+				monster->chooseAction(getmap());
 				monster->update(this->getmap());
 				for (Player* player : players) {
 					monster->collition(player);
@@ -189,7 +190,7 @@ void Game::createGreenFatty(uint32_t x, uint32_t y)
 
 void Game::createCrazyGuy(uint32_t x, uint32_t y)
 {
-	auto temp = new CrazyGuy(x, y);	
+	auto temp = new CrazyGuy(x, y,Enemies.size());	
 	this->Enemies.push_back(temp);
 
 #if _DEBUG
