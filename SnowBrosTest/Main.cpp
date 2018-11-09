@@ -8,7 +8,7 @@
 #include "MVC/PlayerDrawer.h"
 #include "MVC/ProyectileDrawer.h"
 #include "MVC/EnemyDrawer.h"
-
+#include "../SnowBrosTest/Logica/Personajes/Being.h"
 #include "Logica/juego/Game.h"
 
 #define WindowTitle "SnowBros!"
@@ -29,6 +29,8 @@ int main(void) {
 	Game snowbros(Player1ID);
 	EventHandler eventH;
 
+	AllegroAnimation()ggfdafsdfadgsfdgnhfdgsafsgshdgjkhfjdhgsaefwd
+	
 	
 	Local1PlayerController controller(allegro.getEventQueue(), Player1ID);
 	eventH.loadController(&controller);
