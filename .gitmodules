@@ -1,0 +1,3 @@
+[submodule "vendors\\Allw"]
+	path = vendors\\Allw
+	url = https://github.com/ldellisola/Allw
