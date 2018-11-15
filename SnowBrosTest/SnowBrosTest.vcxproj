@@ -166,20 +166,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Allegro Wrapper\AllegroAnimation.cpp" />
-    <ClCompile Include="Allegro Wrapper\AllegroBox.cpp" />
-    <ClCompile Include="Allegro Wrapper\AllegroButton.cpp" />
-    <ClCompile Include="Allegro Wrapper\AllegroEvent.cpp" />
-    <ClCompile Include="Allegro Wrapper\AllegroFont.cpp" />
-    <ClCompile Include="Allegro Wrapper\AllegroLayout.cpp" />
-    <ClCompile Include="Allegro Wrapper\AllegroLog.cpp" />
-    <ClCompile Include="Allegro Wrapper\AllegroMenu.cpp" />
-    <ClCompile Include="Allegro Wrapper\AllegroSound.cpp" />
-    <ClCompile Include="Allegro Wrapper\AllegroSprite.cpp" />
-    <ClCompile Include="Allegro Wrapper\AllegroWindow.cpp" />
-    <ClCompile Include="Allegro Wrapper\WritableBox.cpp" />
-    <ClCompile Include="Allegro Wrapper\WrittenBox.cpp" />
-    <ClCompile Include="AllegroV2\AllegroClassV2.cpp" />
     <ClCompile Include="Logica\juego\Game.cpp" />
     <ClCompile Include="Logica\Personajes\Being.cpp" />
     <ClCompile Include="Logica\Personajes\CrazyGuy.cpp" />
@@ -198,23 +184,6 @@
     <ClCompile Include="MVC\StageObserver.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Allegro Wrapper\AllegroAnimation.h" />
-    <ClInclude Include="Allegro Wrapper\AllegroBox.h" />
-    <ClInclude Include="Allegro Wrapper\AllegroButton.h" />
-    <ClInclude Include="Allegro Wrapper\AllegroEvent.h" />
-    <ClInclude Include="Allegro Wrapper\AllegroException.h" />
-    <ClInclude Include="Allegro Wrapper\AllegroFont.h" />
-    <ClInclude Include="Allegro Wrapper\AllegroLayout.h" />
-    <ClInclude Include="Allegro Wrapper\AllegroLog.h" />
-    <ClInclude Include="Allegro Wrapper\AllegroMenu.h" />
-    <ClInclude Include="Allegro Wrapper\AllegroSound.h" />
-    <ClInclude Include="Allegro Wrapper\AllegroSprite.h" />
-    <ClInclude Include="Allegro Wrapper\AllegroWindow.h" />
-    <ClInclude Include="Allegro Wrapper\WritableBox.h" />
-    <ClInclude Include="Allegro Wrapper\WrittenBox.h" />
-    <ClInclude Include="AllegroV2\AllegroAddons.h" />
-    <ClInclude Include="AllegroV2\AllegroClassV2.h" />
-    <ClInclude Include="AllegroV2\AllegroFactory.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Logica\juego\Game.h" />
     <ClInclude Include="Logica\Personajes\Being.h" />
