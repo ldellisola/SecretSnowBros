@@ -143,7 +143,6 @@ int Game::dispatchEvent(GameEvent * ev)
 
 			// Imprimo todo en en pantalla
 			this->updateObservers(this);
-			al_flip_display();
 
 			break;
 

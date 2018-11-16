@@ -15,6 +15,7 @@
 #define WindowTitle "SnowBros!"
 #define WindowImage ""
 
+#include "MVC/WindowUpdater.h"
 
 #define Player1ID (123)
 
@@ -53,6 +54,9 @@ int main(void) {
 	enemyDrawer.loadFrozenSprites({ "FrozenState1.png","FrozenState2.png","FrozenState3.png","FrozenState4.png" });
 
 	snowbros.loadObserver(&enemyDrawer);
+
+	WindowUpdater win(window);
+	snowbros.loadObserver(&win);
 	
 
 	World world("map.csv");
