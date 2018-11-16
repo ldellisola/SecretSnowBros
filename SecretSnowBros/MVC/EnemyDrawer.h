@@ -3,7 +3,7 @@
 #include <vector>
 #include "Observer.h"
 
-#include "../Allegro Wrapper/AllegroSprite.h"
+#include "AllwAnimation/AllegroSprite.h"
 
 #include "../Logica/Personajes/CrazyGuy.h"
 #include "../Logica/Personajes/PurpleGuy.h"

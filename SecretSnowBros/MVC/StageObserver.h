@@ -1,8 +1,8 @@
 #pragma once
 #include "../MVC/Observer.h"
 #include "../Logica/juego/Game.h"
-#include "../Allegro Wrapper\AllegroSprite.h"
-#include "../AllegroV2/AllegroFactory.h"
+#include "AllwAnimation/AllegroSprite.h"
+#include "AllwInit/AllegroFactory.h"
 #include <stdint.h>
 
 class StageObserver :

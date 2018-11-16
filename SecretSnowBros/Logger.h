@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
-#include "Allegro Wrapper/AllegroLog.h"
+
+#include "AllwMisc/AllegroLog.h"
 
 class Logger
 {

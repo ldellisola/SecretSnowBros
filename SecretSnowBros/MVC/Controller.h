@@ -2,8 +2,8 @@
 class Controller
 {
 public:
-	Controller();
-	~Controller();
+	Controller(){}
+	~Controller(){}
 	virtual void * getEvent(void * ptr) = 0;
 };
 

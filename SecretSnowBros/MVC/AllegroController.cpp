@@ -1,6 +1,7 @@
 #include "AllegroController.h"
 
 
+
 Local2PlayerController::Local2PlayerController(ALLEGRO_EVENT_QUEUE * eventQueue, uint16_t player1ID, uint16_t player2ID)
 	:eventFactory(eventQueue),Player1ID(player1ID),Player2ID(player2ID){}
 

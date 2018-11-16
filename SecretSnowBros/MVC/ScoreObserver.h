@@ -1,7 +1,7 @@
 #pragma once
 #include "Observer.h"
-#include "../Allegro Wrapper/WrittenBox.h"
-#include "../Allegro Wrapper/AllegroFont.h"
+#include "AllwUI/WrittenBox.h"
+#include "AllwBasics/AllegroFont.h"
 #include <cstdint>
 #include "../Logica/Personajes/Score.h"
 class ScoreObserver :

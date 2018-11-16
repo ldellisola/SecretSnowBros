@@ -1,7 +1,7 @@
 #pragma once
 #include "Controller.h"
 #include "Event.h"
-#include "../AllegroV2/AllegroFactory.h"
+#include "AllwInit/AllegroFactory.h"
 
 #include <queue>
 #include <memory>

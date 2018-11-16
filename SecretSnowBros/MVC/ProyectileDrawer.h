@@ -1,7 +1,7 @@
 #pragma once
 #include "../Logica/Personajes/Player.h"
 #include "../Logica/Personajes/Projectiles/Projectile.h"
-#include "../Allegro Wrapper/AllegroAnimation.h"
+#include "AllwAnimation/AllegroAnimation.h"
 #include "Observer.h"
 
 class ProyectileDrawer :
