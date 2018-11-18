@@ -133,14 +133,14 @@ void Monster::update(void * ptr) {
 	}
 	else {
 		if (getHorizontalState() == BeingState::StillWalk && getVerticalState() == BeingState::StillJump) {
-			if (!futureDirections.empty()) {
+			if (!futureDirections.empty() && futureDirections.front() != BeingState::Shooting) {
 				setState(futureDirections.front());
 				futureDirections.pop();
 			}
 
 		}
 		else if (getHorizontalTicks() == 0 && getVerticalTicks() == 0) {
-			if (!futureDirections.empty()) {
+			if (!futureDirections.empty() && futureDirections.front() != BeingState::Shooting) {
 				setState(futureDirections.front());
 				futureDirections.pop();
 			}
@@ -150,74 +150,5 @@ void Monster::update(void * ptr) {
 		Being::update(ptr);
 	}
 
-	/*if (this->getState() == BeingState::Walking && this->getTick() == this->maxWalkTick) {
-
-		World * map = (World *)ptr;
-		updateTicks();
-
-		if (this->getDirection() == BeingDirection::Left && x - 1 >= 0 && map->map[x - 1][y] != 'F')
-			this->x--;
-		else if (this->getDirection() == BeingDirection::Right && x + 1 < map->columna &&map->map[x + 1][y] != 'F')
-			this->x++;
-
-		this->setState(BeingState::Still);
-		this->resetTicks();
-	}
-	else if (this->getState() == BeingState::Jumping) {
-		World * map = (World *)ptr;
-		updateTicks();
-
-		if (this->getTick() == this->maxJumpTick / 2 && this->y + 1 <map->fila && map->map[x][y + 1] != 'F') {
-			this->y++;
-		}
-		else if (this->getTick() == this->maxJumpTick && this->y + 1 < map->fila && map->map[x][y + 1] == 'F') {
-			this->y++;
-			this->setState(BeingState::Falling);
-			this->resetTicks();
-		}
-		else if (this->getTick() == this->maxJumpTick && this->y + 1 < map->fila && map->map[x][y + 1] != 'F') {
-			this->y++;
-			this->setState(BeingState::Still);
-			this->resetTicks();
-		}
-	}
-	else if (this->getState() == BeingState::Falling) {
-
-		World * map = (World *)ptr;
-		updateTicks();
-		if (this->getTick() == this->maxJumpTick &&  this->y - 1 >= 0) {
-
-			if (map->map[x][y - 1] == 'F') {
-				this->setState(BeingState::Still);
-				this->resetTicks();
-			}
-			else {
-				this->y--;
-				this->resetTicks();
-			}
-
-		}
-	}
-	else if (this->freezeState > 0 && this->getState()!= BeingState::Frozen) {
-		this->setState(BeingState::Frozen);
-		this->resetTicks();
-	}
-	else if (this->getState() == BeingState::Frozen) {
-		if (this->freezeState==1 && this->getTick()> 134) {
-				this->setState(BeingState::Still);
-				this->resetTicks();
-		}
-		else if (this->freezeState == 2 && this->getTick()> 134) {
-				this->freezeState = 1;
-				this->resetTicks();
-		}
-		else if (this->freezeState == 3 && this->getTick()> 134) {
-			this->freezeState = 2;
-			this->resetTicks();
-		}
-		else if (this->freezeState == 4 && this->getTick()> 134) {
-			this->freezeState = 3;
-			this->resetTicks();
-		}
-	}*/
+	
 }

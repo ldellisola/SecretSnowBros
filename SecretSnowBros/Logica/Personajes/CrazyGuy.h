@@ -28,7 +28,7 @@ class CrazyGuy :
 {
 public:
 	CrazyGuy(uint32_t x, uint32_t y,uint32_t ID=0);
-	~CrazyGuy();	
+	~CrazyGuy(){}
 	void chooseAction(void *ptr);
 	void next();//Define la proxima accion
 

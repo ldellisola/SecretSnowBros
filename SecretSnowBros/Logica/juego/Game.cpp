@@ -179,8 +179,8 @@ void Game::createPurpleGuy(uint32_t x, uint32_t y)
 
 void Game::createGreenFatty(uint32_t x, uint32_t y)
 {
-	//auto temp = new GreenFatty(x, y);
-	//this->Enemies.push_back(temp);
+	auto temp = new GreenFatty(x, y);
+	this->Enemies.push_back(temp);
 
 #if _DEBUG
 	log("Created GreenFatty at location [" + std::to_string(x) + "," + std::to_string(y) + "]");

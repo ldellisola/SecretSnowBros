@@ -41,21 +41,21 @@ protected:
 	void updateFreezeTick();
 	void resetFreezeTick();
 	uint16_t getFreezeTick();
+	const uint16_t maxWaitTick;
+	const uint16_t maxFrozenTick;
+	const uint16_t points;
 
 	
 	uint16_t getPoints();
 
 private:
-	const uint16_t maxWaitTick;
 	uint16_t waitTick = 0;
 	uint16_t freezeState = 0;
 
 
-	const uint16_t maxFrozenTick;
 	uint16_t freezeTick = 0;
 
 
-	const uint16_t points;
 	bool waiting;
 };
 

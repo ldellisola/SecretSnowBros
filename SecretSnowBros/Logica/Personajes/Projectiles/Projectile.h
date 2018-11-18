@@ -13,7 +13,7 @@ const std::string _ProjDir[] = { "Left", "Right" };
 class Projectile
 {
 public:
-	Projectile(uint16_t x, uint16_t y, ProjectileDirection dir, uint16_t reach, uint16_t maxTick, Score& score)
+	Projectile(uint16_t x, uint16_t y, ProjectileDirection dir, uint16_t reach, uint16_t maxTick, Score* score)
 		:reach(reach), startX(x), startY(y), maxTick(maxTick), scoreboard(score)
 	{
 		this->x = startX;
@@ -39,7 +39,8 @@ public:
 	ProjectileDirection getDir() { return dir; }
 
 	void addScore(uint16_t add) {
-		this->scoreboard += add;
+		if(scoreboard != nullptr)
+			*scoreboard += add;
 	}
 
 	void update(void *ptr) {
@@ -68,7 +69,7 @@ public:
 	}
 	void kill() { alive = false; }
 private:
-	Score& scoreboard;
+	Score* scoreboard;
 	uint16_t x, y, tick;
 	ProjectileDirection dir;
 	bool alive = true;

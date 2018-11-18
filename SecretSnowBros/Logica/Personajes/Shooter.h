@@ -12,7 +12,7 @@ public:
 	{
 	}
 
-	void shoot(uint16_t x, uint16_t y, ProjectileDirection dir,void* score) {
+	void shoot(uint16_t x, uint16_t y, ProjectileDirection dir,void* score = nullptr) {
 		Projectile * temp = new T(x, y, dir,(Score*)score);
 		projectiles.push_back(temp);
 	}

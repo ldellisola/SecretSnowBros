@@ -7,6 +7,7 @@
 #include "MVC/PlayerDrawer.h"
 #include "MVC/ProyectileDrawer.h"
 #include "MVC/EnemyDrawer.h"
+#include "FattyLogger.h"
 
 #include "Logica/Personajes/Being.h"
 
@@ -51,9 +52,14 @@ int main(void) {
 
 	EnemyDrawer enemyDrawer(window.getWidth() / 16, window.getHeight() / 12);
 	enemyDrawer.loadCrazyGuySprite("CrazyGuySprite.png");
+	enemyDrawer.loadGreenFattySprite("GreenFattySprite.png");
 	enemyDrawer.loadFrozenSprites({ "FrozenState1.png","FrozenState2.png","FrozenState3.png","FrozenState4.png" });
 
 	snowbros.loadObserver(&enemyDrawer);
+
+	FattyLogger fatlog;
+
+	snowbros.loadObserver(&fatlog);
 
 	WindowUpdater win(window);
 	snowbros.loadObserver(&win);

@@ -9,9 +9,9 @@ public:
 	Logger(std::string file, bool saveToFile = true) :_logger(file, saveToFile){}
 	virtual ~Logger(){}
 
-protected:
+
 	void log(std::string data) {
-		_logger << data;
+		_logger << (data+"\n");
 	}
 
 private:

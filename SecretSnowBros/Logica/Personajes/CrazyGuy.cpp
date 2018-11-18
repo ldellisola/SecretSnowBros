@@ -21,9 +21,7 @@ CrazyGuy::CrazyGuy(uint32_t x, uint32_t y, uint32_t ID)
 
 }
 
-CrazyGuy::~CrazyGuy()
-{
-}
+
 void CrazyGuy::chooseAction(void * ptr)
 {
 	if (getHorizontalState() == BeingState::StillWalk && getVerticalState() == BeingState::StillJump) {

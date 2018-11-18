@@ -14,18 +14,19 @@ segundos de manera equiprobable. */
 //	/		Ranovich		/	//
 #define WaitingTimeGF 7
 class GreenFatty :
-	public Monster, public Shooter<FireProjectile>
+	public Monster, protected Shooter<FireProjectile>
 {
 public:
 	GreenFatty(uint32_t x, uint32_t y, uint32_t ID = 0);
 	~GreenFatty() {}
 	void next();//Define la proxima accion
-	void startWait(); //Lo pone en modo diablo
-	void freeWait();//Lo libera
 	void update(void * ptr);
+	void chooseAction(void * ptr);
+	void setState(BeingState state);
+
+	friend class FattyLogger;
 	
 private:
-	//CGAction doing;
 	uint16_t tickWaitStart;
 	BeingState  currentState;
 };

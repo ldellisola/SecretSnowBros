@@ -18,110 +18,115 @@ GreenFatty::GreenFatty(uint32_t x, uint32_t y, uint32_t ID)
 	Shooter(ShootTicks)
 {
 	this->lives = 1; 
-	//this->currentState = BeingState::Still; 
-	//this->doing = CGAction::Straight;
+	this->setHorizontalState(BeingState::StillWalk);
+	setVerticalState(BeingState::StillJump);
 }
 
 void GreenFatty::next() {
 	uint16_t probs = rand() % 100;
-	/*if (probs < 30)	this->doing = CGAction::Shooting;
-	else if (probs < 90) this->doing = CGAction::Straight;
-	else if (probs < 93) this->doing = CGAction::Jump;
-	else if (probs < 96) this->doing = CGAction::Still;
-	else this->doing = CGAction::Reverse;*/
+	if (probs < 30) {
+		// Dispara
+		futureDirections.push(BeingState::Shooting);
+	}
+	else if (probs < 90) {
+		//se queda Camina hacia adelante
+		this->futureDirections.push(BeingState::Walking);
+		this->futureDirections.push(BeingState::StillWalk);
+	}
+	else if (probs < 93) {
+		//salta
+		this->futureDirections.push(BeingState::Jumping);
+		this->futureDirections.push(BeingState::StillJump);
+	}
+	else if (probs < 96) {
+		// se queda quieto
+		this->futureDirections.push(BeingState::Waiting);
+	}
+	else {
+		// camina hacia el otro lado
+		if (getDirection() == BeingDirection::Left)
+			setMovement(BeingDirection::Right);
+		else if (getDirection() == BeingDirection::Right)
+			setMovement(BeingDirection::Left);
+
+		this->futureDirections.push(BeingState::Walking);
+		this->futureDirections.push(BeingState::StillWalk);
+	}
+
 }
 
-void GreenFatty::startWait() {
-//	this->tickWaitStart = this->getTick();
-	this->currentState = BeingState::Waiting;
-}
-void GreenFatty::freeWait() {
-	/*if (this->getTick() > this->tickWaitStart + WaitingTimeGF) {
-		this->currentState = BeingState::Still;
-		this->tickWaitStart = 0;
-	}*/
-}
 void GreenFatty::update(void * ptr){
-//	if (this->getState() == BeingState::Walking && this->getTick() == this->maxWalkTick) {
-//
-//		World * map = (World *)ptr;
-//		updateTicks();
-//
-//		if (this->getDirection() == BeingDirection::Left && x - 1 >= 0 && map->map[x - 1][y] != 'F')
-//			this->x--;
-//		else if (this->getDirection() == BeingDirection::Right && x + 1 < map->columna &&map->map[x + 1][y] != 'F')
-//			this->x++;
-//
-//		this->setState(BeingState::Still);
-//		this->resetTicks();
-//	}
-//	else if (this->getState() == BeingState::Jumping) {
-//		World * map = (World *)ptr;
-//		updateTicks();
-//
-//		if (this->getTick() == this->maxJumpTick / 2 && this->y + 1 < map->fila && map->map[x][y + 1] != 'F') {
-//			this->y++;
-//		}
-//		else if (this->getTick() == this->maxJumpTick && this->y + 1 < map->fila && map->map[x][y + 1] == 'F') {
-//			this->y++;
-//			this->setState(BeingState::Falling);
-//			this->resetTicks();
-//		}
-//		else if (this->getTick() == this->maxJumpTick && this->y + 1 < map->fila && map->map[x][y + 1] != 'F') {
-//			this->y++;
-//			this->setState(BeingState::Still);
-//			this->resetTicks();
-//		}
-//	}
-//	else if (this->getState() == BeingState::Shooting && this->getTick() == this->maxShootTicks) {
-//		updateTicks();
-//		
-////		this->shoot();
-//		this->setState(BeingState::Still);
-//		this->resetTicks();
-//	}
-//	else if (this->getState() == BeingState::Falling) {
-//
-//		World * map = (World *)ptr;
-//		updateTicks();
-//
-//		if (this->getTick() == this->maxJumpTick &&  this->y - 1 >= 0) {
-//
-//			if (map->map[x][y - 1] == 'F') {
-//				this->setState(BeingState::Still);
-//				this->resetTicks();
-//			}
-//			else {
-//				this->y--;
-//				this->resetTicks();
-//			}
-//
-//		}
-//
-//	
-//
-//
-//	}
-//	else if (this->freezeState > 0 && this->getState() != BeingState::Frozen) {
-//		this->setState(BeingState::Frozen);
-//		this->resetTicks();
-//	}
-//	else if (this->getState() == BeingState::Frozen) {
-//		if (this->freezeState == 1 && this->getTick() > 134) {
-//			this->setState(BeingState::Still);
-//			this->resetTicks();
-//		}
-//		else if (this->freezeState == 2 && this->getTick() > 134) {
-//			this->freezeState = 1;
-//			this->resetTicks();
-//		}
-//		else if (this->freezeState == 3 && this->getTick() > 134) {
-//			this->freezeState = 2;
-//			this->resetTicks();
-//		}
-//		else if (this->freezeState == 4 && this->getTick() > 134) {
-//			this->freezeState = 3;
-//			this->resetTicks();
-//		}
-//	}
+
+
+	if (isFrozen()) {
+		updateFreezeTick();
+
+		if (getFreezeTick() == maxFrozenTick) {
+			unfreeze();
+			resetFreezeTick();
+		}
+	}
+	else {
+		if (getHorizontalState() == BeingState::StillWalk && getVerticalState() == BeingState::StillJump) {
+			if (!futureDirections.empty() ) {
+				setState(futureDirections.front());
+				futureDirections.pop();
+			}
+
+		}
+		else if (getHorizontalTicks() == 0 && getVerticalTicks() == 0) {
+			if (!futureDirections.empty() ) {
+				setState(futureDirections.front());
+				futureDirections.pop();
+			}
+		}
+
+		if (!isCoolingDown() && isShooting()) {
+			World& map = *(World*)ptr;
+
+			if (this->getDirection() == BeingDirection::Right && this->x + 1 < map.columna)
+				this->shoot(this->x + 1, this->y, ProjectileDirection::Right);
+			else if (this->getDirection() == BeingDirection::Left && x - 1 >= 0)
+				this->shoot(this->x - 1, this->y, ProjectileDirection::Left);
+			stopShooting();
+			startCoolDown();
+		}
+		else if (isCoolingDown()) {
+			updateShootingTicks();
+			if (getShootingTicks() == 0) {
+				stopCoolDown();
+			}
+
+		}
+
+
+
+		Being::update(ptr);
+		Shooter::updateProjectiles(ptr);
+	}
+
+	
+
+	
+}
+
+void GreenFatty::chooseAction(void * ptr)
+{
+	if (getHorizontalState() == BeingState::StillWalk && getVerticalState() == BeingState::StillJump) {
+		next();
+	}
+
+}
+
+void GreenFatty::setState(BeingState state)
+{
+	Monster::setState(state);
+	if (!isWaiting()) {
+		if (state == BeingState::Shooting) {
+			if (!isCoolingDown()) {
+				resetShootingTicks();
+				startShooting();
+			}
+		}
+	}
 }
