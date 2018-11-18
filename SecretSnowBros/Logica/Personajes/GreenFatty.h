@@ -11,8 +11,7 @@ con probabilidad 0.6. En caso contrario a ambos, decide si saltar,
 moverse en la dirección contraria o quedarse quieto por 0.5
 segundos de manera equiprobable. */
 
-//	/		Ranovich		/	//
-#define WaitingTimeGF 7
+
 class GreenFatty :
 	public Monster, public Shooter<FireProjectile>
 {
@@ -26,8 +25,5 @@ public:
 
 	friend class FattyLogger;
 	
-private:
-	uint16_t tickWaitStart;
-	BeingState  currentState;
 };
 

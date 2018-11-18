@@ -1,6 +1,6 @@
 #pragma once
-#include "../Logica/Personajes/Player.h"
-#include "../Logica/Personajes/Projectiles/Projectile.h"
+#include "Logica/Personajes/Player.h"
+#include "Logica/Personajes/Projectiles/Projectile.h"
 #include "AllwAnimation/AllegroAnimation.h"
 #include "Observer.h"
 

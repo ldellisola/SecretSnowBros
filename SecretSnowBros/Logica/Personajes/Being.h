@@ -34,6 +34,7 @@ public:
 	virtual void setState(BeingState state);
 	BeingDirection getDirection() { return dir; }
 	virtual void update(void * ptr);
+	uint16_t getLives() { return lives; }
 
 	
 	BeingState getVerticalState() { return verticalState; }

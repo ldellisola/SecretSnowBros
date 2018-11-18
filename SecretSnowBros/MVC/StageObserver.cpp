@@ -23,6 +23,7 @@ StageObserver::~StageObserver()
 void StageObserver::draw(void * ptr){
 	World * map = ((Game *)ptr)->getmap();
 
+	
 	background->draw(0, 0);
 	for (int i = 0; i < map->fila; i++) {
 		for (int j = 0; j < map->columna; j++) {

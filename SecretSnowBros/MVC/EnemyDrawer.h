@@ -3,12 +3,12 @@
 #include <vector>
 #include "Observer.h"
 
-#include "AllwAnimation/AllegroSprite.h"
+#include <AllwAnimation/AllegroSprite.h>
 
-#include "../Logica/Personajes/CrazyGuy.h"
-#include "../Logica/Personajes/PurpleGuy.h"
-#include "../Logica/Personajes/GreenFatty.h"
-#include "../Logica/juego/Game.h"
+#include "Logica/Personajes/CrazyGuy.h"
+#include "Logica/Personajes/PurpleGuy.h"
+#include "Logica/Personajes/GreenFatty.h"
+#include "Logica/juego/Game.h"
 
 
 class EnemyDrawer : public Observer
