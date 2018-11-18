@@ -18,8 +18,8 @@ ProyectileDrawer::~ProyectileDrawer()
 
 void ProyectileDrawer::draw(void * ptr)
 {
-
 	Player * shooter = (Player*)ptr;
+
 
 	std::vector<Projectile*> projectiles = shooter->getProjectiles();
 

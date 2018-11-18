@@ -1,8 +1,7 @@
 #pragma once
-#include "MVC/Observer.h"
-#include "Logica/juego/Game.h"
-#include "Logger.h"
-#include "l"
+#include "Observer.h"
+#include "../Logica/juego/Game.h"
+#include "../Logger.h"
 
 
 

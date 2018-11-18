@@ -14,7 +14,7 @@ segundos de manera equiprobable. */
 //	/		Ranovich		/	//
 #define WaitingTimeGF 7
 class GreenFatty :
-	public Monster, protected Shooter<FireProjectile>
+	public Monster, public Shooter<FireProjectile>
 {
 public:
 	GreenFatty(uint32_t x, uint32_t y, uint32_t ID = 0);

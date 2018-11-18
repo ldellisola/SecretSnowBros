@@ -7,7 +7,9 @@
 #include "MVC/PlayerDrawer.h"
 #include "MVC/ProyectileDrawer.h"
 #include "MVC/EnemyDrawer.h"
-#include "FattyLogger.h"
+#include "MVC/WindowUpdater.h"
+#include "MVC/FattyLogger.h"
+#include "MVC/FireBallProjectile.h"
 
 #include "Logica/Personajes/Being.h"
 
@@ -16,7 +18,6 @@
 #define WindowTitle "SnowBros!"
 #define WindowImage ""
 
-#include "MVC/WindowUpdater.h"
 
 #define Player1ID (123)
 
@@ -54,6 +55,9 @@ int main(void) {
 	enemyDrawer.loadCrazyGuySprite("CrazyGuySprite.png");
 	enemyDrawer.loadGreenFattySprite("GreenFattySprite.png");
 	enemyDrawer.loadFrozenSprites({ "FrozenState1.png","FrozenState2.png","FrozenState3.png","FrozenState4.png" });
+
+	FireBallProjectile test("ProjectileSprite.png", window.getWidth() / 16, window.getHeight() / 12);
+	enemyDrawer.loadObserver(test);
 
 	snowbros.loadObserver(&enemyDrawer);
 
