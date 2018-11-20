@@ -91,7 +91,7 @@ int Game::dispatchEvent(GameEvent * ev)
 				if (player->getID() == ev->getID()) {
 					if (ev->isItStart()) {
 						player->setState(BeingState::Walking);
-						player->setMovement(BeingDirection::Left);
+						player->setHorizontalDir(HorizontalDirection::Left);
 					}
 					else {
 						player->setState(BeingState::StillWalk);
@@ -103,7 +103,7 @@ int Game::dispatchEvent(GameEvent * ev)
 				if (player->getID() == ev->getID()) {
 					if (ev->isItStart()) {
 						player->setState(BeingState::Walking);
-						player->setMovement(BeingDirection::Right);
+						player->setHorizontalDir(HorizontalDirection::Right);
 					}
 					else {
 						player->setState(BeingState::StillWalk);

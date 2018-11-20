@@ -18,8 +18,6 @@ GreenFatty::GreenFatty(uint32_t x, uint32_t y, uint32_t ID)
 	Shooter(ShootTicks)
 {
 	this->lives = 1; 
-	this->setHorizontalState(BeingState::StillWalk);
-	setVerticalState(BeingState::StillJump);
 }
 
 void GreenFatty::next() {
@@ -44,10 +42,10 @@ void GreenFatty::next() {
 	}
 	else {
 		// camina hacia el otro lado
-		if (getDirection() == BeingDirection::Left)
-			setMovement(BeingDirection::Right);
-		else if (getDirection() == BeingDirection::Right)
-			setMovement(BeingDirection::Left);
+		if (getHorizontalDir() == HorizontalDirection::Left)
+			setHorizontalDir(HorizontalDirection::Right);
+		else if (getHorizontalDir() == HorizontalDirection::Right)
+			setHorizontalDir(HorizontalDirection::Left);
 
 		this->futureDirections.push(BeingState::Walking);
 		this->futureDirections.push(BeingState::StillWalk);
@@ -67,7 +65,7 @@ void GreenFatty::update(void * ptr){
 		}
 	}
 	else {
-		if (getHorizontalState() == BeingState::StillWalk && getVerticalState() == BeingState::StillJump) {
+		if (getHorizontalState() == HorizontalState::Still && getVerticalState() == VerticalState::Still) {
 			if (!futureDirections.empty() ) {
 				setState(futureDirections.front());
 				futureDirections.pop();
@@ -84,10 +82,10 @@ void GreenFatty::update(void * ptr){
 		if (!isCoolingDown() && isShooting()) {
 			World& map = *(World*)ptr;
 
-			if (this->getDirection() == BeingDirection::Right && this->x + 1 < map.columna)
-				this->shoot(this->x + 1, this->y, ProjectileDirection::Right);
-			else if (this->getDirection() == BeingDirection::Left && x - 1 >= 0)
-				this->shoot(this->x - 1, this->y, ProjectileDirection::Left);
+			if (this->getHorizontalDir() == HorizontalDirection::Right && this->getX() + 1 < map.columna)
+				this->shoot(this->getX() + 1, this->getY(), ProjectileDirection::Right);
+			else if (this->getHorizontalDir() == HorizontalDirection::Left && getX() - 1 >= 0)
+				this->shoot(this->getX() - 1, this->getY(), ProjectileDirection::Left);
 			stopShooting();
 			startCoolDown();
 		}
@@ -112,7 +110,7 @@ void GreenFatty::update(void * ptr){
 
 void GreenFatty::chooseAction(void * ptr)
 {
-	if (getHorizontalState() == BeingState::StillWalk && getVerticalState() == BeingState::StillJump) {
+	if (getHorizontalState() == HorizontalState::Still && getVerticalState() == VerticalState::Still) {
 		next();
 	}
 

@@ -18,7 +18,7 @@ void PurpleGuy::findPlayer(void *a)
 }
 
 PurpleGuy::PurpleGuy(uint32_t x, uint32_t y, uint32_t ID )
-	:Monster(JumpTicks,WalkTicks,StillTicks,maxFallTicks,x,y,ID, PointsAwarded)
+	:Monster(JumpTicks,WalkTicks,StillTicks, FallTick,x,y,ID, PointsAwarded)
 {
 	 this->lives = 1; 
 	// this->currentState = BeingState::Still; 

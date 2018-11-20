@@ -24,7 +24,7 @@ CrazyGuy::CrazyGuy(uint32_t x, uint32_t y, uint32_t ID)
 
 void CrazyGuy::chooseAction(void * ptr)
 {
-	if (getHorizontalState() == BeingState::StillWalk && getVerticalState() == BeingState::StillJump) {
+	if (getHorizontalState() == HorizontalState::Still && getVerticalState() == VerticalState::Still) {
 
 #ifdef _DEBUG
 		log("Selecting new state");
@@ -47,10 +47,10 @@ void CrazyGuy::next() {
 #ifdef _DEBUG
 		log("New state elected: Walking other Direction");
 #endif // _DEBUG
-		if (getDirection() == BeingDirection::Left) 
-			setMovement(BeingDirection::Right);
-		else if(getDirection() == BeingDirection::Right)
-			setMovement(BeingDirection::Left);
+		if (getHorizontalDir() == HorizontalDirection::Left) 
+			setHorizontalDir(HorizontalDirection::Right);
+		else if(getHorizontalDir() == HorizontalDirection::Right)
+			setHorizontalDir(HorizontalDirection::Left);
 
 		this->futureDirections.push(BeingState::Walking);
 		this->futureDirections.push(BeingState::StillWalk);

@@ -32,12 +32,12 @@ void Being::kill()
 	}
 }
 
-void Being::setMovement(BeingDirection dir)
-{
-
-
-	//this->dir = dir;
-}
+//void Being::setMovement(BeingDirection dir)
+//{
+//
+//
+//	//this->dir = dir;
+//}
 
 void Being::setState(BeingState state)
 {
@@ -78,6 +78,23 @@ void Being::setState(BeingState state)
 void Being::update(void * ptr)
 {
 	World& map = *(World *)ptr;
+
+	
+	std::unique_ptr<char> row(new char[map.columna]);
+
+	for (int i = 0; i < map.columna; i++) {
+		row.get()[i] = map.map[getY()][i];
+	}
+
+	Slider::update(row.get());
+
+	std::unique_ptr<char> column(new char[map.fila]);
+
+	for (int i = 0; i < map.fila; i++) {
+		column.get()[i] = map.map[i][getX()];
+	}
+
+	Jumper::update(column.get());
 
 	/*if (getVerticalState() != BeingState::StillJump)
 		updateVerticalTicks();
@@ -151,40 +168,40 @@ void Being::update(void * ptr)
 		break;
 	}*/
 }
-
-void Being::resetVerticalTicks()
-{
-	verticalMovementTick = 0;
-}
-
-void Being::resetHorizontalTicks()
-{
-	horizontalMovementTick = 0;
-}
-
-void Being::updateVerticalTicks()
-{
-	if(getVerticalState() == BeingState::Falling)
-		this->verticalMovementTick = (this->verticalMovementTick + 1) ;
-	else if(getVerticalState() == BeingState::Jumping)
-		this->verticalMovementTick = (this->verticalMovementTick + 1) ;
-}
-
-void Being::updateHorizontalTicks()
-{
-	this->horizontalMovementTick = (this->horizontalMovementTick + 1) ;
-
-}
-
-void Being::setHorizontalState(BeingState state)
-{
-	horizontalState = state;
-}
-
-void Being::setVerticalState(BeingState state)
-{
-	verticalState = state;
-}
+//
+//void Being::resetVerticalTicks()
+//{
+//	verticalMovementTick = 0;
+//}
+//
+//void Being::resetHorizontalTicks()
+//{
+//	horizontalMovementTick = 0;
+//}
+//
+//void Being::updateVerticalTicks()
+//{
+//	if(getVerticalState() == BeingState::Falling)
+//		this->verticalMovementTick = (this->verticalMovementTick + 1) ;
+//	else if(getVerticalState() == BeingState::Jumping)
+//		this->verticalMovementTick = (this->verticalMovementTick + 1) ;
+//}
+//
+//void Being::updateHorizontalTicks()
+//{
+//	this->horizontalMovementTick = (this->horizontalMovementTick + 1) ;
+//
+//}
+//
+//void Being::setHorizontalState(BeingState state)
+//{
+//	horizontalState = state;
+//}
+//
+//void Being::setVerticalState(BeingState state)
+//{
+//	verticalState = state;
+//}
 
 
 

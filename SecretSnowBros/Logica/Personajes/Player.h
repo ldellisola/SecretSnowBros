@@ -3,8 +3,8 @@
 #include <cstdint>
 #include "Being.h"
 #include "Projectiles/SnowProjectile.h"
-#include "Shooter.h"
-#include "../juego/Cmap.h"
+#include "Logica/Personajes/Base Classes/Shooter.h"
+#include "Logica/juego/Cmap.h"
 #include "Score.h"
 
 #ifdef _DEBUG
@@ -30,12 +30,12 @@ public:
 
 #ifdef _DEBUG
 	void kill(){
-		log("Player Killed at [" + std::to_string(x) + ", " + std::to_string(y) + "]");
+		log("Player Killed at [" + std::to_string(getX()) + ", " + std::to_string(getY()) + "]");
 
 		Being::kill();
 
 		if (lives > 0) {
-			log("Player spawned at [" + std::to_string(x) + ", " + std::to_string(y) + "]");
+			log("Player spawned at [" + std::to_string(getX()) + ", " + std::to_string(getY()) + "]");
 		}
 	}
 

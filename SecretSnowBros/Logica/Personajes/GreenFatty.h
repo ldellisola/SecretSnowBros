@@ -4,7 +4,7 @@
 #include<ctime>
 #include <stdint.h>
 #include "Projectiles/FireProjectile.h"
-#include "Shooter.h"
+#include "Logica/Personajes/Base Classes/Shooter.h"
 /*dispara con
 probabilidad 0.3 o si camina en el sentido en el que estaba mirando
 con probabilidad 0.6. En caso contrario a ambos, decide si saltar,

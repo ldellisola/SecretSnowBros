@@ -31,17 +31,14 @@ void Slider::update(void * ptr)
 
 		if (this->getHorizontalTicks() == this->MaxHorizontalTicks) {
 			
-			if (this->getHorizontalDir() == HorizontalDirection::Left)
+			if (this->getHorizontalDir() == HorizontalDirection::Left) {
 				if (x - 1 >= 0 && map[x - 1] != 'F')
 					this->x--;
-				else {
-					setHorizontalDir(HorizontalDirection::Right);
-				}
-			else if (this->getHorizontalDir() == HorizontalDirection::Right)
+			}
+			else if (this->getHorizontalDir() == HorizontalDirection::Right) {
 				if (map[x + 1] != 'F')
 					this->x++;
-				else
-					setHorizontalDir(HorizontalDirection::Left);
+			}
 			this->resetHorizontalTicks();
 
 		}

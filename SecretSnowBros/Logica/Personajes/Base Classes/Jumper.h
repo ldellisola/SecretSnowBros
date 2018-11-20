@@ -12,6 +12,7 @@ public:
 	virtual ~Jumper();
 
 	virtual void update(void * ptr);
+	uint16_t getY();
 
 protected:
 
@@ -23,11 +24,12 @@ protected:
 	VerticalState getVerticalState();
 
 	void setY(uint16_t y);
-	uint16_t getY();
 
-private:
 	const uint16_t MaxJumpingTicks;
 	const uint16_t MaxFallingTicks;
+
+private:
+
 	uint16_t y, verticalTicks;
 	VerticalState verticalState;
 };

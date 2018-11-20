@@ -35,19 +35,19 @@ public:
 
 
 				if(fatties[i]->isShooting())
-					loggers[i]->log("Shoot at [" + std::to_string(x) + "," + std::to_string(y) + "] in direction: " + _BeingDir[(int)fatties[i]->getDirection()]);
+					loggers[i]->log("Shoot at [" + std::to_string(x) + "," + std::to_string(y) + "]");
 				
-				else if (fatties[i]->getVerticalState() == BeingState::Falling && fatties[i]->getVerticalTicks() == 0) {
+				else if (fatties[i]->getVerticalState() == VerticalState::Falling && fatties[i]->getVerticalTicks() == 0) {
 					loggers[i]->log("Falling at [" + std::to_string(x) + "," + std::to_string(y) + "]");
 
 				}
-				else if (fatties[i]->getVerticalState() == BeingState::Jumping && fatties[i]->getVerticalTicks() == fatties[i]->maxJumpTick / 2)
+				else if (fatties[i]->getVerticalState() == VerticalState::Jumping && fatties[i]->getVerticalTicks() == fatties[i]->MaxJumpingTicks / 2)
 				{
 					loggers[i]->log("Jumping at [" + std::to_string(x) + "," + std::to_string(y) + "], to " + "[" + std::to_string(x) + ", " + std::to_string(y - 1) + "]");
 
 				}
-				else if(fatties[i]->getHorizontalState() == BeingState::Walking && fatties[i]->getHorizontalTicks() == 0)
-					loggers[i]->log("Walked from [" + std::to_string(x) + "," + std::to_string(y) + "] in direction: " + _BeingDir[(int)fatties[i]->getDirection()]);
+				else if(fatties[i]->getHorizontalState() == HorizontalState::Moving && fatties[i]->getHorizontalTicks() == 0)
+					loggers[i]->log("Walked from [" + std::to_string(x) + "," + std::to_string(y) + "]");
 
 				else {
 					loggers[i]->log("Standing at [" + std::to_string(x) + "," + std::to_string(y) + "]");

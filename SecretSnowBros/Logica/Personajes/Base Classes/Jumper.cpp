@@ -23,6 +23,10 @@ void Jumper::update(void * ptr)
 
 	char * column = (char*)ptr;
 
+	if (getVerticalState() == VerticalState::Still && column[y + 1] == 'E') {
+		this->setVerticalState(VerticalState::Falling);
+	}
+
 	switch (getVerticalState())
 	{
 	case VerticalState::Still:
@@ -32,8 +36,27 @@ void Jumper::update(void * ptr)
 		}
 		break;
 	case VerticalState::Jumping:
+		if (getVerticalTicks() == MaxJumpingTicks / 2) {
+			if ((this->y - 1) >= 0) 
+				y--;
+		}
+		else if (getVerticalTicks() == MaxJumpingTicks-1 ) {
+			if ((this->y - 1) >= 0) 
+				y--;
+
+			setVerticalState(VerticalState::Still);
+			resetVerticalTicks();
+			}
 		break;
 	case VerticalState::Falling:
+		if (getVerticalTicks() == MaxFallingTicks - 1) {
+			y++;
+			if (column[y + 1] == 'F') {
+				setVerticalState(VerticalState::Still);
+			}
+
+			this->resetVerticalTicks();
+		}
 		break;
 	default:
 		break;
@@ -43,34 +66,6 @@ void Jumper::update(void * ptr)
 
 }
 
-case BeingState::Jumping:
-	if (getVerticalTicks() == maxJumpTick / 2) {
-		if ((this->y - 1) >= 0) {
-			y--;
-		}
-	}
-	else if (getVerticalTicks() == maxJumpTick - 1) {
-		if ((this->y - 1) >= 0) {
-			y--;
-
-		}
-
-		this->setState(BeingState::StillJump);
-		resetVerticalTicks();
-	}
-	break;
-case BeingState::Falling:
-	if (getVerticalTicks() == maxFallTicks - 1) {
-		y++;
-		if (y + 1 < map.fila && map.map[y + 1][x] == 'F') {
-			this->setState(BeingState::StillJump);
-		}
-
-		this->resetVerticalTicks();
-	}
-	break;
-
-}
 
 void Jumper::updateVerticalTicks()
 {

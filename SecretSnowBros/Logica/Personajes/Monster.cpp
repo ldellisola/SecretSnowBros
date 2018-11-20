@@ -71,7 +71,7 @@ void Monster::setState(BeingState state)
 void Monster ::collition(Being * player)
 {
 
-	if (player->getX() == this->x && player->getY() == this->y) {
+	if (player->getX() == this->getX() && player->getY() == this->getY()) {
 		player->kill();
 	}
 
@@ -81,7 +81,7 @@ void Monster ::collition(Being * player)
 
 void Monster::collition(Projectile * proy)
 {
-	if (proy->getX() == this->x && proy->getY() == this->y ) {
+	if (proy->getX() == this->getX() && proy->getY() == this->getY() ) {
 		this->freeze();
 		proy->kill();
 		proy->addScore(getPoints());
@@ -135,7 +135,7 @@ void Monster::update(void * ptr) {
 		}
 	}
 	else {
-		if (getHorizontalState() == BeingState::StillWalk && getVerticalState() == BeingState::StillJump) {
+		if (getHorizontalState() == HorizontalState::Still && getVerticalState() == VerticalState::Still) {
 			if (!futureDirections.empty() && futureDirections.front() != BeingState::Shooting) {
 				setState(futureDirections.front());
 				futureDirections.pop();

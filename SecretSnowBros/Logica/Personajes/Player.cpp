@@ -30,16 +30,16 @@ void Player::update(void * ptr)
 	
 	Being::update(ptr);
 #ifdef _DEBUG
-	if(getVerticalState() == BeingState::Jumping)
-		if(getVerticalTicks() == maxJumpTick/2)
-			log("Jumped halfway at [" + std::to_string(x) + "," + std::to_string(y) + "], to "+ "[" + std::to_string(x) + ", " + std::to_string(y-1) + "]");
-	else if(getVerticalState() == BeingState::Falling)
+	if(getVerticalState() == VerticalState::Jumping)
+		if(getVerticalTicks() == MaxJumpingTicks/2)
+			log("Jumped halfway at [" + std::to_string(getX()) + "," + std::to_string(getY()) + "], to "+ "[" + std::to_string(getX()) + ", " + std::to_string(getY() -1) + "]");
+	else if(getVerticalState() == VerticalState::Falling)
 		if (getVerticalTicks() == 0) 
-			log("Falling at [" + std::to_string(x) + "," + std::to_string(y) + "]");
+			log("Falling at [" + std::to_string(getX()) + "," + std::to_string(getY()) + "]");
 	
-	if(getHorizontalState() == BeingState::Walking)
+	if(getHorizontalState() == HorizontalState::Moving)
 		if(getHorizontalTicks() == 0)
-			log("Walked from [" + std::to_string(x) + "," + std::to_string(y) + "] in direction: " + _BeingDir[(int)getDirection()]);
+			log("Walked from [" + std::to_string(getX()) + "," + std::to_string(getY()) + "]");
 
 
 #endif // _DEBUG
@@ -55,13 +55,13 @@ void Player::update(void * ptr)
 	if (!isCoolingDown() && isShooting()) {
 #ifdef _DEBUG
 		log("Current score is:" + std::to_string(this->getScoreCounter()->getActualScore()));
-		log("Shoot at [" + std::to_string(x) + "," + std::to_string(y) + "] in direction: " + _BeingDir[(int)this->getDirection()]);
+		log("Shoot at [" + std::to_string(getX()) + "," + std::to_string(getY()) + "]");
 #endif // _DEBUG
 
-		if (this->getDirection() == BeingDirection::Right && this->x + 1 < map.columna)
-			this->shoot(this->x + 1, this->y, ProjectileDirection::Right, this->getScoreCounter());
-		else if (this->getDirection() == BeingDirection::Left && x - 1 >= 0)
-			this->shoot(this->x - 1, this->y, ProjectileDirection::Left, this->getScoreCounter());
+		if (this->getHorizontalDir() == HorizontalDirection::Right && this->getX() + 1 < map.columna)
+			this->shoot(this->getX() + 1, this->getY(), ProjectileDirection::Right, this->getScoreCounter());
+		else if (this->getHorizontalDir() == HorizontalDirection::Left && getX() - 1 >= 0)
+			this->shoot(this->getX() - 1, this->getY(), ProjectileDirection::Left, this->getScoreCounter());
 		stopShooting();
 		startCoolDown();
 	}
@@ -90,7 +90,7 @@ void Player::update(void * ptr)
 
 void Player::collition(Projectile * proy)
 {
-	if (proy->getX() == this->x && proy->getY() == this->y) {
+	if (proy->getX() == this->getX() && proy->getY() == this->getY()) {
 		this->kill();
 #ifdef _DEBUG
 		log("Collision with projectile");

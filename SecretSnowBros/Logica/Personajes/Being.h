@@ -1,5 +1,6 @@
 #pragma once
 #include <stdint.h>
+#include <memory>
 #include "Logica/juego/Cmap.h"
 #include "Logica/Personajes/Base Classes/Jumper.h"
 #include "Logica/Personajes/Base Classes/Slider.h"
@@ -33,7 +34,7 @@ public:
 	uint16_t getID() { return ID; }
 	bool isAlive() { return (lives > 0 ? true:false); }
 	virtual void kill();
-	void setMovement(BeingDirection dir);
+	//void setMovement(BeingDirection dir);
 	virtual void setState(BeingState state);
 	
 	virtual void update(void * ptr);

@@ -28,7 +28,7 @@ void PlayerDrawer::draw(void * data)
 	Player  * being = ((Game*)data)->getPlayer()[0];
 
 	if (being->isAlive()) {
-		if (being->getDirection() == BeingDirection::Right)
+		if (being->getHorizontalDir() == HorizontalDirection::Right)
 			sprite.draw(being->getX() *BlockWidth, being->getY() * BlockHeight);
 		else
 			sprite.drawHorizontallyMirrored(being->getX() *BlockWidth, being->getY() * BlockHeight);

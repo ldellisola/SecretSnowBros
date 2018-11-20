@@ -6,7 +6,7 @@ SnowBall::SnowBall(Monster * monster, Score * PlayerScore)
 {
 	this->x = monster->getX();
 	this->y = monster->getY();
-	this->direction = monster->getDirection();
+	//this->direction = monster->getHorizontalDir();
 	this->state = SnowBallState::Still;
 	this->capturedMonster = monster;
 	this->playerScore = PlayerScore;
@@ -25,6 +25,8 @@ bool SnowBall::collision(Being * being)
 			for (int i = 1; i <= enemyHits; i++) {
 				*playerScore += i * 1000;
 			}
+
+			return true;
 		}
 
 	}
@@ -36,7 +38,10 @@ bool SnowBall::collision(Being * being)
 
 		}
 
+		return true;
+
 	}
+	return false;
 }
 
 void SnowBall::update(void * ptr)
@@ -44,12 +49,6 @@ void SnowBall::update(void * ptr)
 
 	World * world = (World *) ptr;
 
-
-	switch (switch_on)
-	{
-	default:
-		break;
-	}
 
 
 

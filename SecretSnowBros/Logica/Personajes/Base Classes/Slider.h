@@ -20,6 +20,12 @@ public:
 
 	virtual void update(void*ptr);
 
+	void setHorizontalDir(HorizontalDirection dir);
+
+	HorizontalDirection getHorizontalDir();
+
+	uint16_t getX();
+
 protected:
 	void updateHorizontalTicks();
 
@@ -28,9 +34,7 @@ protected:
 
 	uint16_t getHorizontalTicks();
 
-	void setHorizontalDir(HorizontalDirection dir);
 
-	HorizontalDirection getHorizontalDir();
 
 	void setHorizontalState(HorizontalState state);
 
@@ -38,7 +42,7 @@ protected:
 
 	void setX(uint16_t x);
 
-	uint16_t getX();
+
 
 
 
