@@ -1,33 +1,26 @@
 #pragma once
 #include <cstdint>
-#include "../Score.h"
+#include "Logica/Personajes/Score.h"
+#include "Logica/Personajes/Base Classes/Slider.h"
 
-enum class ProjectileDirection
-{
-	Left,Right
-};
-#ifdef _DEBUG
-const std::string _ProjDir[] = { "Left", "Right" };
-#endif // _DEBUG
 
-class Projectile
+
+class Projectile: public Slider
 {
 public:
-	Projectile(uint16_t x, uint16_t y, ProjectileDirection dir, uint16_t reach, uint16_t maxTick, Score* score)
-		:reach(reach), startX(x), startY(y), maxTick(maxTick), scoreboard(score)
+	Projectile(uint16_t x, uint16_t y, HorizontalDirection dir, uint16_t reach, uint16_t maxTick, Score* score)
+		:Slider(x,maxTick),reach(reach), startX(x), startY(y), scoreboard(score)
 	{
-		this->x = startX;
 		this->y = startY;
-		this->dir = dir;
-		this->tick = 0;
+		this->setHorizontalDir(dir);
+		this->setHorizontalState(HorizontalState::Moving);
 	}
 	~Projectile(){}
 
-	uint16_t getX() { return x; }
 	uint16_t getY() { return y; }
 
 	bool hasToDie() { 
-		uint16_t mod = (x - startX > 0 ? x - startX : startX - x);
+		uint16_t mod = (getX() - startX > 0 ? getX() - startX : startX - getX());
 
 		if (mod >= reach || !alive)
 			return true;
@@ -35,8 +28,6 @@ public:
 			return false;
 	
 	}
-	uint16_t getTick() { return tick; }
-	ProjectileDirection getDir() { return dir; }
 
 	void addScore(uint16_t add) {
 		if(scoreboard != nullptr)
@@ -44,35 +35,41 @@ public:
 	}
 
 	void update(void *ptr) {
-		this->tick++;
-		if (this->tick == maxTick) {
 
-			World * map = (World*)ptr;
-
-
-			this->tick = 0;
-			if (this->dir == ProjectileDirection::Left) {
-				if (map->map[y][this->x - 1] == 'E')
-					this->x--;
-				else {
-					this->alive = false;
+			World & map = *(World*)ptr;
+			switch (getHorizontalDir())
+			{
+			case HorizontalDirection::Left:
+				if (map.map[y][getX()-1] == 'F') {
+					this->kill();
 				}
-			}
-			else if( this->dir == ProjectileDirection::Right){
-				if (map->map[y][this->x + 1] == 'E')
-					this->x++;
-				else {
-					this->alive = false;
+				break;
+			case HorizontalDirection::Right:
+				if (map.map[y][getX()+1] == 'F') {
+					this->kill();
 				}
+				break;
 			}
-		}
+
+
+
+
+			std::unique_ptr<char> row(new char[map.columna]);
+
+			for (int i = 0; i < map.columna; i++) {
+				row.get()[i] = map.map[getY()][i];
+			}
+
+			Slider::update(row.get());
+
+
+			
 	}
 	void kill() { alive = false; }
 private:
 	Score* scoreboard;
-	uint16_t x, y, tick;
-	ProjectileDirection dir;
+	uint16_t y;
 	bool alive = true;
-	const uint16_t reach, startX, startY, maxTick;
+	const uint16_t reach, startX, startY;
 };
 

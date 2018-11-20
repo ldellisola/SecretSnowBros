@@ -6,7 +6,7 @@ class SnowProjectile
 	:public Projectile
 {
 public:
-	SnowProjectile(uint16_t x, uint16_t y, ProjectileDirection dir, Score* score)
+	SnowProjectile(uint16_t x, uint16_t y, HorizontalDirection dir, Score* score)
 		:Projectile(x,y,dir,3,6,(Score*)score)
 	{
 	}

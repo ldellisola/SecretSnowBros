@@ -10,7 +10,7 @@ public:
 	{
 		this->playerID = playerID_;
 	};
-	~Score(){}
+	virtual ~Score(){}
 	uint16_t getActualScore() { return this->actualScore; };
 	void update(uint16_t addScore) {
 		this->actualScore += addScore;

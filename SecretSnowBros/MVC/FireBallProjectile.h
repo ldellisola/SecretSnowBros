@@ -31,10 +31,10 @@ public:
 
 
 			for (Projectile* proj : projectiles) {
-				if (proj->getDir() == ProjectileDirection::Right) {
+				if (proj->getHorizontalDir() == HorizontalDirection::Right) {
 					this->sprite->draw(proj->getX()*BlockWidth, proj->getY() * BlockHeight);
 				}
-				else if (proj->getDir() == ProjectileDirection::Left) {
+				else if (proj->getHorizontalDir() == HorizontalDirection::Left) {
 					this->sprite->drawHorizontallyMirrored(proj->getX()*BlockWidth, proj->getY() * BlockHeight);
 				}
 			}

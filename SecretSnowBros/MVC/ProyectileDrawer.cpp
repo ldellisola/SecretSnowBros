@@ -24,10 +24,10 @@ void ProyectileDrawer::draw(void * ptr)
 	std::vector<Projectile*> projectiles = shooter->getProjectiles();
 
 	for (Projectile * proj : projectiles) {
-		if (proj->getDir() == ProjectileDirection::Right) {
+		if (proj->getHorizontalDir() == HorizontalDirection::Right) {
 			this->bullet->draw(proj->getX()*BlockWidth, proj->getY() * BlockHeight);
 		}
-		else if (proj->getDir() == ProjectileDirection::Left) {
+		else if (proj->getHorizontalDir() == HorizontalDirection::Left) {
 			this->bullet->drawHorizontallyMirrored(proj->getX()*BlockWidth, proj->getY() * BlockHeight);
 		}
 	}

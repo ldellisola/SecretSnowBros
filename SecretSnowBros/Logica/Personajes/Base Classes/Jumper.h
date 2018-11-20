@@ -13,6 +13,7 @@ public:
 
 	virtual void update(void * ptr);
 	uint16_t getY();
+	void setY(uint16_t y);
 
 protected:
 
@@ -23,7 +24,6 @@ protected:
 	void setVerticalState(VerticalState state);
 	VerticalState getVerticalState();
 
-	void setY(uint16_t y);
 
 	const uint16_t MaxJumpingTicks;
 	const uint16_t MaxFallingTicks;

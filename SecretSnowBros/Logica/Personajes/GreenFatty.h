@@ -17,7 +17,7 @@ class GreenFatty :
 {
 public:
 	GreenFatty(uint32_t x, uint32_t y, uint32_t ID = 0);
-	~GreenFatty() {}
+	virtual ~GreenFatty() {}
 	void next();//Define la proxima accion
 	void update(void * ptr);
 	void chooseAction(void * ptr);

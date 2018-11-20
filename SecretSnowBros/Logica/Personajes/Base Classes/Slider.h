@@ -24,6 +24,8 @@ public:
 
 	HorizontalDirection getHorizontalDir();
 
+	void setX(uint16_t x);
+
 	uint16_t getX();
 
 protected:
@@ -40,7 +42,7 @@ protected:
 
 	HorizontalState getHorizontalState();
 
-	void setX(uint16_t x);
+	
 
 
 

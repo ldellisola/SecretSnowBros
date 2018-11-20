@@ -24,7 +24,7 @@ class PurpleGuy :
 {
 public:
 	PurpleGuy(uint32_t x, uint32_t y, uint32_t ID = 0);
-	~PurpleGuy(){}
+	virtual ~PurpleGuy(){}
 	void next();//Define la proxima accion
 	void chase(World map_); //Implementar algoritmo de Dijkstra para que lo persiga
 	void startWait(); //Lo pone en modo diablo

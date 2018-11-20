@@ -12,12 +12,12 @@ enum class BeingDirection
 
 enum class BeingState
 {
-	StillWalk, StillJump, Walking, Jumping, Shooting, Falling, Frozen, Waiting
+	StillWalk, StillJump, Walking, Jumping, Shooting, Falling, Frozen, Waiting, Carried
 };
 
 #ifdef _DEBUG
 const std::string _BeingDir[] = { "Left", "Right" };
-const std::string _BeingState[] = { "StillWalk","StillJump","Walking","Jumping","Shooting","Falling","Frozen","Waiting" };
+const std::string _BeingState[] = { "StillWalk","StillJump","Walking","Jumping","Shooting","Falling","Frozen","Waiting","Carried" };
 #endif // _DEBUG
 
 

@@ -59,9 +59,9 @@ void Player::update(void * ptr)
 #endif // _DEBUG
 
 		if (this->getHorizontalDir() == HorizontalDirection::Right && this->getX() + 1 < map.columna)
-			this->shoot(this->getX() + 1, this->getY(), ProjectileDirection::Right, this->getScoreCounter());
+			this->shoot(this->getX() + 1, this->getY(), HorizontalDirection::Right, this->getScoreCounter());
 		else if (this->getHorizontalDir() == HorizontalDirection::Left && getX() - 1 >= 0)
-			this->shoot(this->getX() - 1, this->getY(), ProjectileDirection::Left, this->getScoreCounter());
+			this->shoot(this->getX() - 1, this->getY(), HorizontalDirection::Left, this->getScoreCounter());
 		stopShooting();
 		startCoolDown();
 	}

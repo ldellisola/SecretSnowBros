@@ -3,6 +3,8 @@
 
 #include "Logica/Personajes/Player.h"
 #include "Logica/Personajes/Monster.h"
+#include "Logica/Personajes/Base Classes/Slider.h"
+#include "Logica/Personajes/Base Classes/Jumper.h"
 #include "Logica/juego/Cmap.h"
 
 enum class SnowBallState
@@ -10,7 +12,7 @@ enum class SnowBallState
 	Carried, Rolling, Still
 };
 
-class SnowBall
+class SnowBall :public Slider,public Jumper
 {
 public:
 	SnowBall(Monster * monster, Score * PlayerScore);
@@ -23,14 +25,13 @@ public:
 
 
 
-	~SnowBall();
+	virtual ~SnowBall();
 protected:
 	const uint16_t maxHits = 8;
-	const uint16_t MaxRollTicks = 20;
 private:
-	uint16_t x, y, wallHits,enemyHits, rollTicks;
+	uint16_t wallHits,enemyHits;
 	SnowBallState state;
-	BeingDirection direction;
+	HorizontalDirection direction;
 	Monster * capturedMonster = nullptr;
 	Score * playerScore = nullptr;
 

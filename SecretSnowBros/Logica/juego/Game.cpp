@@ -22,6 +22,9 @@ Game::~Game()
 	{
 		delete Enemies[i];
 	}
+
+	for (int i = 0; i < snowballs.size(); i++)
+		delete snowballs[i];
 }
 
 void Game::selectNextMap()
@@ -54,6 +57,9 @@ void Game::selectNextMap()
 	}
 
 	currentMap->purge();
+
+	createSnowBall(Enemies[0], players[0]->getScoreCounter());
+	
 
 #if _DEBUG
 	log("Purged map number " + std::to_string(i));
@@ -130,6 +136,16 @@ int Game::dispatchEvent(GameEvent * ev)
 				player->updateProjectiles(this->getmap());
 			}
 
+			for (SnowBall * snowball : snowballs) {
+				for (Monster * monster : this->Enemies)
+					snowball->collision(monster);
+				for (Player * player : this->players)
+					snowball->collision(player);
+				snowball->update(getmap());
+
+			}
+
+			killSnowBalls();
 
 
 			//if (this->checkIfMonstersAlive())
@@ -197,6 +213,23 @@ void Game::createCrazyGuy(uint32_t x, uint32_t y)
 #endif
 }
 
+void Game::createSnowBall(Monster * monster, Score * playerScore)
+{
+	this->snowballs.push_back(new SnowBall(monster, playerScore));
+}
+
+void Game::killSnowBalls()
+{
+	for (auto it = snowballs.begin(); it != snowballs.end(); it) {
+		if ((*it)->shouldDie()) {
+			SnowBall * temp = *it;
+			delete temp;
+			it = snowballs.erase(it);
+		}
+
+	}
+}
+
 
 std::vector <Player *>& Game::getPlayer() { 
 
@@ -205,6 +238,11 @@ std::vector <Player *>& Game::getPlayer() {
 
 std::vector <Monster   *>& Game::getMonster() { 
 	return this->Enemies; 
+}
+
+std::vector<SnowBall*>& Game::getSnowballs()
+{
+	return snowballs;
 }
 
 void Game::loadMap(World map)

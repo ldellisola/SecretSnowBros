@@ -83,9 +83,9 @@ void GreenFatty::update(void * ptr){
 			World& map = *(World*)ptr;
 
 			if (this->getHorizontalDir() == HorizontalDirection::Right && this->getX() + 1 < map.columna)
-				this->shoot(this->getX() + 1, this->getY(), ProjectileDirection::Right);
+				this->shoot(this->getX() + 1, this->getY(), HorizontalDirection::Right);
 			else if (this->getHorizontalDir() == HorizontalDirection::Left && getX() - 1 >= 0)
-				this->shoot(this->getX() - 1, this->getY(), ProjectileDirection::Left);
+				this->shoot(this->getX() - 1, this->getY(), HorizontalDirection::Left);
 			stopShooting();
 			startCoolDown();
 		}
