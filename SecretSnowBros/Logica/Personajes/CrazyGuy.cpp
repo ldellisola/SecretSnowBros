@@ -30,7 +30,6 @@ void CrazyGuy::chooseAction(void * ptr)
 		log("Selecting new state");
 #endif // _DEBUG
 		next();
-
 	}
 }
 void CrazyGuy::next() {
@@ -39,7 +38,10 @@ void CrazyGuy::next() {
 #ifdef _DEBUG
 		log("New state elected: Walking Same Direction");
 #endif // _DEBUG
-		this->futureDirections.push(BeingState::Walking);
+		if (getHorizontalDir() == HorizontalDirection::Left)
+			this->futureDirections.push(BeingState::WalkingLeft);
+		else if (getHorizontalDir() == HorizontalDirection::Right)
+			this->futureDirections.push(BeingState::WalkingRight);
 		this->futureDirections.push(BeingState::StillWalk);
 	}
 	else if (probs < 83)
@@ -48,11 +50,9 @@ void CrazyGuy::next() {
 		log("New state elected: Walking other Direction");
 #endif // _DEBUG
 		if (getHorizontalDir() == HorizontalDirection::Left) 
-			setHorizontalDir(HorizontalDirection::Right);
+			this->futureDirections.push(BeingState::WalkingLeft);
 		else if(getHorizontalDir() == HorizontalDirection::Right)
-			setHorizontalDir(HorizontalDirection::Left);
-
-		this->futureDirections.push(BeingState::Walking);
+			this->futureDirections.push(BeingState::WalkingRight);
 		this->futureDirections.push(BeingState::StillWalk);
 	}
 	else if (probs < 91) {
@@ -69,4 +69,3 @@ void CrazyGuy::next() {
 		this->futureDirections.push(BeingState::Waiting);
 	}
 }
-

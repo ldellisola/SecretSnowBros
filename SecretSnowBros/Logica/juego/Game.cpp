@@ -58,7 +58,7 @@ void Game::selectNextMap()
 
 	currentMap->purge();
 
-	createSnowBall(Enemies[0], players[0]->getScoreCounter());
+	//createSnowBall(Enemies[0], players[0]->getScoreCounter());
 	
 
 #if _DEBUG
@@ -96,8 +96,7 @@ int Game::dispatchEvent(GameEvent * ev)
 			for (Player * player : this->players)
 				if (player->getID() == ev->getID()) {
 					if (ev->isItStart()) {
-						player->setState(BeingState::Walking);
-						player->setHorizontalDir(HorizontalDirection::Left);
+						player->setState(BeingState::WalkingLeft);
 					}
 					else {
 						player->setState(BeingState::StillWalk);
@@ -108,8 +107,7 @@ int Game::dispatchEvent(GameEvent * ev)
 			for (Player * player : this->players)
 				if (player->getID() == ev->getID()) {
 					if (ev->isItStart()) {
-						player->setState(BeingState::Walking);
-						player->setHorizontalDir(HorizontalDirection::Right);
+						player->setState(BeingState::WalkingRight);
 					}
 					else {
 						player->setState(BeingState::StillWalk);
@@ -185,8 +183,8 @@ void Game::createPlayer(uint32_t id, uint32_t x, uint32_t y)
 
 void Game::createPurpleGuy(uint32_t x, uint32_t y)
 {
-//	auto temp = new PurpleGuy(x, y);
-	//this->Enemies.push_back(temp);
+	auto temp = new PurpleGuy(x,y,Enemies.size());
+	this->Enemies.push_back(temp);
 
 #if _DEBUG
 	log("Created PurpleGuy at location [" + std::to_string(x) + "," + std::to_string(y) + "]");
@@ -195,7 +193,7 @@ void Game::createPurpleGuy(uint32_t x, uint32_t y)
 
 void Game::createGreenFatty(uint32_t x, uint32_t y)
 {
-	auto temp = new GreenFatty(x, y);
+	auto temp = new GreenFatty(x, y, Enemies.size());
 	this->Enemies.push_back(temp);
 
 #if _DEBUG
@@ -265,6 +263,13 @@ void Game::loadMaps(std::vector<World> maps)
 }
 
 World*  Game::getmap() { 
+	currentMap->x.clear();
+	currentMap->y.clear();
+	for (Player* plyr : players) {
+		currentMap->x.push_back(plyr->getX());
+		currentMap->y.push_back(plyr->getY());
+	}
+	
 
 	return (this->currentMap); 
 }

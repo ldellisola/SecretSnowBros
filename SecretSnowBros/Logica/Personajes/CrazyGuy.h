@@ -13,6 +13,7 @@ por 0,5 segs.*/
 //	/		MONO AMARILLO		/	//
 #define WaitingTimeCG 7
 
+
 #ifdef _DEBUG
 #include "../../Logger.h"
 #endif

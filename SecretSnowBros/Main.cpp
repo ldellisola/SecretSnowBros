@@ -25,7 +25,7 @@
 int main(void) {
 	Allw allegro(Allegro::InitMode::Full, Allegro::NoValue, Allegro::NoValue, 50);
 
-	AllegroWindow window(16 * 100, 12 * 100 +400, allegro.getEventQueue(), WindowTitle, WindowImage);
+	AllegroWindow window(16 * 50, 12 * 50 +400, allegro.getEventQueue(), WindowTitle, WindowImage);
 	window.open();
 //	window.setFullScreen();
 	AllegroEventHandler eventHandler(allegro.getEventQueue());
@@ -47,7 +47,7 @@ int main(void) {
 
 	PlayerDrawer  playerDrawer("PlayerSprite.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
 	ProyectileDrawer projDrawer("ProjectileSprite.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
-	PlayerInfoObserver playerInfo("font.ttf", window.getWidth(), 400, 12 * 100);
+	PlayerInfoObserver playerInfo("font.ttf", window.getWidth(), 400, 12 * 50);
 	playerDrawer.loadObserver(playerInfo);
 	playerDrawer.loadObserver(projDrawer);
 
@@ -57,6 +57,7 @@ int main(void) {
 	EnemyDrawer enemyDrawer(window.getWidth() / 16, (window.getHeight() - 400) / 12);
 	enemyDrawer.loadCrazyGuySprite("CrazyGuySprite.png");
 	enemyDrawer.loadGreenFattySprite("GreenFattySprite.png");
+	enemyDrawer.loadPurpleGuySprite("PurpleGuySprite.png");
 	enemyDrawer.loadFrozenSprites({ "FrozenState1.png","FrozenState2.png","FrozenState3.png","FrozenState4.png" });
 
 	FireBallProjectile test("ProjectileSprite.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
@@ -77,13 +78,6 @@ int main(void) {
 	snowbros.loadMap(world);
 
 	snowbros.run(nullptr);
-
-	
-
-
-
-
-
 
 	return 0;
 }

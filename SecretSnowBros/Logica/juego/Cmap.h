@@ -53,4 +53,6 @@ public:
 	bool isPurged = false;
 	uint16_t const fila = FILS;
 	uint16_t const columna = COLS;
+	std::vector<uint16_t> x;
+	std::vector<uint16_t>y;
 };

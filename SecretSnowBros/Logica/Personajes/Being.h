@@ -12,7 +12,7 @@ enum class BeingDirection
 
 enum class BeingState
 {
-	StillWalk, StillJump, Walking, Jumping, Shooting, Falling, Frozen, Waiting, Carried
+	StillWalk, StillJump, WalkingLeft, WalkingRight, Jumping, Shooting, Falling, Frozen, Waiting, Carried
 };
 
 #ifdef _DEBUG

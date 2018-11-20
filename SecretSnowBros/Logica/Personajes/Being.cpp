@@ -31,8 +31,13 @@ void Being::kill()
 
 void Being::setState(BeingState state)
 {
-	if (state == BeingState::Walking ) {
+	if (state == BeingState::WalkingLeft ) {
 		Slider::setHorizontalState(HorizontalState::Moving);
+		setHorizontalDir(HorizontalDirection::Left);
+	}
+	else if (state == BeingState::WalkingRight) {
+		Slider::setHorizontalState(HorizontalState::Moving);
+		setHorizontalDir(HorizontalDirection::Right);
 	}
 	else if (state == BeingState::StillWalk) {
 		Slider::setHorizontalState(HorizontalState::Still);
@@ -57,13 +62,7 @@ void Being::update(void * ptr)
 	World& map = *(World *)ptr;
 
 	
-	std::unique_ptr<char> row(new char[map.columna]);
 
-	for (int i = 0; i < map.columna; i++) {
-		row.get()[i] = map.map[getY()][i];
-	}
-
-	Slider::update(row.get());
 
 	std::unique_ptr<char> column(new char[map.fila]);
 
@@ -73,6 +72,13 @@ void Being::update(void * ptr)
 
 	Jumper::update(column.get());
 
+	std::unique_ptr<char> row(new char[map.columna]);
+
+	for (int i = 0; i < map.columna; i++) {
+		row.get()[i] = map.map[getY()][i];
+	}
+
+	Slider::update(row.get());
 	
 }
 

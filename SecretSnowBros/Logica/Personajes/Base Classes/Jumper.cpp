@@ -50,10 +50,12 @@ void Jumper::update(void * ptr)
 		break;
 	case VerticalState::Falling:
 		if (getVerticalTicks() == MaxFallingTicks - 1) {
-			y++;
-			if (column[y + 1] == 'F') {
+			
+			if (column[y + 1] == 'F' && column[y] == 'E') {
 				setVerticalState(VerticalState::Still);
 			}
+			else
+				y++;
 
 			this->resetVerticalTicks();
 		}

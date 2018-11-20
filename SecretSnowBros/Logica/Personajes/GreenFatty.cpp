@@ -28,7 +28,10 @@ void GreenFatty::next() {
 	}
 	else if (probs < 90) {
 		//se queda Camina hacia adelante
-		this->futureDirections.push(BeingState::Walking);
+		if (getHorizontalDir() == HorizontalDirection::Left)
+			this->futureDirections.push(BeingState::WalkingLeft);
+		else if (getHorizontalDir() == HorizontalDirection::Right)
+			this->futureDirections.push(BeingState::WalkingRight);
 		this->futureDirections.push(BeingState::StillWalk);
 	}
 	else if (probs < 93) {
@@ -43,11 +46,9 @@ void GreenFatty::next() {
 	else {
 		// camina hacia el otro lado
 		if (getHorizontalDir() == HorizontalDirection::Left)
-			setHorizontalDir(HorizontalDirection::Right);
+			this->futureDirections.push(BeingState::WalkingRight);
 		else if (getHorizontalDir() == HorizontalDirection::Right)
-			setHorizontalDir(HorizontalDirection::Left);
-
-		this->futureDirections.push(BeingState::Walking);
+			this->futureDirections.push(BeingState::WalkingLeft);
 		this->futureDirections.push(BeingState::StillWalk);
 	}
 
