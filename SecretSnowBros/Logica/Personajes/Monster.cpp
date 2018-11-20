@@ -70,9 +70,12 @@ void Monster::setState(BeingState state)
 
 void Monster ::collition(Being * player)
 {
+
 	if (player->getX() == this->x && player->getY() == this->y) {
 		player->kill();
 	}
+
+
 	
 }
 

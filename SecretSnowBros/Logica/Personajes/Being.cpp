@@ -6,15 +6,9 @@
 
 
 Being::Being(uint16_t maxJumpTick, uint16_t maxWalkTick,uint16_t maxFallTicks, uint16_t x, uint16_t y, uint16_t ID)
-	:maxWalkTick(maxWalkTick),maxJumpTick(maxJumpTick), maxFallTicks(maxFallTicks), xStart(x),yStart(y),
-	ID(ID)
+	: Slider(x,maxWalkTick),Jumper(y,maxJumpTick,maxFallTicks), xStart(x),yStart(y),ID(ID)
 {
-	horizontalState = BeingState::StillWalk;
-	verticalState = BeingState::StillJump;
-	resetHorizontalTicks();
-	resetVerticalTicks();
-	this->x = x;
-	this->y = y;
+
 }
 
 
@@ -25,10 +19,14 @@ void Being::kill()
 
 	if (lives > 0) {
 		lives--;
-		this->x = xStart;
-		this->y = yStart;
-		this->horizontalState = BeingState::StillWalk;
-		this->verticalState = BeingState::StillJump;
+		Jumper::setY(yStart);
+		Slider::setX(xStart);
+		//this->x = xStart;
+		//this->y = yStart;
+		Jumper::setVerticalState(VerticalState::Still);
+		Slider::setHorizontalState(HorizontalState::Still);
+		//this->horizontalState = BeingState::StillWalk;
+		//this->verticalState = BeingState::StillJump;
 		resetHorizontalTicks();
 		resetVerticalTicks();
 	}
@@ -36,28 +34,44 @@ void Being::kill()
 
 void Being::setMovement(BeingDirection dir)
 {
-	this->dir = dir;
+
+
+	//this->dir = dir;
 }
 
 void Being::setState(BeingState state)
 {
-
-	if (state == BeingState::Walking || state == BeingState::StillWalk) {
-		this->horizontalState = state;
-		resetHorizontalTicks();
+	if (state == BeingState::Walking ) {
+		Slider::setHorizontalState(HorizontalState::Moving);
 	}
-	else if (state == BeingState::Jumping && getVerticalState() == BeingState::StillJump) {
-		this->verticalState = state;
-		resetVerticalTicks();
+	else if (state == BeingState::StillWalk) {
+		Slider::setHorizontalState(HorizontalState::Still);
 	}
-	else if ( state == BeingState::Falling || state == BeingState::StillJump) {
-		this->verticalState = state;
-		resetVerticalTicks();
+	else if (state == BeingState::Jumping) {
+		Jumper::setVerticalState(VerticalState::Jumping);
 	}
-	//else if (state == BeingState::Jumping && getVerticalState() != BeingState::Falling && getVerticalState() == BeingState::Jumping) {
+	else if ( state == BeingState::Falling) {
+		Jumper::setVerticalState(VerticalState::Falling);
+	}
+	else if (state == BeingState::StillJump)
+		Jumper::setVerticalState(VerticalState::Still);
+	//if (state == BeingState::Walking || state == BeingState::StillWalk) {
+	//	Slider::setHorizontalState(HorizontalState::Moving);
+	//	//this->horizontalState = state;
+	//	//resetHorizontalTicks();
+	//}
+	//else if (state == BeingState::Jumping && getVerticalState() == BeingState::StillJump) {
 	//	this->verticalState = state;
 	//	resetVerticalTicks();
 	//}
+	//else if ( state == BeingState::Falling || state == BeingState::StillJump) {
+	//	this->verticalState = state;
+	//	resetVerticalTicks();
+	//}
+	////else if (state == BeingState::Jumping && getVerticalState() != BeingState::Falling && getVerticalState() == BeingState::Jumping) {
+	////	this->verticalState = state;
+	////	resetVerticalTicks();
+	////}
 
 }
 
@@ -65,7 +79,7 @@ void Being::update(void * ptr)
 {
 	World& map = *(World *)ptr;
 
-	if (getVerticalState() != BeingState::StillJump)
+	/*if (getVerticalState() != BeingState::StillJump)
 		updateVerticalTicks();
 	if (getHorizontalState() != BeingState::StillWalk)
 		updateHorizontalTicks();
@@ -120,15 +134,22 @@ void Being::update(void * ptr)
 
 				setState(BeingState::Falling);
 			}
-			if (this->getDirection() == BeingDirection::Left && x - 1 >= 0 && map.map[y][x - 1] != 'F')
-				this->x--;
-			else if (this->getDirection() == BeingDirection::Right && x + 1 < map.columna && map.map[y][x + 1] != 'F')
-				this->x++;
+			if (this->getDirection() == BeingDirection::Left)
+				if (x - 1 >= 0 && map.map[y][x - 1] != 'F')
+					this->x--;
+				else {
+					setMovement(BeingDirection::Right);
+				}
+			else if (this->getDirection() == BeingDirection::Right)
+				if (x + 1 < map.columna && map.map[y][x + 1] != 'F')
+					this->x++;
+				else
+					setMovement(BeingDirection::Left);
 			this->resetHorizontalTicks();
 
 		}
 		break;
-	}
+	}*/
 }
 
 void Being::resetVerticalTicks()
