@@ -15,8 +15,6 @@ PurpleGuy::PurpleGuy(uint32_t x, uint32_t y, uint32_t ID )
 {
 	this->adjacency_list.reserve(12*16);
 	 this->lives = 1; 
-	// this->currentState = BeingState::Still; 
-	// this->doing = CGAction::Straight; 
 }
 void PurpleGuy::chooseAction(void * mapWithPj) {
 	World * map = (World*) mapWithPj;
@@ -53,7 +51,7 @@ void PurpleGuy::chase(World&  map_) {
 	std::vector<weight_t> min_distance;
 	std::vector<vertex_t> previous;
 	int source = (this->getY()* (map_).columna + this->getX());
-	int distance = 9999999;
+	int distance = 0xFFFF;
 	int xdes, ydes;
 	for (int i = 0; i < map_.x.size(); i++) {
 		int temp = sqrt(pow(this->getX() - map_.x[i], 2) + pow(this->getY() - map_.y[i], 2));
@@ -85,9 +83,6 @@ void PurpleGuy::chase(World&  map_) {
 		else if (path[i] - path[i + 1] == 16) {
 			this->futureDirections.push(BeingState::Jumping);
 			this->futureDirections.push(BeingState::StillJump);
-		}
-		else if (path[i] - path[i + 1] == -16) {
-			//this->futureDirections.push(BeingState::Falling);
 		}
 	}
 }

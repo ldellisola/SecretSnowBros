@@ -18,7 +18,8 @@ Player::Player(uint16_t x, uint16_t y, uint16_t ID)
 	,Logger("Logs/Player ID -" + std::to_string(ID),true)
 #endif // _DEBUG
 {
-	this->lives = 3;
+	//this->lives = 3;
+	this->lives = 3;//DEBUG
 }
 
 Player::~Player()
@@ -27,7 +28,6 @@ Player::~Player()
 
 void Player::update(void * ptr)
 {
-	
 	Being::update(ptr);
 #ifdef _DEBUG
 	if(getVerticalState() == VerticalState::Jumping)
@@ -72,12 +72,6 @@ void Player::update(void * ptr)
 		}
 		
 	}
-
-
-
-
-	
-	
 
 }
 

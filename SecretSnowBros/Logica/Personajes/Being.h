@@ -4,6 +4,7 @@
 #include "Logica/juego/Cmap.h"
 #include "Logica/Personajes/Base Classes/Jumper.h"
 #include "Logica/Personajes/Base Classes/Slider.h"
+#include "Logica/Personajes/Projectiles/Projectile.h"
 
 enum class BeingDirection
 {
@@ -39,6 +40,7 @@ public:
 	
 	virtual void update(void * ptr);
 	uint16_t getLives() { return lives; }
+	virtual void collition(Projectile * proy);
 
 	//BeingDirection getDirection() { return dir; }
 	//BeingState getVerticalState() { return verticalState; }

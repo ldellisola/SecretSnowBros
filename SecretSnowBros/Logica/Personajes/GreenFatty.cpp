@@ -22,6 +22,7 @@ GreenFatty::GreenFatty(uint32_t x, uint32_t y, uint32_t ID)
 
 void GreenFatty::next() {
 	uint16_t probs = rand() % 100;
+	//uint16_t probs = 20;//DEBUG
 	if (probs < 30) {
 		// Dispara
 		futureDirections.push(BeingState::Shooting);
@@ -95,18 +96,16 @@ void GreenFatty::update(void * ptr){
 			if (getShootingTicks() == 0) {
 				stopCoolDown();
 			}
-
 		}
 
 
 
 		Being::update(ptr);
-		Shooter::updateProjectiles(ptr);
+		
 	}
 
-	
+	Shooter::updateProjectiles(ptr);
 
-	
 }
 
 void GreenFatty::chooseAction(void * ptr)
@@ -114,7 +113,6 @@ void GreenFatty::chooseAction(void * ptr)
 	if (getHorizontalState() == HorizontalState::Still && getVerticalState() == VerticalState::Still) {
 		next();
 	}
-
 }
 
 void GreenFatty::setState(BeingState state)

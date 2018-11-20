@@ -75,6 +75,16 @@ void Monster ::collition(Being * player)
 		player->kill();
 	}
 
+	if (dynamic_cast<Shooter<FireProjectile>*>(this)) {
+		auto temp = (Shooter<Projectile>*) this;
+
+		std::vector<Projectile*>& shoots = temp->getProjectiles();
+		
+		//for (Projectile * sht : shoots) {
+		//	player->collition(sht);
+		//}
+	}
+
 
 	
 }

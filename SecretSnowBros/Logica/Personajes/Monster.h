@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include "Being.h"
 #include "Projectiles/Projectile.h"
+#include "Logica/Personajes/Base Classes/Shooter.h"
+#include "Logica/Personajes/Projectiles/FireProjectile.h"
 
 
 class Monster  :
