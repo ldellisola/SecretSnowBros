@@ -154,7 +154,7 @@ void SnowBall::releasePlayer(Player * player)
 
 bool SnowBall::shouldDie()
 {
-	if (wallHits == maxHits)
+	if (wallHits >= maxHits)
 		return true;
 	else 
 		return false;
