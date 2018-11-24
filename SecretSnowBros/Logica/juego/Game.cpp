@@ -319,12 +319,14 @@ bool Game::checkIfPlayersAlive() {
 
 bool Game::checkIfMonstersAlive() {
 	for (int i = 0; i < this->Enemies.size(); i++) {
-		if (this->Enemies[i]->isAlive()) {
+		if (this->Enemies[i]->isAlive() || this->snowballs.size()) {
 #if _DEBUG
 			log("At least one enemy is alive");
 #endif
+
 			return false;								//Me fijo si alguno tiene vida
 		}
+
 	}
 
 #if _DEBUG
