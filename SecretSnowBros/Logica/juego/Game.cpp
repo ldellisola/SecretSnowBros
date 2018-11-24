@@ -132,6 +132,13 @@ int Game::dispatchEvent(GameEvent * ev)
 			for (Player * player : this->players) {
 				player->update(this->getmap());
 				player->updateProjectiles(this->getmap());
+				for (Monster* mstr : this->Enemies) {
+					if (dynamic_cast<GreenFatty*>(mstr)) {
+						for (Projectile * proj : ((GreenFatty*)mstr)->getProjectiles())
+							player->collition(proj);
+					}
+					
+				}
 			}
 
 			for (SnowBall * snowball : snowballs) {
