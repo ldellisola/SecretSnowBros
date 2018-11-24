@@ -18,30 +18,30 @@
 
 #define WindowTitle "SnowBros!"
 #define WindowImage ""
-
+std::vector<World> setUpMaps(std::string path, std::string ext);
 
 #define Player1ID (123)
 
 int main(void) {
 	Allw allegro(Allegro::InitMode::Full, Allegro::NoValue, Allegro::NoValue, 50);
 
-	AllegroWindow window(16 * 50, 12 * 50 +400, allegro.getEventQueue(), WindowTitle, WindowImage);
+	AllegroWindow window(16 * 50, 12 * 50 + 400, allegro.getEventQueue(), WindowTitle, WindowImage);
 	window.open();
-//	window.setFullScreen();
+	//	window.setFullScreen();
 	AllegroEventHandler eventHandler(allegro.getEventQueue());
 
-	
+
 	Game snowbros(Player1ID);
 	EventHandler eventH;
 
-	
-	
+
+
 	Local1PlayerController controller(allegro.getEventQueue(), Player1ID);
 	eventH.loadController(&controller);
 
 	snowbros.loadEventHandler(&eventH);
 
-	StageObserver stageObserver((window.getHeight() - 400), window.getWidth(),'F');
+	StageObserver stageObserver((window.getHeight() - 400), window.getWidth(), 'F');
 	snowbros.loadObserver(&stageObserver);
 
 
@@ -72,12 +72,21 @@ int main(void) {
 	WindowUpdater win(window);
 	snowbros.loadObserver(&win);
 	
-
-	World world("map.csv");
-	
-	snowbros.loadMap(world);
-
+	snowbros.loadMaps(setUpMaps("map",".csv"));
 	snowbros.run(nullptr);
 
 	return 0;
+}
+
+
+std::vector<World> setUpMaps(std::string path, std::string ext)
+{
+	std::vector<std::string> names(10, " ");
+	std::vector<World> maps;
+	for (int i = 0; i < 10; i++) {
+		names[i] = path + std::to_string(i + 1) + ext;
+		World map(names[i]);
+		maps.push_back(map);
+	}
+	return maps;
 }

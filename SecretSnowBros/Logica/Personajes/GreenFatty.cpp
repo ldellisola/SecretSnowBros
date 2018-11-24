@@ -21,8 +21,8 @@ GreenFatty::GreenFatty(uint32_t x, uint32_t y, uint32_t ID)
 }
 
 void GreenFatty::next() {
-	//uint16_t probs = rand() % 100;
-	uint16_t probs = 20;//DEBUG
+	uint16_t probs = rand() % 100;
+	//uint16_t probs = 20;//DEBUG
 	if (probs < 30) {
 		// Dispara
 		futureDirections.push(BeingState::Shooting);
