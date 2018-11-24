@@ -31,18 +31,12 @@ bool SnowBall::collision(Being * being)
 				*playerScore += i * 1000;
 			}
 		}
-		else if (dynamic_cast<Player *>(being) && !((Player*)being)->isInmune()) {
-			bool alreadyHijacked = false;
+		else if (dynamic_cast<Player *>(being)) {
+			auto player = ((Player*)being);
 
-			for (int i = hijackedPlayers.size() - 1; i >= 0; i--)
-			{
-				if (hijackedPlayers[i] == being)
-					alreadyHijacked = true;
-			}
-			
-			if (!alreadyHijacked) {
+			if (!player->isCarried() && !player->isInmune()) {
 				hijackedPlayers.push_back((Player*)being);
-				being->setState(BeingState::Carried);
+				player->setCarry(true);
 			}
 		}
 		return true;
@@ -101,6 +95,7 @@ void SnowBall::update(void * ptr)
 	for (Player* plyr : hijackedPlayers) {
 		if (plyr->getState() == BeingState::Jumping) {
 			releasePlayer(plyr);
+			plyr->setCarry(false);
 			plyr->setState(BeingState::Inmune);
 		}
 		else {
@@ -142,7 +137,7 @@ void SnowBall::releasePlayer(Player * player)
 
 bool SnowBall::shouldDie()
 {
-	if (wallHits >= maxHits)
+	if (wallHits == maxHits)
 		return true;
 	else 
 		return false;

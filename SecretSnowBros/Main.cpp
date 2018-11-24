@@ -21,7 +21,7 @@
 #define WindowImage ""
 std::vector<World> setUpMaps(std::string path, std::string ext);
 
-#define Block (50)
+#define Block (100)
 
 #define Player1ID (123)
 
