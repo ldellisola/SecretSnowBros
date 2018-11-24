@@ -125,9 +125,14 @@ int Game::dispatchEvent(GameEvent * ev)
 					for (Player* player : players) {
 						monster->collition(player);
 						std::vector<Projectile*> tempProj = player->getProjectiles();
-						for (Projectile* proj : tempProj)
+						for (Projectile* proj : tempProj) {
 							monster->collition(proj);
+							if (monster->getFreezeState() == 4) {
+								createSnowBall(monster, proj->getScore());
+							}
+						}
 					}
+					
 				}
 			}
 
@@ -225,6 +230,7 @@ void Game::createCrazyGuy(uint32_t x, uint32_t y)
 
 void Game::createSnowBall(Monster * monster, Score * playerScore)
 {
+	monster->kill();
 	this->snowballs.push_back(new SnowBall(monster, playerScore));
 }
 
