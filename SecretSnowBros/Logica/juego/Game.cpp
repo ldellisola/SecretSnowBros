@@ -160,28 +160,27 @@ int Game::dispatchEvent(GameEvent * ev)
 
 			if (this->checkIfMonstersAlive())
 			{
-
+				return 	(int)KeepReturn::LevelWon;
 				// Paso al proximo nivel
 			}
 			if (this->checkIfPlayersAlive())
 			{
-			// salgo del juego
+				return (int)KeepReturn::PlayersDead;// salgo del juego //negrada
 			}
 
 			// Imprimo todo en en pantalla
 			this->updateObservers(this);
-
 			break;
 
 		case GameEventType::Exit:
-			return 1;				//NEGARADA
+			return (int)KeepReturn::Exit;				
 
 
 		default:
 			break;
 		}
 
-	return 0;
+	return (int)KeepReturn::Start;
 }
 
 void Game::createPlayer(uint32_t id, uint32_t x, uint32_t y)
@@ -290,18 +289,18 @@ World*  Game::getmap() {
 
 bool Game::checkIfPlayersAlive() {
 	for (int i = 0; i < this->players.size(); i++) {
-		if (this->Enemies[i]->isAlive()) {
+		if (this->players[i]->isAlive()) {
 #if _DEBUG
 			log("At least one player is alive");
 #endif
-			return true;								//Me fijo si alguno tiene vida	
+			return false;								//Me fijo si alguno tiene vida	
 		}
 	}
 
 #if _DEBUG
 	log("All players are dead");
 #endif
-	return false;										//caso contrario estan muertos
+	return true;										//caso contrario estan muertos
 }
 
 
@@ -311,7 +310,7 @@ bool Game::checkIfMonstersAlive() {
 #if _DEBUG
 			log("At least one enemy is alive");
 #endif
-			return true;								//Me fijo si alguno tiene vida
+			return false;								//Me fijo si alguno tiene vida
 		}
 	}
 
@@ -319,30 +318,26 @@ bool Game::checkIfMonstersAlive() {
 	log("All enemies are dead");
 #endif
 
-	return false; //caso contrario estan muertos
+	return true; //caso contrario estan muertos
 }
 int Game::run(void * ptr)
 {
-	int keep = 0;
+	int keep = (int)KeepReturn::Start;
 	int mapCounter = 0;
 	bool alive = true;
-	while (mapCounter  !=this->allMaps.size() && (keep!=1) ) {//ESA ES LA NEGRADA, HAYQ UE DEFINIR VALORES DE SALIDA DE KEEP, ESE 1 DE AHI SERIA QUE PERDISTE NO GANASTE
+	while (mapCounter  !=this->allMaps.size() && (keep!= (int)KeepReturn::Exit) ) {//ESA ES LA NEGRADA, HAYQ UE DEFINIR VALORES DE SALIDA DE KEEP, ESE 1 DE AHI SERIA QUE PERDISTE NO GANASTE
 			this->selectNextMap();
 			mapCounter++;
-		
-
-		
-		
+			keep = (int)KeepReturn::Start;
 		do {
 			this->eventH->getEvent();
 			keep = this->dispatchEvent(eventH->returnEvent());
 			this->eventH->killEvent();
 
-
-		} while (!keep);
-
+		} while (keep == (int)KeepReturn::Start);
+		//Aca si se quiere se puede poner una pantalla que muestre alguna transicion estilo nivel 2
 	}
-
+	currentMap = nullptr;
 	return 0;
 
 

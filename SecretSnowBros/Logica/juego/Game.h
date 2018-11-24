@@ -16,7 +16,7 @@
 #include "Logica/juego/Cmap.h"
 
 
-
+enum class KeepReturn { Start, Exit,PlayersDead,LevelWon };
 class Game
 #ifdef _DEBUG
 	: protected Logger
