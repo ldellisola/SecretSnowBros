@@ -30,30 +30,28 @@ public:
 
 	bool isInmune() { return inmune; }
 
-#ifdef _DEBUG
-	void kill(){
-		log("Player Killed at [" + std::to_string(getX()) + ", " + std::to_string(getY()) + "]");
 
-		Being::kill();
 
-		if (lives > 0) {
-			log("Player spawned at [" + std::to_string(getX()) + ", " + std::to_string(getY()) + "]");
-		}
-	}
 
-#endif
+	void kill();
+
+
+
 	Score* getScoreCounter() { return &points; }
 
+	void setInmune(bool set);
 	void updateInmuneTick();
 	void resetInmuneTick();
 	uint16_t getInmuneTick();
-
+	bool isCarried() { return carried; }
+	void setCarry(bool set);
 	
 private:
 
 	bool inmune = false;
+	bool carried = false;
 	uint16_t inmuneTick = 0;
-	const uint16_t MaxInmuneTick = 60;
+	const uint16_t MaxInmuneTick = 60 * 3;
 
 	Score points;
 };

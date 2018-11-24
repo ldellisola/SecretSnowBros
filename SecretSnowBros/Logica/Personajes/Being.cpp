@@ -53,10 +53,7 @@ void Being::setState(BeingState state)
 	}
 	else if (state == BeingState::StillJump)
 		Jumper::setVerticalState(VerticalState::Still);
-	else if (state == BeingState::Carried) {
-		Jumper::setVerticalState(VerticalState::Still);
-		Slider::setHorizontalState(HorizontalState::Still);
-	}
+
 	this->beingState = state;
 	
 }

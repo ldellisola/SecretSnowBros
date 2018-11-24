@@ -28,56 +28,58 @@ Player::~Player()
 
 void Player::update(void * ptr)
 {
-	Being::update(ptr);
+	if (!isCarried() && isAlive()) {
+		Being::update(ptr);
 #ifdef _DEBUG
-	if(getVerticalState() == VerticalState::Jumping)
-		if(getVerticalTicks() == MaxJumpingTicks/2)
-			log("Jumped halfway at [" + std::to_string(getX()) + "," + std::to_string(getY()) + "], to "+ "[" + std::to_string(getX()) + ", " + std::to_string(getY() -1) + "]");
-	else if(getVerticalState() == VerticalState::Falling)
-		if (getVerticalTicks() == 0) 
-			log("Falling at [" + std::to_string(getX()) + "," + std::to_string(getY()) + "]");
-	
-	if(getHorizontalState() == HorizontalState::Moving)
-		if(getHorizontalTicks() == 0)
-			log("Walked from [" + std::to_string(getX()) + "," + std::to_string(getY()) + "]");
+		if (getVerticalState() == VerticalState::Jumping)
+			if (getVerticalTicks() == MaxJumpingTicks / 2)
+				log("Jumped halfway at [" + std::to_string(getX()) + "," + std::to_string(getY()) + "], to " + "[" + std::to_string(getX()) + ", " + std::to_string(getY() - 1) + "]");
+			else if (getVerticalState() == VerticalState::Falling)
+				if (getVerticalTicks() == 0)
+					log("Falling at [" + std::to_string(getX()) + "," + std::to_string(getY()) + "]");
+
+		if (getHorizontalState() == HorizontalState::Moving)
+			if (getHorizontalTicks() == 0)
+				log("Walked from [" + std::to_string(getX()) + "," + std::to_string(getY()) + "]");
 
 
 #endif // _DEBUG
 
 
-	if (isInmune()) {
-		updateInmuneTick();
+		if (isInmune()) {
+			updateInmuneTick();
 
-		if (getInmuneTick() == MaxInmuneTick) {
-			resetInmuneTick();
-			inmune = false;
+			if (getInmuneTick() == MaxInmuneTick) {
+				resetInmuneTick();
+				setInmune(false);
+			}
 		}
-	}
 
 
-	World& map = *(World*)ptr;
+		World& map = *(World*)ptr;
 
 
 
-	if (!isCoolingDown() && isShooting()) {
+		if (!isCoolingDown() && isShooting()) {
 #ifdef _DEBUG
-		log("Current score is:" + std::to_string(this->getScoreCounter()->getActualScore()));
-		log("Shoot at [" + std::to_string(getX()) + "," + std::to_string(getY()) + "]");
+			log("Current score is:" + std::to_string(this->getScoreCounter()->getActualScore()));
+			log("Shoot at [" + std::to_string(getX()) + "," + std::to_string(getY()) + "]");
 #endif // _DEBUG
 
-		if (this->getHorizontalDir() == HorizontalDirection::Right && this->getX() + 1 < map.columna)
-			this->shoot(this->getX() + 1, this->getY(), HorizontalDirection::Right, this->getScoreCounter());
-		else if (this->getHorizontalDir() == HorizontalDirection::Left && getX() - 1 >= 0)
-			this->shoot(this->getX() - 1, this->getY(), HorizontalDirection::Left, this->getScoreCounter());
-		stopShooting();
-		startCoolDown();
-	}
-	else if (isCoolingDown()) {
-		updateShootingTicks();
-		if (getShootingTicks() == 0) {
-			stopCoolDown();
+			if (this->getHorizontalDir() == HorizontalDirection::Right && this->getX() + 1 < map.columna)
+				this->shoot(this->getX() + 1, this->getY(), HorizontalDirection::Right, this->getScoreCounter());
+			else if (this->getHorizontalDir() == HorizontalDirection::Left && getX() - 1 >= 0)
+				this->shoot(this->getX() - 1, this->getY(), HorizontalDirection::Left, this->getScoreCounter());
+			stopShooting();
+			startCoolDown();
 		}
-		
+		else if (isCoolingDown()) {
+			updateShootingTicks();
+			if (getShootingTicks() == 0) {
+				stopCoolDown();
+			}
+
+		}
 	}
 
 }
@@ -85,13 +87,9 @@ void Player::update(void * ptr)
 
 
 
-
-
-
-
 void Player::collition(Projectile * proy)
 {
-	if (proy->getX() == this->getX() && proy->getY() == this->getY()) {
+	if (proy->getX() == this->getX() && proy->getY() == this->getY() && !this->isInmune() && this->isAlive()) {
 		this->kill();
 #ifdef _DEBUG
 		log("Collision with projectile");
@@ -101,20 +99,63 @@ void Player::collition(Projectile * proy)
 
 void Player::setState(BeingState state)
 {
-	if (state == BeingState::Inmune) {
-		this->inmune = true;
+	if (isAlive()) {
+		if (state == BeingState::Shooting && !this->isCarried()) {
+			if (!isCoolingDown()) {
+				resetShootingTicks();
+				this->startShooting();
+			}
+
+		}
+
+		if (state == BeingState::Inmune) {
+			setInmune(true);
+		}
+		else
+			Being::setState(state);
 	}
-	else
-		Being::setState(state);						
 											
 
-	if(state == BeingState::Shooting ){
-		if (!isCoolingDown()) {
-			resetShootingTicks();
-			this->startShooting();
+
+}
+
+void Player::kill()
+{
+
+	if (!isInmune()) {
+
+#ifdef _DEBUG
+		log("Player Killed at [" + std::to_string(getX()) + ", " + std::to_string(getY()) + "]");
+#endif
+		Being::kill();
+
+		if (isAlive()) {
+			setInmune(true);
+			resetInmuneTick();
 		}
-		
 	}
+
+
+
+
+#ifdef _DEBUG
+	if (lives > 0) {
+		log("Player spawned at [" + std::to_string(getX()) + ", " + std::to_string(getY()) + "]");
+	}
+#endif
+}
+
+void Player::setInmune(bool set)
+{
+	inmune = set;
+
+#ifdef _DEBUG
+	if (inmune) {
+		log("Player is now inmune");
+	}
+	else
+		log("Player stopped being inmune");
+#endif
 }
 
 void Player::updateInmuneTick()
@@ -130,5 +171,14 @@ void Player::resetInmuneTick()
 uint16_t Player::getInmuneTick()
 {
 	return inmuneTick;
+}
+
+void Player::setCarry(bool set)
+{
+	this->carried = set;
+	if (carried) {
+		this->setState(BeingState::StillJump);
+		this->setState(BeingState::StillWalk);
+	}
 }
 

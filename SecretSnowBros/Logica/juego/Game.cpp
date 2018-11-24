@@ -57,8 +57,8 @@ void Game::selectNextMap()
 	}
 
 	currentMap->purge();
-	Enemies[0]->kill();
-	createSnowBall(Enemies[0], players[0]->getScoreCounter());
+	//Enemies[0]->kill();
+	//createSnowBall(Enemies[0], players[0]->getScoreCounter());
 	
 
 
