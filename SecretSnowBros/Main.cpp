@@ -21,7 +21,11 @@
 #define WindowImage ""
 std::vector<World> setUpMaps(std::string path, std::string ext);
 
-#define Block (100)
+#ifdef ShittyComputer
+	#define Block (50)
+#elif GreatComputer
+	#define Block (100)
+#endif
 
 #define Player1ID (123)
 
