@@ -22,24 +22,26 @@ SnowBall::SnowBall(Monster * monster, Score * PlayerScore)
 bool SnowBall::collision(Being * being)
 {
 
-	if (this->getX() == being->getX() && this->getY() == being->getY() && being->isAlive() && state == SnowBallState::Rolling) {
+	if (this->getX() == being->getX() && this->getY() == being->getY()  ) {
+		if (being->isAlive() && state == SnowBallState::Rolling) {
 
-		if (dynamic_cast<Monster*>(being)) {
-			this->enemyHits++;
-			being->kill();
-			for (int i = 1; i <= enemyHits; i++) {
-				*playerScore += i * 1000;
+			if (dynamic_cast<Monster*>(being)) {
+				this->enemyHits++;
+				being->kill();
+				for (int i = 1; i <= enemyHits; i++) {
+					*playerScore += i * 1000;
+				}
 			}
-		}
-		else if (dynamic_cast<Player *>(being)) {
-			auto player = ((Player*)being);
+			else if (dynamic_cast<Player *>(being)) {
+				auto player = ((Player*)being);
 
-			if (!player->isCarried() && !player->isInmune()) {
-				hijackedPlayers.push_back((Player*)being);
-				player->setCarry(true);
+				if (!player->isCarried() && !player->isInmune()) {
+					hijackedPlayers.push_back((Player*)being);
+					player->setCarry(true);
+				}
 			}
+			return true;
 		}
-		return true;
 	}
 
 	return false;
@@ -110,7 +112,7 @@ void SnowBall::update(void * ptr)
 		if (plyr->getState() == BeingState::Jumping) {
 			releasePlayer(plyr);
 			plyr->setCarry(false);
-			plyr->setState(BeingState::Inmune);
+			plyr->setInmune(true);
 		}
 		else {
 			plyr->setX(getX());
@@ -135,6 +137,7 @@ void SnowBall::setState(SnowBallState state) {
 	default:
 		break;
 	}
+	this->state = state;
 
 
 
