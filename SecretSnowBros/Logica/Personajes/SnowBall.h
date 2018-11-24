@@ -28,7 +28,13 @@ public:
 	virtual ~SnowBall();
 protected:
 	const uint16_t maxHits = 8;
+
+	void setState(SnowBallState state);
+
 private:
+
+	void releasePlayer(Player * player);
+
 	uint16_t wallHits,enemyHits;
 	SnowBallState state;
 	HorizontalDirection direction;

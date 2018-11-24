@@ -45,7 +45,14 @@ void Player::update(void * ptr)
 #endif // _DEBUG
 
 
+	if (isInmune()) {
+		updateInmuneTick();
 
+		if (getInmuneTick() == MaxInmuneTick) {
+			resetInmuneTick();
+			inmune = false;
+		}
+	}
 
 
 	World& map = *(World*)ptr;
@@ -94,8 +101,12 @@ void Player::collition(Projectile * proy)
 
 void Player::setState(BeingState state)
 {
-	Being::setState(state);						// Para no meter cosas que no van en Being, sobrecargo la funcion en player y le agrego la habilidad
-												// de disparar. Idealmente esto iria en shooter, pero shooter no tiene acceso a being
+	if (state == BeingState::Inmune) {
+		this->inmune = true;
+	}
+	else
+		Being::setState(state);						
+											
 
 	if(state == BeingState::Shooting ){
 		if (!isCoolingDown()) {
@@ -104,5 +115,20 @@ void Player::setState(BeingState state)
 		}
 		
 	}
+}
+
+void Player::updateInmuneTick()
+{
+	this->inmuneTick++;
+}
+
+void Player::resetInmuneTick()
+{
+	inmuneTick = 0;
+}
+
+uint16_t Player::getInmuneTick()
+{
+	return inmuneTick;
 }
 

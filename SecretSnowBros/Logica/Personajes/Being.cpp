@@ -8,6 +8,8 @@
 Being::Being(uint16_t maxJumpTick, uint16_t maxWalkTick,uint16_t maxFallTicks, uint16_t x, uint16_t y, uint16_t ID)
 	: Slider(x,maxWalkTick),Jumper(y,maxJumpTick,maxFallTicks), xStart(x),yStart(y),ID(ID)
 {
+	this->setState(BeingState::StillJump);
+	this->setState(BeingState::StillWalk);
 
 }
 
@@ -31,6 +33,7 @@ void Being::kill()
 
 void Being::setState(BeingState state)
 {
+	
 	if (state == BeingState::WalkingLeft ) {
 		Slider::setHorizontalState(HorizontalState::Moving);
 		setHorizontalDir(HorizontalDirection::Left);
@@ -54,7 +57,13 @@ void Being::setState(BeingState state)
 		Jumper::setVerticalState(VerticalState::Still);
 		Slider::setHorizontalState(HorizontalState::Still);
 	}
+	this->beingState = state;
 	
+}
+
+
+BeingState Being::getState() {
+	return beingState;
 }
 
 void Being::update(void * ptr)

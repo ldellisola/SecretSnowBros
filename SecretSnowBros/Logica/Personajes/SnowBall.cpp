@@ -10,8 +10,9 @@ SnowBall::SnowBall(Monster * monster, Score * PlayerScore)
 	:Slider(monster->getX(), WalkTicks),Jumper(monster->getY(), JumpTicks, FallTicks)
 {
 
-	this->state = SnowBallState::Rolling;
+	
 	this->setHorizontalDir(HorizontalDirection::Left);
+	setState(SnowBallState::Rolling);
 	this->capturedMonster = monster;
 	this->playerScore = PlayerScore;
 	this->enemyHits = 0;
@@ -21,7 +22,7 @@ SnowBall::SnowBall(Monster * monster, Score * PlayerScore)
 bool SnowBall::collision(Being * being)
 {
 
-	if (this->getX() == being->getX() && this->getY() == being->getY()) {
+	if (this->getX() == being->getX() && this->getY() == being->getY() && being->isAlive()) {
 
 		if (dynamic_cast<Monster*>(being)) {
 			this->enemyHits++;
@@ -29,15 +30,21 @@ bool SnowBall::collision(Being * being)
 			for (int i = 1; i <= enemyHits; i++) {
 				*playerScore += i * 1000;
 			}
-
-
 		}
-		else if (dynamic_cast<Player *>(being)) {
-			hijackedPlayers.push_back((Player*)being);
-			being->setState(BeingState::Carried);
+		else if (dynamic_cast<Player *>(being) && !((Player*)being)->isInmune()) {
+			bool alreadyHijacked = false;
+
+			for (int i = hijackedPlayers.size() - 1; i >= 0; i--)
+			{
+				if (hijackedPlayers[i] == being)
+					alreadyHijacked = true;
+			}
+			
+			if (!alreadyHijacked) {
+				hijackedPlayers.push_back((Player*)being);
+				being->setState(BeingState::Carried);
+			}
 		}
-
-
 		return true;
 	}
 
@@ -56,6 +63,9 @@ void SnowBall::update(void * ptr)
 		if (world.map[getY()][getX() - 1] == 'F') {
 			wallHits++;
 			this->setHorizontalDir(HorizontalDirection::Right);
+			if (getY() == 10) {
+				wallHits = 123;
+			}
 		}
 
 		break;
@@ -63,21 +73,14 @@ void SnowBall::update(void * ptr)
 		if (world.map[getY()][getX() + 1] == 'F') {
 			wallHits++;
 			this->setHorizontalDir(HorizontalDirection::Left);
+			if (getY() == 10) {
+				wallHits = 123;
+			}
 		}
 		break;
 
 	}
 
-
-
-
-	std::unique_ptr<char> row(new char[world.columna]);
-
-	for (int i = 0; i < world.columna; i++) {
-		row.get()[i] = world.map[getY()][i];
-	}
-
-	Slider::update(row.get());
 
 	std::unique_ptr<char> column(new char[world.fila]);
 
@@ -87,19 +90,59 @@ void SnowBall::update(void * ptr)
 
 	Jumper::update(column.get());
 
-	for (Player* plyr : hijackedPlayers) {
-		plyr->setX(getX());
-		plyr->setY(getY());
+	std::unique_ptr<char> row(new char[world.columna]);
+
+	for (int i = 0; i < world.columna; i++) {
+		row.get()[i] = world.map[getY()][i];
 	}
 
+	Slider::update(row.get());
+
+	for (Player* plyr : hijackedPlayers) {
+		if (plyr->getState() == BeingState::Jumping) {
+			releasePlayer(plyr);
+			plyr->setState(BeingState::Inmune);
+		}
+		else {
+			plyr->setX(getX());
+			plyr->setY(getY());
+		}
+	}
+}
+
+
+void SnowBall::setState(SnowBallState state) {
+
+	switch (state)
+	{
+	case SnowBallState::Carried:
+		break;
+	case SnowBallState::Rolling:
+		this->setHorizontalState(HorizontalState::Moving);
+		break;
+	case SnowBallState::Still:
+		this->setHorizontalState(HorizontalState::Still);
+		break;
+	default:
+		break;
+	}
 
 
 
 }
 
+void SnowBall::releasePlayer(Player * player)
+{
+	for (int i = (int)hijackedPlayers.size() - 1; i >= 0; i--)
+	{
+		if(hijackedPlayers[i] == player)
+			hijackedPlayers.erase(hijackedPlayers.begin() + i);
+	}
+}
+
 bool SnowBall::shouldDie()
 {
-	if (wallHits == maxHits)
+	if (wallHits >= maxHits)
 		return true;
 	else 
 		return false;

@@ -28,6 +28,8 @@ public:
 	
 	void setState(BeingState state);
 
+	bool isInmune() { return inmune; }
+
 #ifdef _DEBUG
 	void kill(){
 		log("Player Killed at [" + std::to_string(getX()) + ", " + std::to_string(getY()) + "]");
@@ -40,14 +42,18 @@ public:
 	}
 
 #endif
-
-
 	Score* getScoreCounter() { return &points; }
 
+	void updateInmuneTick();
+	void resetInmuneTick();
+	uint16_t getInmuneTick();
 
+	
 private:
 
-
+	bool inmune = false;
+	uint16_t inmuneTick = 0;
+	const uint16_t MaxInmuneTick = 60;
 
 	Score points;
 };

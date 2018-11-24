@@ -57,8 +57,8 @@ void Game::selectNextMap()
 	}
 
 	currentMap->purge();
-
-	//createSnowBall(Enemies[0], players[0]->getScoreCounter());
+	Enemies[0]->kill();
+	createSnowBall(Enemies[0], players[0]->getScoreCounter());
 	
 
 #if _DEBUG
@@ -118,23 +118,27 @@ int Game::dispatchEvent(GameEvent * ev)
 
 			// Actualizo la posicion de los malos
 			for (Monster  * monster : this->Enemies) {
-				monster->chooseAction(getmap());
-				monster->update(this->getmap());
-				for (Player* player : players) {
-					monster->collition(player);
-					std::vector<Projectile*> tempProj = player->getProjectiles();
-					for (Projectile* proj : tempProj)
-						monster->collition(proj);
+				if (monster->isAlive()) {
+					monster->chooseAction(getmap());
+					monster->update(this->getmap());
+					for (Player* player : players) {
+						monster->collition(player);
+						std::vector<Projectile*> tempProj = player->getProjectiles();
+						for (Projectile* proj : tempProj)
+							monster->collition(proj);
+					}
 				}
 			}
 
 			// Actualizo la posicion de todos mis chabones
 			for (Player * player : this->players) {
-				player->update(this->getmap());
+				if(player->isAlive())
+					player->update(this->getmap());
 				player->updateProjectiles(this->getmap());
 			}
 
 			for (SnowBall * snowball : snowballs) {
+
 				for (Monster * monster : this->Enemies)
 					snowball->collision(monster);
 				for (Player * player : this->players)
@@ -218,13 +222,12 @@ void Game::createSnowBall(Monster * monster, Score * playerScore)
 
 void Game::killSnowBalls()
 {
-	for (auto it = snowballs.begin(); it != snowballs.end(); it) {
-		if ((*it)->shouldDie()) {
-			SnowBall * temp = *it;
-			delete temp;
-			it = snowballs.erase(it);
+	for (int i = (int)snowballs.size() - 1; i >= 0; i--)
+	{
+		if (snowballs[i]->shouldDie()) {
+			delete snowballs[i];
+			snowballs.erase(snowballs.begin()+i);
 		}
-
 	}
 }
 

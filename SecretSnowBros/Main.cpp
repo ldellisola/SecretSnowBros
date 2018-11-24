@@ -10,6 +10,7 @@
 #include "MVC/WindowUpdater.h"
 #include "MVC/FattyLogger.h"
 #include "MVC/FireBallProjectile.h"
+#include "MVC/SnowBallObserver.h"
 #include "MVC/PlayerInfoObserver.h"
 
 #include "Logica/Personajes/Being.h"
@@ -19,13 +20,14 @@
 #define WindowTitle "SnowBros!"
 #define WindowImage ""
 
+#define Block (50)
 
 #define Player1ID (123)
 
 int main(void) {
 	Allw allegro(Allegro::InitMode::Full, Allegro::NoValue, Allegro::NoValue, 50);
 
-	AllegroWindow window(16 * 50, 12 * 50 +400, allegro.getEventQueue(), WindowTitle, WindowImage);
+	AllegroWindow window(16 * Block, 12 * Block +400, allegro.getEventQueue(), WindowTitle, WindowImage);
 	window.open();
 //	window.setFullScreen();
 	AllegroEventHandler eventHandler(allegro.getEventQueue());
@@ -47,7 +49,7 @@ int main(void) {
 
 	PlayerDrawer  playerDrawer("PlayerSprite.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
 	ProyectileDrawer projDrawer("ProjectileSprite.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
-	PlayerInfoObserver playerInfo("font.ttf", window.getWidth(), 400, 12 * 50);
+	PlayerInfoObserver playerInfo("font.ttf", window.getWidth(), 400, 12 * Block);
 	playerDrawer.loadObserver(playerInfo);
 	playerDrawer.loadObserver(projDrawer);
 
@@ -68,6 +70,10 @@ int main(void) {
 	FattyLogger fatlog;
 
 	snowbros.loadObserver(&fatlog);
+
+	SnowBallObserver snowBallObs("FrozenState4.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
+
+	snowbros.loadObserver(&snowBallObs);
 
 	WindowUpdater win(window);
 	snowbros.loadObserver(&win);

@@ -63,28 +63,31 @@ public:
 
 		for (Monster * enemy : enemies) {
 
-			if (dynamic_cast<GreenFatty*>(enemy)) {
-				GreenFatty * guy = dynamic_cast<GreenFatty*>(enemy);
+			if (enemy->isAlive()) {
 
-				greenFatty->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
-			}
-			else if (dynamic_cast<PurpleGuy*>(enemy)) {
-				PurpleGuy * guy = dynamic_cast<PurpleGuy*>(enemy);
+				if (dynamic_cast<GreenFatty*>(enemy)) {
+					GreenFatty * guy = dynamic_cast<GreenFatty*>(enemy);
 
-				purpleGuy->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
-			}
-			else if (dynamic_cast<CrazyGuy*>(enemy)) {
-				CrazyGuy * guy = dynamic_cast<CrazyGuy*> (enemy);
+					greenFatty->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+				}
+				else if (dynamic_cast<PurpleGuy*>(enemy)) {
+					PurpleGuy * guy = dynamic_cast<PurpleGuy*>(enemy);
 
-				crazyGuy->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
-			}
+					purpleGuy->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+				}
+				else if (dynamic_cast<CrazyGuy*>(enemy)) {
+					CrazyGuy * guy = dynamic_cast<CrazyGuy*> (enemy);
 
-			if (enemy->isFrozen()) {
-				frozenSprites[enemy->getFreezeState() - 1]->draw(enemy->getX() * BlockWidth, enemy->getY() * BlockHeight);
-			}
+					crazyGuy->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+				}
 
-			for (Observer * obs : observers) {
-				obs->draw(enemy);
+				if (enemy->isFrozen()) {
+					frozenSprites[enemy->getFreezeState() - 1]->draw(enemy->getX() * BlockWidth, enemy->getY() * BlockHeight);
+				}
+
+				for (Observer * obs : observers) {
+					obs->draw(enemy);
+				}
 			}
 
 		}
