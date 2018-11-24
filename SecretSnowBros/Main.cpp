@@ -20,10 +20,11 @@
 #define WindowTitle "SnowBros!"
 #define WindowImage ""
 std::vector<World> setUpMaps(std::string path, std::string ext);
+#undef ShittyComputer
 
 #ifdef ShittyComputer
 	#define Block (50)
-#elif GreatComputer
+#else
 	#define Block (100)
 #endif
 

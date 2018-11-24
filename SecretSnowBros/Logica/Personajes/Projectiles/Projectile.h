@@ -32,6 +32,10 @@ public:
 		return scoreboard;
 	}
 
+	uint16_t getDistanceFromStart() {
+		return (getX() - startX > 0 ? getX() - startX : startX - getX());
+	}
+
 	void addScore(uint16_t add) {
 		if(scoreboard != nullptr)
 			*scoreboard += add;

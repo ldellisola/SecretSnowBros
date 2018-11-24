@@ -19,6 +19,8 @@ public:
 
 	bool collision(Being * being);
 
+	bool collision(Projectile * proj);
+
 	void update(void * ptr);
 
 	bool shouldDie();

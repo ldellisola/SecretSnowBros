@@ -12,7 +12,7 @@ SnowBall::SnowBall(Monster * monster, Score * PlayerScore)
 
 	
 	this->setHorizontalDir(HorizontalDirection::Left);
-	setState(SnowBallState::Rolling);
+	setState(SnowBallState::Still);
 	this->capturedMonster = monster;
 	this->playerScore = PlayerScore;
 	this->enemyHits = 0;
@@ -22,7 +22,7 @@ SnowBall::SnowBall(Monster * monster, Score * PlayerScore)
 bool SnowBall::collision(Being * being)
 {
 
-	if (this->getX() == being->getX() && this->getY() == being->getY() && being->isAlive()) {
+	if (this->getX() == being->getX() && this->getY() == being->getY() && being->isAlive() && state == SnowBallState::Rolling) {
 
 		if (dynamic_cast<Monster*>(being)) {
 			this->enemyHits++;
@@ -43,6 +43,20 @@ bool SnowBall::collision(Being * being)
 	}
 
 	return false;
+}
+
+bool SnowBall::collision(Projectile * proj) {
+
+	if (proj->getX() == this->getX() && proj->getY() == this->getY()) {
+		if (proj->getDistanceFromStart() == 0) {
+			this->setState(SnowBallState::Rolling);
+			this->setHorizontalDir(proj->getHorizontalDir());
+			proj->kill();
+			return true;
+		}
+	}
+	return false;
+
 }
 
 void SnowBall::update(void * ptr)

@@ -154,8 +154,14 @@ int Game::dispatchEvent(GameEvent * ev)
 
 				for (Monster * monster : this->Enemies)
 					snowball->collision(monster);
-				for (Player * player : this->players)
+				for (Player * player : this->players) {
 					snowball->collision(player);
+					auto projs = player->getProjectiles();
+
+					for (Projectile * proj : projs) {
+						snowball->collision(proj);
+					}
+				}
 				snowball->update(getmap());
 
 			}
@@ -230,8 +236,9 @@ void Game::createCrazyGuy(uint32_t x, uint32_t y)
 
 void Game::createSnowBall(Monster * monster, Score * playerScore)
 {
-	monster->kill();
+	
 	this->snowballs.push_back(new SnowBall(monster, playerScore));
+	monster->kill();
 }
 
 void Game::killSnowBalls()
