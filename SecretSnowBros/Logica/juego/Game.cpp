@@ -13,7 +13,7 @@ Game::Game(uint32_t Player1ID, uint32_t Player2ID)
 
 Game::~Game()
 {
-	for (int i = (int) players.size() - 1; i >= 0; i--)
+	for (int i = (int)players.size() - 1; i >= 0; i--)
 	{
 		delete players[i];
 	}
@@ -30,7 +30,7 @@ Game::~Game()
 void Game::selectNextMap()
 {
 	int i = 0;
-	if(currentMap != nullptr)
+	if (currentMap != nullptr)
 		while (this->currentMap != &allMaps[i++]);
 
 	this->currentMap = &allMaps[i];
@@ -45,7 +45,7 @@ void Game::selectNextMap()
 
 			switch (currentMap->map[fil][col])
 			{
-			case 'T':	this->createPlayer(Player1ID,col, fil);		break;
+			case 'T':	this->createPlayer(Player1ID, col, fil);		break;
 			case 'N':	this->createPlayer(Player2ID, col, fil);	break;
 			case 'P':	this->createPurpleGuy(col, fil);			break;
 			case 'G':	this->createGreenFatty(col, fil);			break;
@@ -61,6 +61,7 @@ void Game::selectNextMap()
 	createSnowBall(Enemies[0], players[0]->getScoreCounter());
 	
 
+
 #if _DEBUG
 	log("Purged map number " + std::to_string(i));
 #endif
@@ -74,8 +75,8 @@ void Game::updateObservers(void * ptr)
 
 int Game::dispatchEvent(GameEvent * ev)
 {
-	if(ev != nullptr)
-		switch (ev->getEventType()) 
+	if (ev != nullptr)
+		switch (ev->getEventType())
 		{
 			break;
 		case GameEventType::Jump:
@@ -88,7 +89,7 @@ int Game::dispatchEvent(GameEvent * ev)
 		case GameEventType::Shoot:
 			for (Player * player : this->players)
 				if (player->getID() == ev->getID()) {
-					if(ev->isItStart())
+					if (ev->isItStart())
 						player->setState(BeingState::Shooting);
 				}
 			break;
@@ -135,6 +136,13 @@ int Game::dispatchEvent(GameEvent * ev)
 				if(player->isAlive())
 					player->update(this->getmap());
 				player->updateProjectiles(this->getmap());
+				for (Monster* mstr : this->Enemies) {
+					if (dynamic_cast<GreenFatty*>(mstr)) {
+						for (Projectile * proj : ((GreenFatty*)mstr)->getProjectiles())
+							player->collition(proj);
+					}
+
+				}
 			}
 
 			for (SnowBall * snowball : snowballs) {
@@ -150,14 +158,15 @@ int Game::dispatchEvent(GameEvent * ev)
 			killSnowBalls();
 
 
-			//if (this->checkIfMonstersAlive())
-			//{
-			//	// Paso al proximo nivel
-			//}
-			//if (this->checkIfPlayersAlive())
-			//{
-			//	// salgo del juego
-			//}
+			if (this->checkIfMonstersAlive())
+			{
+
+				// Paso al proximo nivel
+			}
+			if (this->checkIfPlayersAlive())
+			{
+			// salgo del juego
+			}
 
 			// Imprimo todo en en pantalla
 			this->updateObservers(this);
@@ -187,7 +196,7 @@ void Game::createPlayer(uint32_t id, uint32_t x, uint32_t y)
 
 void Game::createPurpleGuy(uint32_t x, uint32_t y)
 {
-	auto temp = new PurpleGuy(x,y,Enemies.size());
+	auto temp = new PurpleGuy(x, y, Enemies.size());
 	this->Enemies.push_back(temp);
 
 #if _DEBUG
@@ -207,7 +216,7 @@ void Game::createGreenFatty(uint32_t x, uint32_t y)
 
 void Game::createCrazyGuy(uint32_t x, uint32_t y)
 {
-	auto temp = new CrazyGuy(x, y,Enemies.size());	
+	auto temp = new CrazyGuy(x, y, Enemies.size());
 	this->Enemies.push_back(temp);
 
 #if _DEBUG
@@ -232,13 +241,13 @@ void Game::killSnowBalls()
 }
 
 
-std::vector <Player *>& Game::getPlayer() { 
+std::vector <Player *>& Game::getPlayer() {
 
-	return this->players; 
+	return this->players;
 }
 
-std::vector <Monster   *>& Game::getMonster() { 
-	return this->Enemies; 
+std::vector <Monster   *>& Game::getMonster() {
+	return this->Enemies;
 }
 
 std::vector<SnowBall*>& Game::getSnowballs()
@@ -265,16 +274,16 @@ void Game::loadMaps(std::vector<World> maps)
 #endif
 }
 
-World*  Game::getmap() { 
+World*  Game::getmap() {
 	currentMap->x.clear();
 	currentMap->y.clear();
 	for (Player* plyr : players) {
 		currentMap->x.push_back(plyr->getX());
 		currentMap->y.push_back(plyr->getY());
 	}
-	
 
-	return (this->currentMap); 
+
+	return (this->currentMap);
 }
 
 
@@ -282,9 +291,9 @@ World*  Game::getmap() {
 bool Game::checkIfPlayersAlive() {
 	for (int i = 0; i < this->players.size(); i++) {
 		if (this->Enemies[i]->isAlive()) {
-			#if _DEBUG
+#if _DEBUG
 			log("At least one player is alive");
-			#endif
+#endif
 			return true;								//Me fijo si alguno tiene vida	
 		}
 	}
@@ -314,20 +323,25 @@ bool Game::checkIfMonstersAlive() {
 }
 int Game::run(void * ptr)
 {
-	if (this->currentMap == nullptr)
-		this->selectNextMap();
 	int keep = 0;
-	do {
-
-		this->eventH->getEvent();
-		keep = this->dispatchEvent(eventH->returnEvent());
-		this->eventH->killEvent();
+	int mapCounter = 0;
+	bool alive = true;
+	while (mapCounter  !=this->allMaps.size() && (keep!=1) ) {//ESA ES LA NEGRADA, HAYQ UE DEFINIR VALORES DE SALIDA DE KEEP, ESE 1 DE AHI SERIA QUE PERDISTE NO GANASTE
+			this->selectNextMap();
+			mapCounter++;
 		
 
-	} while (!keep);
+		
+		
+		do {
+			this->eventH->getEvent();
+			keep = this->dispatchEvent(eventH->returnEvent());
+			this->eventH->killEvent();
 
-	this->currentMap = nullptr;
 
+		} while (!keep);
+
+	}
 
 	return 0;
 
@@ -338,26 +352,26 @@ void Game::loadEventHandler(EventHandler * eventH)
 {
 	this->eventH = eventH;
 
-	#if _DEBUG
+#if _DEBUG
 	log("Loaded event handler");
-	#endif
+#endif
 }
 
 void Game::loadObserver(Observer * obs)
 {
 	if (obs != nullptr) {
 		this->observers.push_back(obs);
-		#if _DEBUG
+#if _DEBUG
 		log("Loaded observer");
-		#endif
+#endif
 	}
 }
 
 void Game::loadPlayer(Player * player)
 {
 	this->players.push_back(player);
-	#if _DEBUG
+#if _DEBUG
 	log("Loaded player");
-	#endif
+#endif
 }
 

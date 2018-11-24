@@ -79,10 +79,6 @@ void Monster ::collition(Being * player)
 		auto temp = (Shooter<Projectile>*) this;
 
 		std::vector<Projectile*>& shoots = temp->getProjectiles();
-		
-		//for (Projectile * sht : shoots) {
-		//	player->collition(sht);
-		//}
 	}
 
 
