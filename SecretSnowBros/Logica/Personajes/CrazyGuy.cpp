@@ -17,8 +17,6 @@ CrazyGuy::CrazyGuy(uint32_t x, uint32_t y, uint32_t ID)
 
 {
 	this->lives = 1;
-
-
 }
 
 
@@ -50,9 +48,9 @@ void CrazyGuy::next() {
 		log("New state elected: Walking other Direction");
 #endif // _DEBUG
 		if (getHorizontalDir() == HorizontalDirection::Left) 
-			this->futureDirections.push(BeingState::WalkingLeft);
-		else if(getHorizontalDir() == HorizontalDirection::Right)
 			this->futureDirections.push(BeingState::WalkingRight);
+		else if(getHorizontalDir() == HorizontalDirection::Right)
+			this->futureDirections.push(BeingState::WalkingLeft);
 		this->futureDirections.push(BeingState::StillWalk);
 	}
 	else if (probs < 91) {

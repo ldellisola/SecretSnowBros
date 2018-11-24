@@ -1,10 +1,7 @@
 #pragma once
 #include "Monster.h"
-#include <utility>
-#include <list>
 #include<cstdlib>
 #include<ctime>
-
 #include <iostream>
 #include <vector>
 #include <string>
