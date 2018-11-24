@@ -176,7 +176,7 @@ int Game::dispatchEvent(GameEvent * ev)
 			}
 			if (this->checkIfPlayersAlive())
 			{
-				return (int)KeepReturn::PlayersDead;// salgo del juego //negrada
+				return (int)KeepReturn::PlayersDead;// salgo del juego 
 			}
 
 			// Imprimo todo en en pantalla
