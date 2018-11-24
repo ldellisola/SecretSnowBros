@@ -94,8 +94,8 @@ std::vector<World> setUpMaps(std::string path, std::string ext)
 {
 	std::vector<std::string> names(10, " ");
 	std::vector<World> maps;
-	for (int i = 0; i < 10; i++) {
-		names[i] = path + std::to_string(i + 1) + ext;
+	for (int i = 0; i < 9; i++) {
+		names[i] = path + std::to_string(i + 2) + ext;
 		World map(names[i]);
 		maps.push_back(map);
 	}

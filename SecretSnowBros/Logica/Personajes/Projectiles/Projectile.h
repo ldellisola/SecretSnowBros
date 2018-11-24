@@ -28,6 +28,9 @@ public:
 			return false;
 	
 	}
+	Score* getScore() {
+		return scoreboard;
+	}
 
 	void addScore(uint16_t add) {
 		if(scoreboard != nullptr)
