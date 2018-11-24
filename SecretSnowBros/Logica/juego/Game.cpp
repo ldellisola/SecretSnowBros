@@ -340,7 +340,6 @@ int Game::run(void * ptr)
 	currentMap = nullptr;
 	return 0;
 
-
 }
 
 void Game::loadEventHandler(EventHandler * eventH)
