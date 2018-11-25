@@ -39,6 +39,18 @@ void Game::selectNextMap()
 	log("Loaded map number " + std::to_string(i));
 #endif
 
+	for (Monster * monst : this->getMonster())
+		delete monst;
+	this->Enemies.clear();
+
+	for (Player * player : this->getPlayer())
+		delete player;
+	this->players.clear();
+
+	for (SnowBall* snowBall : getSnowballs())
+		delete snowBall;
+	this->snowballs.clear();
+
 
 	for (int fil = 0; fil < currentMap->fila; fil++) {
 		for (int col = 0; col < currentMap->columna; col++) {
@@ -57,8 +69,9 @@ void Game::selectNextMap()
 	}
 
 	currentMap->purge();
-	//Enemies[0]->kill();
-	//createSnowBall(Enemies[0], players[0]->getScoreCounter());
+	
+
+
 	
 
 
@@ -127,9 +140,7 @@ int Game::dispatchEvent(GameEvent * ev)
 						std::vector<Projectile*> tempProj = player->getProjectiles();
 						for (Projectile* proj : tempProj) {
 							monster->collition(proj);
-							if (monster->getFreezeState() == 4) {
-								createSnowBall(monster, proj->getScore());
-							}
+							createSnowBall(monster, proj->getScore());
 						}
 					}
 					
@@ -236,7 +247,7 @@ void Game::createCrazyGuy(uint32_t x, uint32_t y)
 
 void Game::createSnowBall(Monster * monster, Score * playerScore)
 {
-	if (monster->isAlive()) {
+	if (monster->isAlive()&& monster->getFreezeState() == 4) {
 		this->snowballs.push_back(new SnowBall(monster, playerScore));
 		monster->kill();
 	}
