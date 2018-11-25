@@ -23,7 +23,7 @@ std::vector<World> setUpMaps(std::string path, std::string ext);
 //#undef ShittyComputer
 
 #ifdef ShittyComputer
-	#define Block (100)
+	#define Block (50)
 #else
 	#define Block (100)
 #endif
