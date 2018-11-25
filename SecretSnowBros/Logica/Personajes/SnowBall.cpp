@@ -18,6 +18,7 @@ SnowBall::SnowBall(Monster * monster, Score * PlayerScore)
 	this->playerScore = PlayerScore;
 	this->enemyHits = 0;
 	this->wallHits = 0;
+	this->playerScore += 500;
 }
 
 bool SnowBall::collision(Being * being)
@@ -64,7 +65,8 @@ bool SnowBall::collision(Projectile * proj) {
 
 void SnowBall::update(void * ptr)
 {
-	updateFrozenTick();
+	if(state != SnowBallState::Rolling)
+		updateFrozenTick();
 
 	World& world = *(World *) ptr;
 
@@ -75,6 +77,10 @@ void SnowBall::update(void * ptr)
 		if (world.map[getY()][getX() - 1] == 'F') {
 			wallHits++;
 			this->setHorizontalDir(HorizontalDirection::Right);
+
+			for (Player * player : hijackedPlayers)
+				player->getScoreCounter()->update(200);
+
 			if (getY() == 10) {
 				wallHits = 123;
 			}
@@ -85,6 +91,9 @@ void SnowBall::update(void * ptr)
 		if (world.map[getY()][getX() + 1] == 'F') {
 			wallHits++;
 			this->setHorizontalDir(HorizontalDirection::Left);
+			for (Player * player : hijackedPlayers)
+				player->getScoreCounter()->update(200);
+
 			if (getY() == 10) {
 				wallHits = 123;
 			}
