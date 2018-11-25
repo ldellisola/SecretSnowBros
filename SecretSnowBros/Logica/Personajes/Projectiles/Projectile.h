@@ -47,12 +47,12 @@ public:
 			switch (getHorizontalDir())
 			{
 			case HorizontalDirection::Left:
-				if (map.map[y][getX()-1] == 'F') {
+				if (map.map[y][getX() - 1] == 'F' || map.map[y][getX()] == 'F') {
 					this->kill();
 				}
 				break;
 			case HorizontalDirection::Right:
-				if (map.map[y][getX()+1] == 'F') {
+				if (map.map[y][getX() + 1] == 'F' || map.map[y][getX()] == 'F') {
 					this->kill();
 				}
 				break;
