@@ -139,6 +139,16 @@ void Monster::update(void * ptr) {
 			unfreeze();
 			resetFreezeTick();
 		}
+		World& map = *(World *)ptr;
+		
+
+		std::unique_ptr<char> column(new char[map.fila]);
+
+		for (int i = 0; i < map.fila; i++) {
+			column.get()[i] = map.map[i][getX()];
+		}
+
+		Jumper::update(column.get());
 	}
 	else {
 		if (getHorizontalState() == HorizontalState::Still && getVerticalState() == VerticalState::Still) {
@@ -154,10 +164,11 @@ void Monster::update(void * ptr) {
 				futureDirections.pop();
 			}
 		}
-
-
 		Being::update(ptr);
 	}
+	
+		
+	
 
 	
 }
