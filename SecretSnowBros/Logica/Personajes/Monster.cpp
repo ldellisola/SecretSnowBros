@@ -131,7 +131,7 @@ uint16_t Monster::getPoints()
 }
 
 void Monster::update(void * ptr) {
-
+	World& map = *(World *)ptr;
 	if (isFrozen()) {
 		updateFreezeTick();
 
@@ -139,7 +139,7 @@ void Monster::update(void * ptr) {
 			unfreeze();
 			resetFreezeTick();
 		}
-		World& map = *(World *)ptr;
+	
 		
 
 		std::unique_ptr<char> column(new char[map.fila]);
@@ -153,8 +153,18 @@ void Monster::update(void * ptr) {
 	else {
 		if (getHorizontalState() == HorizontalState::Still && getVerticalState() == VerticalState::Still) {
 			if (!futureDirections.empty() && futureDirections.front() != BeingState::Shooting) {
+				if (this->getHorizontalDir() == HorizontalDirection::Left && futureDirections.front() == BeingState::WalkingLeft && map.map[this->getY()][this->getX() - 1] == 'F') {
+					setState(BeingState::WalkingRight);
+					futureDirections.pop();
+				}
+				else if (this->getHorizontalDir() == HorizontalDirection::Right && futureDirections.front() == BeingState::WalkingRight && map.map[this->getY()][this->getX() + 1] == 'F') {
+					setState(BeingState::WalkingLeft);
+					futureDirections.pop();
+				}
+				else {
 				setState(futureDirections.front());
 				futureDirections.pop();
+				}
 			}
 
 		}
@@ -164,6 +174,7 @@ void Monster::update(void * ptr) {
 				futureDirections.pop();
 			}
 		}
+
 		Being::update(ptr);
 	}
 	
