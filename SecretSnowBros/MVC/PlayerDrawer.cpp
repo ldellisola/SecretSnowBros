@@ -25,17 +25,19 @@ void PlayerDrawer::loadObserver(Observer & obs)
 
 void PlayerDrawer::draw(void * data)
 {
-	Player  * being = ((Game*)data)->getPlayer()[0];
 
-	if (being->isAlive()) {
-		if (being->getHorizontalDir() == HorizontalDirection::Right)
-			sprite.draw(being->getX() *BlockWidth, being->getY() * BlockHeight);
-		else
-			sprite.drawHorizontallyMirrored(being->getX() *BlockWidth, being->getY() * BlockHeight);
-	}
+	for (Player * being : ((Game*)data)->getPlayer()) {
 
-	for (Observer * obs : observers) {
-		obs->draw(being);
+		if (being->isAlive() && !being->isWaitingToRevive()) {
+			if (being->getHorizontalDir() == HorizontalDirection::Right)
+				sprite.draw(being->getX() *BlockWidth, being->getY() * BlockHeight);
+			else
+				sprite.drawHorizontallyMirrored(being->getX() *BlockWidth, being->getY() * BlockHeight);
+		}
+
+		for (Observer * obs : observers) {
+			obs->draw(being);
+		}
 	}
 
 

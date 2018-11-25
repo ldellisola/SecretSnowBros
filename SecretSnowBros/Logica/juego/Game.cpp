@@ -175,6 +175,8 @@ int Game::dispatchEvent(GameEvent * ev)
 			for (Player * player : this->players) {
 				if (player->isAlive())
 					player->update(this->getmap());
+				if (player->shouldRevive())
+					player->revive();
 				player->updateProjectiles(this->getmap());
 				for (Monster* mstr : this->Enemies) {
 					if (dynamic_cast<GreenFatty*>(mstr)) {
