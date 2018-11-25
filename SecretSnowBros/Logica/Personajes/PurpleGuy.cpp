@@ -81,8 +81,21 @@ void PurpleGuy::chase(World&  map_) {
 			this->futureDirections.push(BeingState::StillWalk);
 		}
 		else if (path[i] - path[i + 1] == 16) {
+
 			this->futureDirections.push(BeingState::Jumping);
-			this->futureDirections.push(BeingState::StillJump);
+			//this->futureDirections.push(BeingState::StillJump);
+			if ((i + 2 < path.size()) && path[i] - path[i + 2] == 32) {
+				path.erase(path.begin() + i + 1);
+				//if (path[i+1] - path[i + 2] == 1) {//uno para atras se movio
+				//	this->futureDirections.push(BeingState::WalkingLeft);
+
+				//	this->futureDirections.push(BeingState::StillWalk);
+				//}
+				//else if (path[i+1] - path[i + 2] == -1) {
+				//	this->futureDirections.push(BeingState::WalkingRight);
+				//	this->futureDirections.push(BeingState::StillWalk);
+				//}
+			}
 		}
 	}
 }
@@ -187,14 +200,16 @@ void PurpleGuy::makegraph(World map, adjacency_list_t& adjacency_list) {
 			}
 			else if (map.map[i][j] == 'F') {
 				//Siempre que este en piso ir para abajo, izq o derecha es peso infinito
-				adjacency_list[((i)*map.columna) + j].push_back(neighbor(((i)*map.columna) + j + 1, max_weight));//maximo peso 
-				adjacency_list[((i)*map.columna) + j].push_back(neighbor(((i + 1)*map.columna) + j, max_weight));//maximo peso
-				adjacency_list[((i)*map.columna) + j].push_back(neighbor(((i - 1)*map.columna) + j, max_weight));//maximo peso
-				if (map.map[i][j - 1] == 'E') {
-					adjacency_list[((i)*map.columna) + j].push_back(neighbor(((i)*map.columna) + j - 1, 1));//peso 1
+				adjacency_list[((i)*map.columna) + j].push_back(neighbor(((i)*map.columna) + j + 1, max_weight));//maximo peso  //derecha
+				adjacency_list[((i)*map.columna) + j].push_back(neighbor(((i + 1)*map.columna) + j, max_weight));//maximo peso//abajo
+				adjacency_list[((i)*map.columna) + j].push_back(neighbor(((i)*map.columna) + j - 1, max_weight));//maximo peso//izquierda
+				if (map.map[i-1][j] == 'E') {
+
+					adjacency_list[((i)*map.columna) + j].push_back(neighbor(((i - 1)*map.columna) + j, 1));//maximo peso //arriba
 				}
 				else {
-					adjacency_list[((i)*map.columna) + j].push_back(neighbor(((i)*map.columna) + j - 1, max_weight));//maximo peso
+
+					adjacency_list[((i)*map.columna) + j].push_back(neighbor(((i - 1)*map.columna) + j, max_weight));//maximo peso
 				}
 			}
 		}
