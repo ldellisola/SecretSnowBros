@@ -5,9 +5,10 @@
 #define JumpTicks (ms50* 24)	// 1200ms
 #define WalkTicks (ms50*4)	// 200ms
 #define FallTicks (ms50*6)	// 300ms
+#define FrozenTicks (ms50 *20 ) // 10 segundos 200
 
 SnowBall::SnowBall(Monster * monster, Score * PlayerScore)
-	:Slider(monster->getX(), WalkTicks),Jumper(monster->getY(), JumpTicks, FallTicks)
+	:Slider(monster->getX(), WalkTicks),Jumper(monster->getY(), JumpTicks, FallTicks),MaxFrozenTick(FrozenTicks)
 {
 
 	
@@ -63,6 +64,7 @@ bool SnowBall::collision(Projectile * proj) {
 
 void SnowBall::update(void * ptr)
 {
+	updateFrozenTick();
 
 	World& world = *(World *) ptr;
 
@@ -143,6 +145,21 @@ void SnowBall::setState(SnowBallState state) {
 
 }
 
+void SnowBall::updateFrozenTick()
+{
+	frozenTick++;
+}
+
+void SnowBall::resetFrozenTick()
+{
+	frozenTick = 0;
+}
+
+uint16_t SnowBall::getFrozenTick()
+{
+	return frozenTick;
+}
+
 void SnowBall::releasePlayer(Player * player)
 {
 	for (int i = (int)hijackedPlayers.size() - 1; i >= 0; i--)
@@ -158,6 +175,22 @@ bool SnowBall::shouldDie()
 		return true;
 	else 
 		return false;
+}
+
+bool SnowBall::shouldMelt()
+{
+	if (getFrozenTick() == MaxFrozenTick)
+		return true;
+	else
+		return false;
+}
+
+Monster * SnowBall::melt()
+{
+	capturedMonster->revive();
+	capturedMonster->setX(getX());
+	capturedMonster->setY(getY());
+	return this->capturedMonster;
 }
 
 SnowBall::~SnowBall ()

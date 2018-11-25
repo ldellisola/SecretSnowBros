@@ -33,6 +33,7 @@ public:
 	uint16_t getID() { return ID; }
 	bool isAlive() { return (lives > 0 ? true:false); }
 	virtual void kill();
+	virtual void revive();
 	virtual void setState(BeingState state);
 	virtual BeingState getState();
 	
