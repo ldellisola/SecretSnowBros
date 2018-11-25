@@ -87,7 +87,7 @@ void Monster ::collition(Being * player)
 
 void Monster::collition(Projectile * proy)
 {
-	if (proy->getX() == this->getX() && proy->getY() == this->getY() ) {
+	if (proy->getX() == this->getX() && proy->getY() == this->getY() && this->isAlive()) {
 		this->freeze();
 		proy->kill();
 		proy->addScore(getPoints());

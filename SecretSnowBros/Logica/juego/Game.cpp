@@ -236,9 +236,10 @@ void Game::createCrazyGuy(uint32_t x, uint32_t y)
 
 void Game::createSnowBall(Monster * monster, Score * playerScore)
 {
-	
-	this->snowballs.push_back(new SnowBall(monster, playerScore));
-	monster->kill();
+	if (monster->isAlive()) {
+		this->snowballs.push_back(new SnowBall(monster, playerScore));
+		monster->kill();
+	}
 }
 
 void Game::killSnowBalls()
