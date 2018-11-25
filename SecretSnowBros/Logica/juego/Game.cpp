@@ -43,7 +43,7 @@ void Game::selectNextMap()
 		delete monst;
 	this->Enemies.clear();
 
-	uint32_t player1lives = 3, player2lives = 3, player1score = 0, player2score = 0;
+
 	for (Player * player : this->getPlayer()) {
 		if (player->getID() == this->Player1ID) {
 			player1lives = player->getLives();

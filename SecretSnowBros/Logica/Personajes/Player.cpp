@@ -19,7 +19,6 @@ Player::Player(uint16_t x, uint16_t y, uint16_t ID)
 #endif // _DEBUG
 {
 	this->lives = 3;
-	//this->lives = 1000;//DEBUG
 }
 
 Player::~Player()
