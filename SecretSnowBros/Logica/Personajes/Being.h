@@ -49,9 +49,9 @@ protected:
 
 
 	BeingState beingState;
-
-private:
 	const uint16_t xStart;
 	const uint16_t yStart;
+
+
 
 };

@@ -18,8 +18,8 @@ Player::Player(uint16_t x, uint16_t y, uint16_t ID)
 	,Logger("Logs/Player ID -" + std::to_string(ID),true)
 #endif // _DEBUG
 {
-	this->lives = 3;
-	//this->lives = 1000;//DEBUG
+	//this->lives = 3;
+	this->lives = 999;//DEBUG
 }
 
 Player::~Player()
@@ -28,7 +28,7 @@ Player::~Player()
 
 void Player::update(void * ptr)
 {
-	if (!isCarried() && isAlive()) {
+	if (!isCarried() && isAlive() && !isWaitingToRevive()) {
 		Being::update(ptr);
 #ifdef _DEBUG
 		if (getVerticalState() == VerticalState::Jumping)
@@ -46,7 +46,7 @@ void Player::update(void * ptr)
 #endif // _DEBUG
 
 
-		if (isInmune()) {
+		if (isInmune() && !isWaitingToRevive()) {
 			updateInmuneTick();
 
 			if (getInmuneTick() == MaxInmuneTick) {
@@ -80,6 +80,9 @@ void Player::update(void * ptr)
 			}
 
 		}
+	}
+	else if (isWaitingToRevive()) {
+		updateReviveTick();
 	}
 
 }
@@ -129,9 +132,10 @@ void Player::kill()
 #endif
 		Being::kill();
 
+
+
 		if (isAlive()) {
-			setInmune(true);
-			resetInmuneTick();
+			this->startWaitingToRevive();
 		}
 	}
 
@@ -143,6 +147,31 @@ void Player::kill()
 		log("Player spawned at [" + std::to_string(getX()) + ", " + std::to_string(getY()) + "]");
 	}
 #endif
+}
+
+bool Player::shouldRevive()
+{
+	if (this->MaxReviveTick == getReviveTick()) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+void Player::revive()
+{
+	Jumper::setY(yStart);
+	Slider::setX(xStart);
+	Jumper::setVerticalState(VerticalState::Still);
+	Slider::setHorizontalState(HorizontalState::Still);
+	resetHorizontalTicks();
+	resetVerticalTicks();
+	setInmune(true);
+	stopWaitingToRevive();
+	resetReviveTick();
+
+	resetInmuneTick();
 }
 
 void Player::setInmune(bool set)
@@ -180,5 +209,46 @@ void Player::setCarry(bool set)
 		this->setState(BeingState::StillJump);
 		this->setState(BeingState::StillWalk);
 	}
+}
+
+bool Player::isWaitingToRevive()
+{
+	return waitingToRevive;
+}
+
+void Player::startWaitingToRevive()
+{
+	this->setInmune(true);
+	resetReviveTick();
+	waitingToRevive = true;
+#ifdef _DEBUG
+		log("Player is waiting to revive");
+
+#endif
+}
+
+void Player::stopWaitingToRevive()
+{
+	resetReviveTick();
+	waitingToRevive = false;
+#ifdef _DEBUG
+	log("Player is will revive now");
+
+#endif
+}
+
+void Player::updateReviveTick()
+{
+	this->reviveTick++;
+}
+
+void Player::resetReviveTick()
+{
+	reviveTick = 0;
+}
+
+uint16_t Player::getReviveTick()
+{
+	return reviveTick;
 }
 

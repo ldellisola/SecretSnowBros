@@ -35,6 +35,10 @@ public:
 
 	void kill();
 
+	bool shouldRevive();
+
+	void revive();
+
 
 
 	Score* getScoreCounter() { return &points; }
@@ -46,12 +50,30 @@ public:
 	bool isCarried() { return carried; }
 	void setCarry(bool set);
 	void setLives(uint16_t lives_) { this->lives = lives_; }
-private:
 
+	bool isWaitingToRevive();
+
+protected:
+
+	void startWaitingToRevive();
+	void stopWaitingToRevive();
+
+
+	void updateReviveTick();
+	void resetReviveTick();
+	uint16_t getReviveTick();
+
+
+private:
+	bool waitingToRevive = false;
 	bool inmune = false;
 	bool carried = false;
 	uint16_t inmuneTick = 0;
 	const uint16_t MaxInmuneTick = 60 * 3;
+
+	uint16_t reviveTick = 0;
+	const uint16_t MaxReviveTick = 3 * 100;
+
 
 	Score points;
 };

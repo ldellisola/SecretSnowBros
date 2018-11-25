@@ -21,8 +21,8 @@ void Being::kill()
 
 	if (lives > 0) {
 		lives--;
-		Jumper::setY(yStart);
-		Slider::setX(xStart);
+	}
+	else {
 		Jumper::setVerticalState(VerticalState::Still);
 		Slider::setHorizontalState(HorizontalState::Still);
 		resetHorizontalTicks();
