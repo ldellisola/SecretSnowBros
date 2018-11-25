@@ -45,7 +45,7 @@ public:
 	uint16_t getInmuneTick();
 	bool isCarried() { return carried; }
 	void setCarry(bool set);
-	
+	void setLives(uint16_t lives_) { this->lives = lives_; }
 private:
 
 	bool inmune = false;

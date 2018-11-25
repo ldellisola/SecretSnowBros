@@ -20,6 +20,7 @@ public:
 		this->actualScore += add;
 		return *this;
 	}
+	void setScore(uint16_t point) { this->actualScore = point; }
 
 
 

@@ -43,8 +43,18 @@ void Game::selectNextMap()
 		delete monst;
 	this->Enemies.clear();
 
-	for (Player * player : this->getPlayer())
+	uint32_t player1lives = 3, player2lives = 3, player1score = 0, player2score = 0;
+	for (Player * player : this->getPlayer()) {
+		if (player->getID() == this->Player1ID) {
+			player1lives = player->getLives();
+			player1score = player->getScoreCounter()->getActualScore();
+		}
+		else if (player->getID() == this->Player2ID) {
+			player2lives = player->getLives();
+			player2score = player->getScoreCounter()->getActualScore();
+		}
 		delete player;
+	}
 	this->players.clear();
 
 	for (SnowBall* snowBall : getSnowballs())
@@ -57,8 +67,22 @@ void Game::selectNextMap()
 
 			switch (currentMap->map[fil][col])
 			{
-			case 'T':	this->createPlayer(Player1ID, col, fil);		break;
-			case 'N':	this->createPlayer(Player2ID, col, fil);	break;
+			case 'T': {this->createPlayer(Player1ID, col, fil);
+				for (Player* plyr : this->getPlayer()) {
+					if (plyr->getID() == this->Player1ID) {
+						plyr->setLives(player1lives);
+						plyr->getScoreCounter()->setScore(player1score);
+					}
+				}
+			}		break;
+			case 'N': {this->createPlayer(Player2ID, col, fil);
+				for (Player* plyr : this->getPlayer()) {
+					if (plyr->getID() == this->Player2ID) {
+						plyr->setLives(player2lives);
+						plyr->getScoreCounter()->setScore(player1score);
+					}
+				}
+			}	break;
 			case 'P':	this->createPurpleGuy(col, fil);			break;
 			case 'G':	this->createGreenFatty(col, fil);			break;
 			case 'C':	this->createCrazyGuy(col, fil);				break;
@@ -69,10 +93,10 @@ void Game::selectNextMap()
 	}
 
 	currentMap->purge();
-	
 
 
-	
+
+
 
 
 #if _DEBUG
@@ -131,7 +155,7 @@ int Game::dispatchEvent(GameEvent * ev)
 		case GameEventType::Timer:
 
 			// Actualizo la posicion de los malos
-			for (Monster  * monster : this->Enemies) {
+			for (Monster * monster : this->Enemies) {
 				if (monster->isAlive()) {
 					monster->chooseAction(getmap());
 					monster->update(this->getmap());
@@ -143,13 +167,13 @@ int Game::dispatchEvent(GameEvent * ev)
 							createSnowBall(monster, proj->getScore());
 						}
 					}
-					
+
 				}
 			}
 
 			// Actualizo la posicion de todos mis chabones
 			for (Player * player : this->players) {
-				if(player->isAlive())
+				if (player->isAlive())
 					player->update(this->getmap());
 				player->updateProjectiles(this->getmap());
 				for (Monster* mstr : this->Enemies) {
@@ -195,7 +219,7 @@ int Game::dispatchEvent(GameEvent * ev)
 			break;
 
 		case GameEventType::Exit:
-			return (int)KeepReturn::Exit;				
+			return (int)KeepReturn::Exit;
 
 
 		default:
@@ -247,7 +271,7 @@ void Game::createCrazyGuy(uint32_t x, uint32_t y)
 
 void Game::createSnowBall(Monster * monster, Score * playerScore)
 {
-	if (monster->isAlive()&& monster->getFreezeState() == 4) {
+	if (monster->isAlive() && monster->getFreezeState() == 4) {
 		this->snowballs.push_back(new SnowBall(monster, playerScore));
 		monster->kill();
 	}
@@ -259,7 +283,7 @@ void Game::killSnowBalls()
 	{
 		if (snowballs[i]->shouldDie()) {
 			delete snowballs[i];
-			snowballs.erase(snowballs.begin()+i);
+			snowballs.erase(snowballs.begin() + i);
 		}
 		else if (snowballs[i]->shouldMelt()) {
 			snowballs[i]->melt();
@@ -357,10 +381,10 @@ int Game::run(void * ptr)
 	int keep = (int)KeepReturn::Start;
 	int mapCounter = 0;
 	bool alive = true;
-	while (mapCounter  !=this->allMaps.size() && (keep!= (int)KeepReturn::Exit) && (keep != (int)KeepReturn::PlayersDead)) {//ESA ES LA NEGRADA, HAYQ UE DEFINIR VALORES DE SALIDA DE KEEP, ESE 1 DE AHI SERIA QUE PERDISTE NO GANASTE
-			this->selectNextMap();
-			mapCounter++;
-			keep = (int)KeepReturn::Start;
+	while (mapCounter != this->allMaps.size() && (keep != (int)KeepReturn::Exit) && (keep != (int)KeepReturn::PlayersDead)) {//ESA ES LA NEGRADA, HAYQ UE DEFINIR VALORES DE SALIDA DE KEEP, ESE 1 DE AHI SERIA QUE PERDISTE NO GANASTE
+		this->selectNextMap();
+		mapCounter++;
+		keep = (int)KeepReturn::Start;
 		do {
 			this->eventH->getEvent();
 			keep = this->dispatchEvent(eventH->returnEvent());
