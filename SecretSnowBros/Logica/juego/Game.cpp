@@ -285,6 +285,11 @@ void Game::killSnowBalls()
 			delete snowballs[i];
 			snowballs.erase(snowballs.begin() + i);
 		}
+		else if (snowballs[i]->shouldMelt()) {
+			snowballs[i]->melt();
+			delete snowballs[i];
+			snowballs.erase(snowballs.begin() + i);
+		}
 	}
 }
 

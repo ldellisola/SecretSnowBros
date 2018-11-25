@@ -25,6 +25,10 @@ public:
 
 	bool shouldDie();
 
+	bool shouldMelt();
+
+	Monster * melt();
+
 
 
 	virtual ~SnowBall();
@@ -32,6 +36,10 @@ protected:
 	const uint16_t maxHits = 8;
 
 	void setState(SnowBallState state);
+
+	void updateFrozenTick();
+	void resetFrozenTick();
+	uint16_t getFrozenTick();
 
 private:
 
@@ -44,5 +52,8 @@ private:
 	Score * playerScore = nullptr;
 
 	std::vector<Player *> hijackedPlayers;
+
+	uint16_t frozenTick;
+	const uint16_t MaxFrozenTick;
 };
 

@@ -30,6 +30,11 @@ void Being::kill()
 	}
 }
 
+void Being::revive()
+{
+	this->lives = 1;
+}
+
 
 void Being::setState(BeingState state)
 {
