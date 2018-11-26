@@ -75,13 +75,6 @@ void Being::update(void * ptr)
 	
 
 
-	std::unique_ptr<char> column(new char[map.fila]);
-
-	for (int i = 0; i < map.fila; i++) {
-		column.get()[i] = map.map[i][getX()];
-	}
-
-	Jumper::update(column.get());
 
 	std::unique_ptr<char> row(new char[map.columna]);
 
@@ -91,6 +84,15 @@ void Being::update(void * ptr)
 
 	Slider::update(row.get());
 	
+
+	std::unique_ptr<char> column(new char[map.fila]);
+
+	for (int i = 0; i < map.fila; i++) {
+		column.get()[i] = map.map[i][getX()];
+	}
+
+	Jumper::update(column.get());
+
 }
 
 

@@ -10,7 +10,6 @@
 SnowBall::SnowBall(Monster * monster, Score * PlayerScore)
 	:Slider(monster->getX(), WalkTicks),Jumper(monster->getY(), JumpTicks, FallTicks),MaxFrozenTick(FrozenTicks)
 {
-
 	
 	this->setHorizontalDir(HorizontalDirection::Left);
 	setState(SnowBallState::Still);
@@ -60,7 +59,6 @@ bool SnowBall::collision(Projectile * proj) {
 		}
 	}
 	return false;
-
 }
 
 void SnowBall::update(void * ptr)

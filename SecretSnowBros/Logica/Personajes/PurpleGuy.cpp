@@ -5,13 +5,15 @@
 
 #define JumpTicks (ms50* 24)	// 1200ms
 #define WalkTicks (ms50*6)	// 300ms
+//#define WalkTicks (17)	// 270ms
+
 #define FallTick (ms50*6)	// 300ms
 #define StillTicks (ms50*6)	// 300ms
 
 #define PointsAwarded (10)
 
 PurpleGuy::PurpleGuy(uint32_t x, uint32_t y, uint32_t ID )
-	:Monster(JumpTicks,WalkTicks,StillTicks, FallTick,x,y,ID, PointsAwarded)
+	:Monster(JumpTicks, WalkTicks,StillTicks, FallTick,x,y,ID, PointsAwarded)//Mirar negrada del año
 {
 	this->adjacency_list.reserve(12*16);
 	 this->lives = 1; 
@@ -81,8 +83,25 @@ void PurpleGuy::chase(World&  map_) {
 			this->futureDirections.push(BeingState::StillWalk);
 		}
 		else if (path[i] - path[i + 1] == 16) {
+
 			this->futureDirections.push(BeingState::Jumping);
+
+			if ((i + 2 < path.size()) && path[i] - path[i + 2] == 32) {
+				path.erase(path.begin() + i + 1);
+				if (path[i+1] - path[i + 2] == 1) {//uno para atras se movio
+					this->futureDirections.push(BeingState::WalkingLeft);
+					path.erase(path.begin() + i + 1);
+				}
+				else if (path[i+1] - path[i + 2] == -1) {
+					this->futureDirections.push(BeingState::WalkingRight);
+					path.erase(path.begin() + i + 1);
+				}
+			}
 			this->futureDirections.push(BeingState::StillJump);
+		}
+		else if (path[i] - path[i + 1] == -16) {
+			this->futureDirections.push(BeingState::StillJump);
+			this->futureDirections.push(BeingState::StillWalk);
 		}
 	}
 }
@@ -187,14 +206,16 @@ void PurpleGuy::makegraph(World map, adjacency_list_t& adjacency_list) {
 			}
 			else if (map.map[i][j] == 'F') {
 				//Siempre que este en piso ir para abajo, izq o derecha es peso infinito
-				adjacency_list[((i)*map.columna) + j].push_back(neighbor(((i)*map.columna) + j + 1, max_weight));//maximo peso 
-				adjacency_list[((i)*map.columna) + j].push_back(neighbor(((i + 1)*map.columna) + j, max_weight));//maximo peso
-				adjacency_list[((i)*map.columna) + j].push_back(neighbor(((i - 1)*map.columna) + j, max_weight));//maximo peso
-				if (map.map[i][j - 1] == 'E') {
-					adjacency_list[((i)*map.columna) + j].push_back(neighbor(((i)*map.columna) + j - 1, 1));//peso 1
+				adjacency_list[((i)*map.columna) + j].push_back(neighbor(((i)*map.columna) + j + 1, max_weight));//maximo peso  //derecha
+				adjacency_list[((i)*map.columna) + j].push_back(neighbor(((i + 1)*map.columna) + j, max_weight));//maximo peso//abajo
+				adjacency_list[((i)*map.columna) + j].push_back(neighbor(((i)*map.columna) + j - 1, max_weight));//maximo peso//izquierda
+				if (map.map[i-1][j] == 'E') {
+
+					adjacency_list[((i)*map.columna) + j].push_back(neighbor(((i - 1)*map.columna) + j, 1));//maximo peso //arriba
 				}
 				else {
-					adjacency_list[((i)*map.columna) + j].push_back(neighbor(((i)*map.columna) + j - 1, max_weight));//maximo peso
+
+					adjacency_list[((i)*map.columna) + j].push_back(neighbor(((i - 1)*map.columna) + j, max_weight));//maximo peso
 				}
 			}
 		}
