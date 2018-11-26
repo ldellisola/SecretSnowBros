@@ -12,6 +12,8 @@
 
 #endif
 
+class SnowBall;
+
 class Player :
 	public Being, public Shooter<SnowProjectile>
 #ifdef _DEBUG
@@ -73,6 +75,8 @@ private:
 
 	uint16_t reviveTick = 0;
 	const uint16_t MaxReviveTick = 3 * 100;
+
+
 
 
 	Score points;
