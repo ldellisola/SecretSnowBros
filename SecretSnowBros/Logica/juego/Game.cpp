@@ -243,7 +243,7 @@ void Game::createPlayer(uint32_t id, uint32_t x, uint32_t y)
 
 void Game::createPurpleGuy(uint32_t x, uint32_t y)
 {
-	auto temp = new PurpleGuy(x, y, Enemies.size());
+	auto temp = new PurpleGuy(x, y,(uint32_t) Enemies.size());
 	this->Enemies.push_back(temp);
 
 #if _DEBUG
@@ -253,7 +253,7 @@ void Game::createPurpleGuy(uint32_t x, uint32_t y)
 
 void Game::createGreenFatty(uint32_t x, uint32_t y)
 {
-	auto temp = new GreenFatty(x, y, Enemies.size());
+	auto temp = new GreenFatty(x, y, (uint32_t)Enemies.size());
 	this->Enemies.push_back(temp);
 
 #if _DEBUG
@@ -263,7 +263,7 @@ void Game::createGreenFatty(uint32_t x, uint32_t y)
 
 void Game::createCrazyGuy(uint32_t x, uint32_t y)
 {
-	auto temp = new CrazyGuy(x, y, Enemies.size());
+	auto temp = new CrazyGuy(x, y, (uint32_t)Enemies.size());
 	this->Enemies.push_back(temp);
 
 #if _DEBUG
