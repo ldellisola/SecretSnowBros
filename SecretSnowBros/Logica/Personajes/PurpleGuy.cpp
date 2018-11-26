@@ -167,11 +167,12 @@ void PurpleGuy::makegraph(World map, adjacency_list_t& adjacency_list) {
 	-Si hay dos arriba, peso para arriba infinito, uno solo, 1
 	-Si estoy en el aire y dos para abajo no hay piso, distancia par arriba infinito.
 	-Si estoy en un bloque y arriba es piso, distancia infinito
+	Si el de abajo es aire y arriba es piso entonces infinito arriba
 	*/
 	for (int i = 1; i < (map.fila - 1); i++) {
 		for (int j = 1; j <= (map.columna - 1); j++) {
 			if (map.map[i][j] == 'E') {//Si estoy en aire
-				if (((map.map[i - 1][j] == 'F') && (((i - 2) <= 0) || (map.map[i - 2][j] == 'F'))) || (((i + 2)<map.fila) && (map.map[i + 2][j] == 'E') && (map.map[i + 1][j] == 'E'))) { //Y el de arriba es la primer fila o dos arriba hay piso, O tambien que dos abajo haya piso
+				if (((map.map[i - 1][j] == 'F') && (((i - 2) <= 0) || (map.map[i - 2][j] == 'F') || (map.map[i+1][j]=='E') )) || (((i + 2)<map.fila) && (map.map[i + 2][j] == 'E') && (map.map[i + 1][j] == 'E'))) { //Y el de arriba es la primer fila o dos arriba hay piso, O tambien que dos abajo haya piso
 
 					adjacency_list[((i)*map.columna) + j].push_back(neighbor(((i - 1)*map.columna) + j, max_weight));//maximo peso
 				}
