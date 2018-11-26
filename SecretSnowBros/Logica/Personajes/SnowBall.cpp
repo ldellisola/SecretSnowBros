@@ -120,8 +120,7 @@ void SnowBall::update(void * ptr)
 	for (Player* plyr : hijackedPlayers) {
 		if (plyr->getState() == BeingState::Jumping) {
 			releasePlayer(plyr);
-			plyr->setCarry(false);
-			plyr->setInmune(true);
+
 		}
 		else {
 			plyr->setX(getX());
@@ -169,17 +168,25 @@ uint16_t SnowBall::getFrozenTick()
 
 void SnowBall::releasePlayer(Player * player)
 {
+	player->setCarry(false);
+	player->setInmune(true);
+
 	for (int i = (int)hijackedPlayers.size() - 1; i >= 0; i--)
 	{
 		if(hijackedPlayers[i] == player)
 			hijackedPlayers.erase(hijackedPlayers.begin() + i);
 	}
+
+
 }
 
 bool SnowBall::shouldDie()
 {
-	if (wallHits >= maxHits)
+	if (wallHits >= maxHits) {
+		for (Player * player : hijackedPlayers) 
+			releasePlayer(player);
 		return true;
+	}
 	else 
 		return false;
 }
