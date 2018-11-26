@@ -1,7 +1,6 @@
 #include <AllwInit/Allw.h>
 #include <AllwBasics/AllegroWindow.h>
 #include <AllwBasics/AllegroEvent.h>
-
 #include "MVC/AllegroController.h"
 #include "MVC/StageObserver.h"
 #include "MVC/PlayerDrawer.h"
@@ -35,7 +34,7 @@ int main(void) {
 
 	AllegroWindow window(16 * Block, 12 * Block +400, allegro.getEventQueue(), WindowTitle, WindowImage);
 	window.open();
-	//	window.setFullScreen();
+	//window.setFullScreen();
 	AllegroEventHandler eventHandler(allegro.getEventQueue());
 
 
@@ -59,7 +58,6 @@ int main(void) {
 	playerDrawer.loadObserver(playerInfo);
 	playerDrawer.loadObserver(projDrawer);
 
-
 	snowbros.loadObserver(&playerDrawer);
 
 	EnemyDrawer enemyDrawer(window.getWidth() / 16, (window.getHeight() - 400) / 12);
@@ -68,7 +66,7 @@ int main(void) {
 	enemyDrawer.loadPurpleGuySprite("PurpleGuySprite.png");
 	enemyDrawer.loadFrozenSprites({ "FrozenState1.png","FrozenState2.png","FrozenState3.png","FrozenState4.png" });
 
-	FireBallProjectile test("ProjectileSprite.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
+	FireBallProjectile test("ProjectileSprite2.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
 	enemyDrawer.loadObserver(test);
 
 	snowbros.loadObserver(&enemyDrawer);

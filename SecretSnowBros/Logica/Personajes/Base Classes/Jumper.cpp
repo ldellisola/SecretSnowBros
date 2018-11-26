@@ -1,9 +1,6 @@
 #include "Jumper.h"
 
 
-
-
-
 Jumper::Jumper(uint16_t y, uint16_t maxJumpTicks, uint16_t maxFallTicks)
 	:MaxFallingTicks(maxFallTicks),MaxJumpingTicks(maxJumpTicks)
 {
@@ -12,8 +9,7 @@ Jumper::Jumper(uint16_t y, uint16_t maxJumpTicks, uint16_t maxFallTicks)
 	this->setY(y);
 }
 
-Jumper::~Jumper()
-{
+Jumper::~Jumper(){
 }
 
 void Jumper::update(void * ptr)
@@ -96,17 +92,8 @@ void Jumper::setVerticalState(VerticalState state)
 	}
 }
 
-VerticalState Jumper::getVerticalState()
-{
-	return verticalState;
-}
+VerticalState Jumper::getVerticalState() {return verticalState;}
 
-void Jumper::setY(uint16_t y)
-{
-	this->y = y;
-}
+void Jumper::setY(uint16_t y) {this->y = y;}
 
-uint16_t Jumper::getY()
-{
-	return y;
-}
+uint16_t Jumper::getY() {return y;}

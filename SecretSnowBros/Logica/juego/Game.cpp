@@ -336,8 +336,6 @@ World*  Game::getmap() {
 		currentMap->x.push_back(plyr->getX());
 		currentMap->y.push_back(plyr->getY());
 	}
-
-
 	return (this->currentMap);
 }
 

@@ -4,8 +4,8 @@
 #define ms50 (3)
 
 #define JumpTicks (ms50* 24)	// 1200ms
-//#define WalkTicks (ms50*6)	// 300ms
-#define WalkTicks (16)	// 270ms
+#define WalkTicks (ms50*6)	// 300ms
+//#define WalkTicks (17)	// 270ms
 
 #define FallTick (ms50*6)	// 300ms
 #define StillTicks (ms50*6)	// 300ms
@@ -85,10 +85,19 @@ void PurpleGuy::chase(World&  map_) {
 		else if (path[i] - path[i + 1] == 16) {
 
 			this->futureDirections.push(BeingState::Jumping);
-			this->futureDirections.push(BeingState::StillJump);
+
 			if ((i + 2 < path.size()) && path[i] - path[i + 2] == 32) {
 				path.erase(path.begin() + i + 1);
+				if (path[i+1] - path[i + 2] == 1) {//uno para atras se movio
+					this->futureDirections.push(BeingState::WalkingLeft);
+					path.erase(path.begin() + i + 1);
+				}
+				else if (path[i+1] - path[i + 2] == -1) {
+					this->futureDirections.push(BeingState::WalkingRight);
+					path.erase(path.begin() + i + 1);
+				}
 			}
+			this->futureDirections.push(BeingState::StillJump);
 		}
 		else if (path[i] - path[i + 1] == -16) {
 			this->futureDirections.push(BeingState::StillJump);
