@@ -18,7 +18,8 @@
 
 #define WindowTitle "SnowBros!"
 #define WindowImage ""
-std::vector<World> setUpMaps(std::string path, std::string ext);
+std::vector<std::string> getNames(std::string path, std::string ext, int quantinty);
+std::vector<World> stringtoworld(std::vector<std::string> files);
 //#undef ShittyComputer
 
 #ifdef ShittyComputer
@@ -52,8 +53,14 @@ int main(void) {
 
 
 	PlayerDrawer  playerDrawer(window.getWidth() / 16, (window.getHeight() - 400) / 12);
-	playerDrawer.loadPlayerSprite({"Images/PlayerSprite.png","Images/PlayerSprite2.png","Images/PlayerSprite3.png","Images/PlayerSprite4.png","Images/PlayerSprite5.png","Images/PlayerSprite6.png","Images/PlayerSprite7.png","Images/PlayerSprite8.png","Images/PlayerSprite9.png","Images/PlayerSprite10.png","Images/PlayerSprite11.png","Images/PlayerSprite12.png" });
-	ProyectileDrawer projDrawer("Images/ProjectileSprite.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
+
+	std::vector<std::string> a = getNames("Images/Player/Normal/PS", ".png", 12);
+	std::vector<std::string> b = getNames("Images/Player/Golden/PS", ".png", 12);
+	a.insert(std::end(a), std::begin(b), std::end(b));
+	playerDrawer.loadPlayerSprite(a);
+
+
+	ProyectileDrawer projDrawer("Images/Projectiles/IceProj.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
 	PlayerInfoObserver playerInfo("font.ttf", window.getWidth(), 400, 12 * Block);
 	playerDrawer.loadObserver(playerInfo);
 	playerDrawer.loadObserver(projDrawer);
@@ -61,12 +68,12 @@ int main(void) {
 	snowbros.loadObserver(&playerDrawer);
 
 	EnemyDrawer enemyDrawer(window.getWidth() / 16, (window.getHeight() - 400) / 12);
-	enemyDrawer.loadCrazyGuySprite({ "Images/CrazyGuySprite.png" ,"Images/CrazyGuySprite2.png" , "Images/CrazyGuySprite3.png" , "Images/CrazyGuySprite4.png" ,"Images/CrazyGuySprite5.png" ,"Images/CrazyGuySprite6.png","Images/CrazyGuySprite7.png","Images/CrazyGuySprite8.png","Images/CrazyGuySprite9.png" });
-	enemyDrawer.loadGreenFattySprite({ "Images/GreenFattySprite.png","Images/GreenFattySprite2.png","Images/GreenFattySprite3.png","Images/GreenFattySprite4.png","Images/GreenFattySprite5.png","Images/GreenFattySprite6.png","Images/GreenFattySprite7.png","Images/GreenFattySprite8.png","Images/GreenFattySprite9.png","Images/GreenFattySprite10.png","Images/GreenFattySprite11.png","Images/GreenFattySprite12.png" });
-	enemyDrawer.loadPurpleGuySprite({ "Images/PurpleGuySprite.png","Images/PurpleGuySprite2.png","Images/PurpleGuySprite3.png","Images/PurpleGuySprite4.png","Images/PurpleGuySprite5.png","Images/PurpleGuySprite6.png","Images/PurpleGuySprite7.png","Images/PurpleGuySprite8.png","Images/PurpleGuySprite9.png" });
-	enemyDrawer.loadFrozenSprites({ "Images/FrozenState1.png","Images/FrozenState2.png","Images/FrozenState3.png","Images/FrozenState4.png" });
+	enemyDrawer.loadCrazyGuySprite(getNames("Images/CrazyGuy/CGS", ".png", 9) );
+	enemyDrawer.loadGreenFattySprite(getNames("Images/GreenFatty/GFS", ".png", 12));
+	enemyDrawer.loadPurpleGuySprite(getNames("Images/PurpleGuy/PGS", ".png", 9));
+	enemyDrawer.loadFrozenSprites(getNames("Images/Frozen/FSS", ".png", 4));
 
-	FireBallProjectile test("Images/ProjectileSprite2.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
+	FireBallProjectile test("Images/Projectiles/FireProj.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
 	enemyDrawer.loadObserver(test);
 
 	snowbros.loadObserver(&enemyDrawer);
@@ -75,27 +82,35 @@ int main(void) {
 
 	snowbros.loadObserver(&fatlog);
 
-	SnowBallObserver snowBallObs("Images/FrozenState4.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
+	SnowBallObserver snowBallObs("Images/Frozen/FSS4.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
 
 	snowbros.loadObserver(&snowBallObs);
 
 	WindowUpdater win(window);
 	snowbros.loadObserver(&win);
 	
-	snowbros.loadMaps(setUpMaps("map",".csv"));
+	snowbros.loadMaps(stringtoworld(getNames("map",".csv",10)));
 	snowbros.run(nullptr);
 
 	return 0;
 }
 
 
-std::vector<World> setUpMaps(std::string path, std::string ext)
+std::vector<std::string> getNames(std::string path, std::string ext ,int quantinty)
 {
-	std::vector<std::string> names(10, " ");
+	std::vector<std::string> names(quantinty, " ");
+	std::vector<World> maps;
+	for (int i = 0; i < quantinty; i++) {
+		names[i] = path + std::to_string(i + 1) + ext;
+
+	}
+	return names;
+}
+
+std::vector<World> stringtoworld(std::vector<std::string> files) {
 	std::vector<World> maps;
 	for (int i = 0; i < 10; i++) {
-		names[i] = path + std::to_string(i + 1) + ext;
-		World map(names[i]);
+		World map(files[i]);
 		maps.push_back(map);
 	}
 	return maps;

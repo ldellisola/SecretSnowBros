@@ -32,10 +32,10 @@ void CrazyGuy::chooseAction(void * ptr)
 }
 void CrazyGuy::next() {
 	uint16_t probs = rand()%100;
-	if (probs < 100) {
-		this->futureDirections.push(BeingState::Waiting);
-	}
-	else if (probs < 75) {
+	//if (probs < 100) {
+	//	this->futureDirections.push(BeingState::Waiting);//debug
+	//}
+	/*else */if (probs < 75) {
 #ifdef _DEBUG
 		log("New state elected: Walking Same Direction");
 #endif // _DEBUG

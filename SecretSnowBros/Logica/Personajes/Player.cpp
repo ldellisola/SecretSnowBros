@@ -140,7 +140,7 @@ void Player::MoveSnowBall(SnowBall * snowball, World * map)
 				snowball->setX(getX() + 1);
 			}
 		}
-		else if (Being::beingState == BeingState::Jumping) {
+		else if (Being::beingState == BeingState::Jumping && (getY()!=0)) {
 			if (snowball->getX() == this->getX() && (map->map[getY() - 1][getX()] != 'F')) {
 				snowball->setY(getY() - 1);
 			}
