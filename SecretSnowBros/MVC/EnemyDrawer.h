@@ -30,23 +30,23 @@ public:
 		loadObserver(&obs);
 	}
 
-	void loadCrazyGuySprite(std::initializer_list<std::string>list) {
+	void loadCrazyGuySprite(std::vector<std::string>list) {
 		for (std::string str : list) {
 			crazyGuy.push_back(new AllegroSprite(str, BlockHeight, BlockWidth));
 		}
 	}
-	void loadPurpleGuySprite(std::initializer_list<std::string>list) {
+	void loadPurpleGuySprite(std::vector<std::string>list) {
 		for (std::string str : list) {
 			purpleGuy.push_back(new AllegroSprite(str, BlockHeight, BlockWidth));
 		}
 	}
-	void loadGreenFattySprite(std::initializer_list<std::string>list) {
+	void loadGreenFattySprite(std::vector<std::string>list) {
 		for (std::string str : list) {
 			greenFatty.push_back(new AllegroSprite(str, BlockHeight, BlockWidth));
 		}
 	}
 
-	void loadFrozenSprites(std::initializer_list<std::string>list) {
+	void loadFrozenSprites(std::vector<std::string>list) {
 		for (std::string str : list) {
 			frozenSprites.push_back(new AllegroSprite(str, BlockHeight, BlockWidth));
 		}

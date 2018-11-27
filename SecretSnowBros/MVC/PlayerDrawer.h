@@ -16,7 +16,7 @@ public:
 
 	void loadObserver(Observer&obs);
 	
-	void loadPlayerSprite(std::initializer_list<std::string>list) {
+	void loadPlayerSprite(std::vector<std::string>list) {
 		for (std::string str : list) {
 			sprites.push_back(new AllegroSprite(str, BlockHeight, BlockWidth));
 		}
