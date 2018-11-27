@@ -21,6 +21,8 @@ public:
 
 	bool collision(Projectile * proj);
 
+	bool collision(SnowBall * snow);
+
 	void update(void * ptr);
 
 	bool shouldDie();

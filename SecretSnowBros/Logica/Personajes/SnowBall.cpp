@@ -61,6 +61,15 @@ bool SnowBall::collision(Projectile * proj) {
 	return false;
 }
 
+bool SnowBall::collision(SnowBall * snow)
+{
+	if (this->getX() == snow->getX() && this->getY() == snow->getY()) {
+		if (this->getState() == SnowBallState::Rolling ^ snow->getState() == SnowBallState::Rolling) {
+
+		}
+	}
+}
+
 void SnowBall::update(void * ptr)
 {
 	if(state != SnowBallState::Rolling)
@@ -73,7 +82,8 @@ void SnowBall::update(void * ptr)
 	case HorizontalDirection::Left:
 
 		if (world.map[getY()][getX() - 1] == 'F') {
-			wallHits++;
+			if(getState() == SnowBallState::Rolling)
+				wallHits++;
 			this->setHorizontalDir(HorizontalDirection::Right);
 
 			for (Being * player : hijackedPlayers)
@@ -87,7 +97,8 @@ void SnowBall::update(void * ptr)
 		break;
 	case HorizontalDirection::Right:
 		if (world.map[getY()][getX() + 1] == 'F') {
-			wallHits++;
+			if (getState() == SnowBallState::Rolling)
+				wallHits++;
 			this->setHorizontalDir(HorizontalDirection::Left);
 			for (Being * player : hijackedPlayers)
 				player->updateScore(200);
