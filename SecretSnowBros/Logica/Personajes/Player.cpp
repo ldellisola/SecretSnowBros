@@ -122,6 +122,28 @@ void Player::setState(BeingState state)
 
 }
 
+void Player::updateScore(uint16_t value)
+{
+	this->points += value;
+}
+
+void Player::MoveSnowBall(SnowBall * snowball, World * map)
+{
+	if (snowball->getY() == this->getY() && snowball->getState() == SnowBallState::Still) {
+		if (Being::beingState == BeingState::WalkingLeft) {
+			if (snowball->getX() == this->getX() && (map->map[getY()][getX() - 1] != 'F')) {
+				snowball->setX(getX() - 1);
+			}
+		}
+		else if (Being::beingState == BeingState::WalkingRight ) {
+			if (snowball->getX() == this->getX() && (map->map[getY()][getX() + 1] != 'F')) {
+				snowball->setX(getX() + 1);
+			}
+		}
+	}
+
+}
+
 void Player::kill()
 {
 

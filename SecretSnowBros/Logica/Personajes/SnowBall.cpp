@@ -5,7 +5,7 @@
 #define JumpTicks (ms50* 24)	// 1200ms
 #define WalkTicks (ms50*4)	// 200ms
 #define FallTicks (ms50*6)	// 300ms
-#define FrozenTicks (ms50 *20 ) // 10 segundos 200
+#define FrozenTicks (ms50 *200 ) // 10 segundos 200
 
 SnowBall::SnowBall(Monster * monster, Score * PlayerScore)
 	:Slider(monster->getX(), WalkTicks),Jumper(monster->getY(), JumpTicks, FallTicks),MaxFrozenTick(FrozenTicks)
@@ -33,11 +33,11 @@ bool SnowBall::collision(Being * being)
 					*playerScore += i * 1000;
 				}
 			}
-			else if (dynamic_cast<Player *>(being)) {
-				auto player = ((Player*)being);
+			else  {
+				auto player = ((Being*)being);
 
 				if (!player->isCarried() && !player->isInmune()) {
-					hijackedPlayers.push_back((Player*)being);
+					hijackedPlayers.push_back(being);
 					player->setCarry(true);
 				}
 			}
@@ -76,8 +76,8 @@ void SnowBall::update(void * ptr)
 			wallHits++;
 			this->setHorizontalDir(HorizontalDirection::Right);
 
-			for (Player * player : hijackedPlayers)
-				player->getScoreCounter()->update(200);
+			for (Being * player : hijackedPlayers)
+				player->updateScore(200);
 
 			if (getY() == 10) {
 				wallHits = 123;
@@ -89,8 +89,8 @@ void SnowBall::update(void * ptr)
 		if (world.map[getY()][getX() + 1] == 'F') {
 			wallHits++;
 			this->setHorizontalDir(HorizontalDirection::Left);
-			for (Player * player : hijackedPlayers)
-				player->getScoreCounter()->update(200);
+			for (Being * player : hijackedPlayers)
+				player->updateScore(200);
 
 			if (getY() == 10) {
 				wallHits = 123;
@@ -117,7 +117,7 @@ void SnowBall::update(void * ptr)
 
 	Slider::update(row.get());
 
-	for (Player* plyr : hijackedPlayers) {
+	for (Being* plyr : hijackedPlayers) {
 		if (plyr->getState() == BeingState::Jumping) {
 			releasePlayer(plyr);
 
@@ -166,7 +166,7 @@ uint16_t SnowBall::getFrozenTick()
 	return frozenTick;
 }
 
-void SnowBall::releasePlayer(Player * player)
+void SnowBall::releasePlayer(Being * player)
 {
 	player->setCarry(false);
 	player->setInmune(true);
@@ -183,8 +183,6 @@ void SnowBall::releasePlayer(Player * player)
 bool SnowBall::shouldDie()
 {
 	if (wallHits >= maxHits) {
-		for (Player * player : hijackedPlayers) 
-			releasePlayer(player);
 		return true;
 	}
 	else 
@@ -207,6 +205,13 @@ Monster * SnowBall::melt()
 	return this->capturedMonster;
 }
 
+std::vector<Being*>& SnowBall::getHijackedPlayers()
+{
+	return this->hijackedPlayers;
+}
+
 SnowBall::~SnowBall ()
 {
+	for (Being * being : hijackedPlayers)
+		releasePlayer(being);
 }

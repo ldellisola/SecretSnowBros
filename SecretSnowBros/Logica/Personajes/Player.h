@@ -6,6 +6,7 @@
 #include "Logica/Personajes/Base Classes/Shooter.h"
 #include "Logica/juego/Cmap.h"
 #include "Score.h"
+#include "Logica/Personajes/SnowBall.h"
 
 #ifdef _DEBUG
 #include "../../Logger.h"
@@ -31,6 +32,10 @@ public:
 	void setState(BeingState state);
 
 	bool isInmune() { return inmune; }
+
+	void updateScore(uint16_t value);
+
+	void MoveSnowBall(SnowBall* snowball, World * map);
 
 
 

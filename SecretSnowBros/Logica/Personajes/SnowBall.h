@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-#include "Logica/Personajes/Player.h"
+#include "Logica/Personajes/Being.h"
 #include "Logica/Personajes/Monster.h"
 #include "Logica/Personajes/Base Classes/Slider.h"
 #include "Logica/Personajes/Base Classes/Jumper.h"
@@ -27,8 +27,11 @@ public:
 
 	bool shouldMelt();
 
+	SnowBallState getState() { return state; }
+
 	Monster * melt();
 
+	std::vector<Being*>& getHijackedPlayers();
 
 
 	virtual ~SnowBall();
@@ -43,7 +46,7 @@ protected:
 
 private:
 
-	void releasePlayer(Player * player);
+	void releasePlayer(Being * player);
 
 	uint16_t wallHits,enemyHits;
 	SnowBallState state;
@@ -51,7 +54,7 @@ private:
 	Monster * capturedMonster = nullptr;
 	Score * playerScore = nullptr;
 
-	std::vector<Player *> hijackedPlayers;
+	std::vector<Being *> hijackedPlayers;
 
 	uint16_t frozenTick;
 	const uint16_t MaxFrozenTick;
