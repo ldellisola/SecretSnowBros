@@ -189,9 +189,14 @@ int Game::dispatchEvent(GameEvent * ev)
 
 			for (SnowBall * snowball : snowballs) {
 
+				for (SnowBall * snow2 : snowballs) {
+					snowball->collision(snow2);
+				}
+
 				for (Monster * monster : this->Enemies)
 					snowball->collision(monster);
 				for (Player * player : this->players) {
+					player->MoveSnowBall(snowball, getmap());
 					snowball->collision(player);
 					auto projs = player->getProjectiles();
 
@@ -284,6 +289,12 @@ void Game::killSnowBalls()
 	for (int i = (int)snowballs.size() - 1; i >= 0; i--)
 	{
 		if (snowballs[i]->shouldDie()) {
+			for (Being * being : snowballs[i]->getHijackedPlayers()) {
+				auto player = (Player*)being;
+				player->setCarry(false);
+				player->setInmune(true);
+			}
+
 			delete snowballs[i];
 			snowballs.erase(snowballs.begin() + i);
 		}

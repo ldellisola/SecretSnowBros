@@ -5,7 +5,7 @@
 #define JumpTicks (ms50* 24)	// 1200ms
 #define WalkTicks (ms50*4)	// 200ms
 #define FallTicks (ms50*6)	// 300ms
-#define FrozenTicks (ms50 *20 ) // 10 segundos 200
+#define FrozenTicks (ms50 *200 ) // 10 segundos 200
 
 SnowBall::SnowBall(Monster * monster, Score * PlayerScore)
 	:Slider(monster->getX(), WalkTicks),Jumper(monster->getY(), JumpTicks, FallTicks),MaxFrozenTick(FrozenTicks)
@@ -33,11 +33,11 @@ bool SnowBall::collision(Being * being)
 					*playerScore += i * 1000;
 				}
 			}
-			else if (dynamic_cast<Player *>(being)) {
-				auto player = ((Player*)being);
+			else  {
+				auto player = ((Being*)being);
 
 				if (!player->isCarried() && !player->isInmune()) {
-					hijackedPlayers.push_back((Player*)being);
+					hijackedPlayers.push_back(being);
 					player->setCarry(true);
 				}
 			}
@@ -50,7 +50,7 @@ bool SnowBall::collision(Being * being)
 
 bool SnowBall::collision(Projectile * proj) {
 
-	if (proj->getX() == this->getX() && proj->getY() == this->getY()) {
+	if (proj->getX() == this->getX() && proj->getY() == this->getY() && getState() == SnowBallState::Still) {
 		if (proj->getDistanceFromStart() == 0) {
 			this->setState(SnowBallState::Rolling);
 			this->setHorizontalDir(proj->getHorizontalDir());
@@ -58,6 +58,23 @@ bool SnowBall::collision(Projectile * proj) {
 			return true;
 		}
 	}
+	return false;
+}
+
+bool SnowBall::collision(SnowBall * snow)
+{
+	if (this->getX() == snow->getX() && this->getY() == snow->getY()) {
+		if (this->getState() == SnowBallState::Rolling && snow->getState() == SnowBallState::Still) {
+			snow->setState(SnowBallState::Rolling);
+			snow->setHorizontalDir(this->getHorizontalDir());
+		}
+		else if (this->getState() != SnowBallState::Rolling && snow->getState() != SnowBallState::Still) {
+			this->setState(SnowBallState::Rolling);
+			this->setHorizontalDir(snow->getHorizontalDir());
+		}
+		return true;
+	}
+
 	return false;
 }
 
@@ -73,11 +90,14 @@ void SnowBall::update(void * ptr)
 	case HorizontalDirection::Left:
 
 		if (world.map[getY()][getX() - 1] == 'F') {
-			wallHits++;
+			if (getState() == SnowBallState::Rolling) {
+				wallHits++;
+				for (Being * player : hijackedPlayers)
+					player->updateScore(200);
+			}
 			this->setHorizontalDir(HorizontalDirection::Right);
 
-			for (Player * player : hijackedPlayers)
-				player->getScoreCounter()->update(200);
+
 
 			if (getY() == 10) {
 				wallHits = 123;
@@ -87,10 +107,13 @@ void SnowBall::update(void * ptr)
 		break;
 	case HorizontalDirection::Right:
 		if (world.map[getY()][getX() + 1] == 'F') {
-			wallHits++;
+			if (getState() == SnowBallState::Rolling) {
+				wallHits++;
+				for (Being * player : hijackedPlayers)
+					player->updateScore(200);
+			}
 			this->setHorizontalDir(HorizontalDirection::Left);
-			for (Player * player : hijackedPlayers)
-				player->getScoreCounter()->update(200);
+
 
 			if (getY() == 10) {
 				wallHits = 123;
@@ -117,7 +140,7 @@ void SnowBall::update(void * ptr)
 
 	Slider::update(row.get());
 
-	for (Player* plyr : hijackedPlayers) {
+	for (Being* plyr : hijackedPlayers) {
 		if (plyr->getState() == BeingState::Jumping) {
 			releasePlayer(plyr);
 
@@ -166,7 +189,7 @@ uint16_t SnowBall::getFrozenTick()
 	return frozenTick;
 }
 
-void SnowBall::releasePlayer(Player * player)
+void SnowBall::releasePlayer(Being * player)
 {
 	player->setCarry(false);
 	player->setInmune(true);
@@ -183,8 +206,6 @@ void SnowBall::releasePlayer(Player * player)
 bool SnowBall::shouldDie()
 {
 	if (wallHits >= maxHits) {
-		for (Player * player : hijackedPlayers) 
-			releasePlayer(player);
 		return true;
 	}
 	else 
@@ -207,6 +228,13 @@ Monster * SnowBall::melt()
 	return this->capturedMonster;
 }
 
+std::vector<Being*>& SnowBall::getHijackedPlayers()
+{
+	return this->hijackedPlayers;
+}
+
 SnowBall::~SnowBall ()
 {
+	for (Being * being : hijackedPlayers)
+		releasePlayer(being);
 }
