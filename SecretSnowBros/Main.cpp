@@ -53,7 +53,7 @@ int main(void) {
 
 	PlayerDrawer  playerDrawer(window.getWidth() / 16, (window.getHeight() - 400) / 12);
 	playerDrawer.loadPlayerSprite({"Images/Player/Normal/PS1.png","Images/Player/Normal/PS2.png","Images/Player/Normal/PS3.png","Images/Player/Normal/PS4.png","Images/Player/Normal/PS5.png","Images/Player/Normal/PS6.png","Images/Player/Normal/PS7.png","Images/Player/Normal/PS8.png","Images/Player/Normal/PS9.png","Images/Player/Normal/PS10.png","Images/Player/Normal/PS11.png","Images/Player/Normal/PS12.png", "Images/Player/Golden/PS1.png","Images/Player/Golden/PS2.png","Images/Player/Golden/PS3.png","Images/Player/Golden/PS4.png","Images/Player/Golden/PS5.png","Images/Player/Golden/PS6.png","Images/Player/Golden/PS7.png","Images/Player/Golden/PS8.png","Images/Player/Golden/PS9.png","Images/Player/Golden/PS10.png","Images/Player/Golden/PS11.png","Images/Player/Golden/PS12.png" });
-	ProyectileDrawer projDrawer("Images/ProjectileSprite.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
+	ProyectileDrawer projDrawer("Images/Projectiles/IceProj.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
 	PlayerInfoObserver playerInfo("font.ttf", window.getWidth(), 400, 12 * Block);
 	playerDrawer.loadObserver(playerInfo);
 	playerDrawer.loadObserver(projDrawer);
@@ -61,12 +61,12 @@ int main(void) {
 	snowbros.loadObserver(&playerDrawer);
 
 	EnemyDrawer enemyDrawer(window.getWidth() / 16, (window.getHeight() - 400) / 12);
-	enemyDrawer.loadCrazyGuySprite({ "Images/CrazyGuySprite.png" ,"Images/CrazyGuySprite2.png" , "Images/CrazyGuySprite3.png" , "Images/CrazyGuySprite4.png" ,"Images/CrazyGuySprite5.png" ,"Images/CrazyGuySprite6.png","Images/CrazyGuySprite7.png","Images/CrazyGuySprite8.png","Images/CrazyGuySprite9.png" });
-	enemyDrawer.loadGreenFattySprite({ "Images/GreenFattySprite.png","Images/GreenFattySprite2.png","Images/GreenFattySprite3.png","Images/GreenFattySprite4.png","Images/GreenFattySprite5.png","Images/GreenFattySprite6.png","Images/GreenFattySprite7.png","Images/GreenFattySprite8.png","Images/GreenFattySprite9.png","Images/GreenFattySprite10.png","Images/GreenFattySprite11.png","Images/GreenFattySprite12.png" });
-	enemyDrawer.loadPurpleGuySprite({ "Images/PurpleGuySprite.png","Images/PurpleGuySprite2.png","Images/PurpleGuySprite3.png","Images/PurpleGuySprite4.png","Images/PurpleGuySprite5.png","Images/PurpleGuySprite6.png","Images/PurpleGuySprite7.png","Images/PurpleGuySprite8.png","Images/PurpleGuySprite9.png" });
-	enemyDrawer.loadFrozenSprites({ "Images/FrozenState1.png","Images/FrozenState2.png","Images/FrozenState3.png","Images/FrozenState4.png" });
+	enemyDrawer.loadCrazyGuySprite({ "Images/CrazyGuy/CGS1.png" ,"Images/CrazyGuy/CGS2.png" ,"Images/CrazyGuy/CGS3.png" ,"Images/CrazyGuy/CGS4.png" ,"Images/CrazyGuy/CGS5.png" ,"Images/CrazyGuy/CGS6.png" ,"Images/CrazyGuy/CGS7.png" ,"Images/CrazyGuy/CGS8.png" ,"Images/CrazyGuy/CGS9.png" });
+	enemyDrawer.loadGreenFattySprite({ "Images/GreenFatty/GFS1.png","Images/GreenFatty/GFS2.png","Images/GreenFatty/GFS3.png","Images/GreenFatty/GFS4.png","Images/GreenFatty/GFS5.png","Images/GreenFatty/GFS6.png","Images/GreenFatty/GFS7.png","Images/GreenFatty/GFS8.png","Images/GreenFatty/GFS9.png","Images/GreenFatty/GFS10.png","Images/GreenFatty/GFS11.png","Images/GreenFatty/GFS12.png", });
+	enemyDrawer.loadPurpleGuySprite({ "Images/PurpleGuy/PGS1.png","Images/PurpleGuy/PGS2.png","Images/PurpleGuy/PGS3.png","Images/PurpleGuy/PGS4.png","Images/PurpleGuy/PGS5.png","Images/PurpleGuy/PGS6.png","Images/PurpleGuy/PGS7.png","Images/PurpleGuy/PGS8.png","Images/PurpleGuy/PGS9.png", });
+	enemyDrawer.loadFrozenSprites({ "Images/Frozen/FSS1.png","Images/Frozen/FSS2.png","Images/Frozen/FSS3.png","Images/Frozen/FSS4.png"});
 
-	FireBallProjectile test("Images/ProjectileSprite2.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
+	FireBallProjectile test("Images/Projectiles/FireProj.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
 	enemyDrawer.loadObserver(test);
 
 	snowbros.loadObserver(&enemyDrawer);
@@ -75,7 +75,7 @@ int main(void) {
 
 	snowbros.loadObserver(&fatlog);
 
-	SnowBallObserver snowBallObs("Images/FrozenState4.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
+	SnowBallObserver snowBallObs("Images/Frozen/FSS4.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
 
 	snowbros.loadObserver(&snowBallObs);
 
