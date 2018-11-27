@@ -50,7 +50,7 @@ bool SnowBall::collision(Being * being)
 
 bool SnowBall::collision(Projectile * proj) {
 
-	if (proj->getX() == this->getX() && proj->getY() == this->getY()) {
+	if (proj->getX() == this->getX() && proj->getY() == this->getY() && getState() == SnowBallState::Still) {
 		if (proj->getDistanceFromStart() == 0) {
 			this->setState(SnowBallState::Rolling);
 			this->setHorizontalDir(proj->getHorizontalDir());
