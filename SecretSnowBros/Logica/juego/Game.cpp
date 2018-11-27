@@ -189,6 +189,10 @@ int Game::dispatchEvent(GameEvent * ev)
 
 			for (SnowBall * snowball : snowballs) {
 
+				for (SnowBall * snow2 : snowballs) {
+					snowball->collision(snow2);
+				}
+
 				for (Monster * monster : this->Enemies)
 					snowball->collision(monster);
 				for (Player * player : this->players) {
