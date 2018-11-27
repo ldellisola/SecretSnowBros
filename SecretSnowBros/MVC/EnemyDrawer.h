@@ -21,14 +21,6 @@ public:
 
 	~EnemyDrawer()
 	{
-		if (greenFatty) {
-			delete greenFatty;
-		}
-		if (purpleGuy) {
-			delete purpleGuy;
-		}
-		if (crazyGuy)
-			delete crazyGuy;
 	}
 	void loadObserver(Observer* obs) {
 		observers.push_back(obs);
@@ -38,16 +30,20 @@ public:
 		loadObserver(&obs);
 	}
 
-	void loadCrazyGuySprite(std::string sprite) {
-		this->crazyGuy = new AllegroSprite(sprite, BlockHeight, BlockWidth);
+	void loadCrazyGuySprite(std::initializer_list<std::string>list) {
+		for (std::string str : list) {
+			crazyGuy.push_back(new AllegroSprite(str, BlockHeight, BlockWidth));
+		}
 	}
-
-	void loadPurpleGuySprite(std::string sprite) {
-		this->purpleGuy = new AllegroSprite(sprite, BlockHeight, BlockWidth);
+	void loadPurpleGuySprite(std::initializer_list<std::string>list) {
+		for (std::string str : list) {
+			purpleGuy.push_back(new AllegroSprite(str, BlockHeight, BlockWidth));
+		}
 	}
-
-	void loadGreenFattySprite(std::string sprite) {
-		this->greenFatty = new AllegroSprite(sprite, BlockHeight, BlockWidth);
+	void loadGreenFattySprite(std::initializer_list<std::string>list) {
+		for (std::string str : list) {
+			greenFatty.push_back(new AllegroSprite(str, BlockHeight, BlockWidth));
+		}
 	}
 
 	void loadFrozenSprites(std::initializer_list<std::string>list) {
@@ -67,18 +63,22 @@ public:
 
 				if (dynamic_cast<GreenFatty*>(enemy)) {
 					GreenFatty * guy = dynamic_cast<GreenFatty*>(enemy);
-
-					greenFatty->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+					static int i = 0;
+						greenFatty[(i/5)]->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+					if (i++ == 29) i = 0;
+					
 				}
 				else if (dynamic_cast<PurpleGuy*>(enemy)) {
 					PurpleGuy * guy = dynamic_cast<PurpleGuy*>(enemy);
-
-					purpleGuy->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+					static int i = 0;
+						purpleGuy[(i / 5)]->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+					if (i++ == 25) i = 0;
 				}
 				else if (dynamic_cast<CrazyGuy*>(enemy)) {
 					CrazyGuy * guy = dynamic_cast<CrazyGuy*> (enemy);
-
-					crazyGuy->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+					static int i = 0;
+						crazyGuy[(i / 5)]->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+					if (i++ == 25) i = 0;
 				}
 
 				if (enemy->isFrozen()) {
@@ -105,7 +105,7 @@ private:
 
 	std::vector<Observer*> observers;
 
-	AllegroSprite* crazyGuy = nullptr,*purpleGuy = nullptr,* greenFatty = nullptr;
+	std::vector<AllegroSprite*> crazyGuy,purpleGuy , greenFatty ;
 	std::vector<AllegroSprite*>frozenSprites;
 
 };

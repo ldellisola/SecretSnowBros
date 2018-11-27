@@ -1,8 +1,8 @@
 #include "StageObserver.h"
 
 
-#define BACKGROUNDIMG "BackgroundSprite.png"
-#define GROUNDIMG "GroundSprite.png"
+#define BACKGROUNDIMG "Images/BackgroundSprite.png"
+#define GROUNDIMG "Images/GroundSprite.png"
 
 StageObserver::StageObserver(float screenH, float screenW, uint16_t groundID)
 	:groundID(groundID)
