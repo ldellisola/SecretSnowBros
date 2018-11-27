@@ -37,7 +37,6 @@ int main(void) {
 	//window.setFullScreen();
 	AllegroEventHandler eventHandler(allegro.getEventQueue());
 
-
 	Game snowbros(Player1ID);
 	EventHandler eventH;
 
