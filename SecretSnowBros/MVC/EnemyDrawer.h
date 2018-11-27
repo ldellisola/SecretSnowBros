@@ -48,7 +48,7 @@ public:
 
 	void loadFrozenSprites(std::initializer_list<std::string>list) {
 		for (std::string str : list) {
-			frozenSprites.push_back(new AllegroSprite(str,BlockHeight,BlockWidth));
+			frozenSprites.push_back(new AllegroSprite(str, BlockHeight, BlockWidth));
 		}
 	}
 
@@ -63,22 +63,98 @@ public:
 
 				if (dynamic_cast<GreenFatty*>(enemy)) {
 					GreenFatty * guy = dynamic_cast<GreenFatty*>(enemy);
-					static int i = 0;
-						greenFatty[(i/5)]->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
-					if (i++ == 29) i = 0;
-					
+					if (enemy->getState() == BeingState::WalkingRight && enemy->getHorizontalDir()== HorizontalDirection::Right) {
+						static int i = 0;
+						greenFatty[(i / 5)]->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+						if (i++ == 29) i = 0;
+					}
+					else if (enemy->getState() == BeingState::WalkingLeft && enemy->getHorizontalDir() == HorizontalDirection::Left) {
+						static int i = 0;
+						greenFatty[(i / 5)]->drawHorizontallyMirrored(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+						if (i++ == 29) i = 0;
+					}
+					else if (enemy->getState() == BeingState::StillWalk && enemy->getHorizontalDir() == HorizontalDirection::Right) {
+						greenFatty[0]->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+					}
+					else if (enemy->getState() == BeingState::StillWalk && enemy->getHorizontalDir() == HorizontalDirection::Left) {
+						greenFatty[0]->drawHorizontallyMirrored(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+					}
+					else if (enemy->getState() == BeingState::Jumping) {
+						static int i = 30;
+						greenFatty[i / 5]->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+						if (i++ == 44) i = 0;
+					}
+					else if (enemy->getState() == BeingState::Shooting &&  enemy->getHorizontalDir() == HorizontalDirection::Right) {
+						static int i = 45;
+						greenFatty[i / 5]->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+						if (i++ == 59) i = 0;
+					}
+					else if (enemy->getState() == BeingState::Shooting &&  enemy->getHorizontalDir() == HorizontalDirection::Left) {
+						static int i = 45;
+						greenFatty[i / 5]->drawHorizontallyMirrored(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+						if (i++ == 59) i = 0;
+					}
+					else {
+						greenFatty[0]->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+					}
+
 				}
 				else if (dynamic_cast<PurpleGuy*>(enemy)) {
 					PurpleGuy * guy = dynamic_cast<PurpleGuy*>(enemy);
-					static int i = 0;
+					if (enemy->getState() == BeingState::WalkingRight && enemy->getHorizontalDir() == HorizontalDirection::Right) {
+						static int i = 0;
 						purpleGuy[(i / 5)]->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
-					if (i++ == 25) i = 0;
+						if (i++ == 29) i = 0;
+					}
+					else if (enemy->getState() == BeingState::WalkingLeft && enemy->getHorizontalDir() == HorizontalDirection::Left) {
+						static int i = 0;
+						purpleGuy[(i / 5)]->drawHorizontallyMirrored(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+						if (i++ == 29) i = 0;
+					}
+					else if (enemy->getState() == BeingState::StillWalk && enemy->getHorizontalDir() == HorizontalDirection::Right) {
+						purpleGuy[0]->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+					}
+					else if (enemy->getState() == BeingState::StillWalk && enemy->getHorizontalDir() == HorizontalDirection::Left) {
+						purpleGuy[0]->drawHorizontallyMirrored(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+					}
+					else if (enemy->getState() == BeingState::Jumping) {
+						static int i = 30;
+						purpleGuy[i / 5]->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+						if (i++ == 44) i = 0;
+					}
+					else {
+						purpleGuy[0]->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+					}
+
 				}
 				else if (dynamic_cast<CrazyGuy*>(enemy)) {
 					CrazyGuy * guy = dynamic_cast<CrazyGuy*> (enemy);
-					static int i = 0;
+
+					if (enemy->getState() == BeingState::WalkingRight && enemy->getHorizontalDir() == HorizontalDirection::Right) {
+						static int i = 0;
 						crazyGuy[(i / 5)]->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
-					if (i++ == 25) i = 0;
+						if (i++ == 29) i = 0;
+					}
+					else if (enemy->getState() == BeingState::WalkingLeft && enemy->getHorizontalDir() == HorizontalDirection::Left) {
+						static int i = 0;
+						crazyGuy[(i / 5)]->drawHorizontallyMirrored(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+						if (i++ == 29) i = 0;
+					}
+					else if (enemy->getState() == BeingState::StillWalk && enemy->getHorizontalDir() == HorizontalDirection::Right) {
+						crazyGuy[0]->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+					}
+					else if (enemy->getState() == BeingState::StillWalk && enemy->getHorizontalDir() == HorizontalDirection::Left) {
+						crazyGuy[0]->drawHorizontallyMirrored(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+					}
+					else if (enemy->getState() == BeingState::Jumping) {
+						static int i = 30;
+						crazyGuy[i / 5]->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+						if (i++ == 44) i = 0;
+					}
+					else {
+						crazyGuy[0]->draw(guy->getX() * BlockWidth, guy->getY() * BlockHeight);
+					}
+
 				}
 
 				if (enemy->isFrozen()) {
@@ -93,7 +169,7 @@ public:
 		}
 
 
-		
+
 
 
 
@@ -105,7 +181,7 @@ private:
 
 	std::vector<Observer*> observers;
 
-	std::vector<AllegroSprite*> crazyGuy,purpleGuy , greenFatty ;
+	std::vector<AllegroSprite*> crazyGuy, purpleGuy, greenFatty;
 	std::vector<AllegroSprite*>frozenSprites;
 
 };
@@ -114,4 +190,3 @@ private:
 
 
 
-	

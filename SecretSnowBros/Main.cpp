@@ -52,7 +52,8 @@ int main(void) {
 	snowbros.loadObserver(&stageObserver);
 
 
-	PlayerDrawer  playerDrawer("Images/PlayerSprite.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
+	PlayerDrawer  playerDrawer(window.getWidth() / 16, (window.getHeight() - 400) / 12);
+	playerDrawer.loadPlayerSprite({"Images/PlayerSprite.png","Images/PlayerSprite2.png","Images/PlayerSprite3.png","Images/PlayerSprite4.png","Images/PlayerSprite5.png","Images/PlayerSprite6.png","Images/PlayerSprite7.png","Images/PlayerSprite8.png","Images/PlayerSprite9.png","Images/PlayerSprite10.png","Images/PlayerSprite11.png","Images/PlayerSprite12.png" });
 	ProyectileDrawer projDrawer("Images/ProjectileSprite.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
 	PlayerInfoObserver playerInfo("font.ttf", window.getWidth(), 400, 12 * Block);
 	playerDrawer.loadObserver(playerInfo);
@@ -61,9 +62,9 @@ int main(void) {
 	snowbros.loadObserver(&playerDrawer);
 
 	EnemyDrawer enemyDrawer(window.getWidth() / 16, (window.getHeight() - 400) / 12);
-	enemyDrawer.loadCrazyGuySprite({ "Images/CrazyGuySprite.png" ,"Images/CrazyGuySprite2.png" , "Images/CrazyGuySprite3.png" , "Images/CrazyGuySprite4.png" ,"Images/CrazyGuySprite5.png" ,"Images/CrazyGuySprite6.png" , });
-	enemyDrawer.loadGreenFattySprite({ "Images/GreenFattySprite.png","Images/GreenFattySprite2.png","Images/GreenFattySprite3.png","Images/GreenFattySprite4.png","Images/GreenFattySprite5.png","Images/GreenFattySprite6.png" });
-	enemyDrawer.loadPurpleGuySprite({ "Images/PurpleGuySprite.png","Images/PurpleGuySprite2.png","Images/PurpleGuySprite3.png","Images/PurpleGuySprite4.png","Images/PurpleGuySprite5.png","Images/PurpleGuySprite6.png" });
+	enemyDrawer.loadCrazyGuySprite({ "Images/CrazyGuySprite.png" ,"Images/CrazyGuySprite2.png" , "Images/CrazyGuySprite3.png" , "Images/CrazyGuySprite4.png" ,"Images/CrazyGuySprite5.png" ,"Images/CrazyGuySprite6.png","Images/CrazyGuySprite7.png","Images/CrazyGuySprite8.png","Images/CrazyGuySprite9.png" });
+	enemyDrawer.loadGreenFattySprite({ "Images/GreenFattySprite.png","Images/GreenFattySprite2.png","Images/GreenFattySprite3.png","Images/GreenFattySprite4.png","Images/GreenFattySprite5.png","Images/GreenFattySprite6.png","Images/GreenFattySprite7.png","Images/GreenFattySprite8.png","Images/GreenFattySprite9.png","Images/GreenFattySprite10.png","Images/GreenFattySprite11.png","Images/GreenFattySprite12.png" });
+	enemyDrawer.loadPurpleGuySprite({ "Images/PurpleGuySprite.png","Images/PurpleGuySprite2.png","Images/PurpleGuySprite3.png","Images/PurpleGuySprite4.png","Images/PurpleGuySprite5.png","Images/PurpleGuySprite6.png","Images/PurpleGuySprite7.png","Images/PurpleGuySprite8.png","Images/PurpleGuySprite9.png" });
 	enemyDrawer.loadFrozenSprites({ "Images/FrozenState1.png","Images/FrozenState2.png","Images/FrozenState3.png","Images/FrozenState4.png" });
 
 	FireBallProjectile test("Images/ProjectileSprite2.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
