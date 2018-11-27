@@ -90,10 +90,12 @@ void PurpleGuy::chase(World&  map_) {
 				path.erase(path.begin() + i + 1);
 				if (path[i+1] - path[i + 2] == 1) {//uno para atras se movio
 					this->futureDirections.push(BeingState::WalkingLeft);
+					this->futureDirections.push(BeingState::StillWalk);
 					path.erase(path.begin() + i + 1);
 				}
 				else if (path[i+1] - path[i + 2] == -1) {
 					this->futureDirections.push(BeingState::WalkingRight);
+					this->futureDirections.push(BeingState::StillWalk);
 					path.erase(path.begin() + i + 1);
 				}
 			}

@@ -32,20 +32,10 @@ void CrazyGuy::chooseAction(void * ptr)
 }
 void CrazyGuy::next() {
 	uint16_t probs = rand()%100;
-
-	//static int abort = 1;
-	//if ((probs < 100) &&  (abort==1) ) {
-	//	this->futureDirections.push(BeingState::WalkingLeft);
-	//	this->futureDirections.push(BeingState::StillWalk);
-	//	this->futureDirections.push(BeingState::WalkingLeft);
-	//	this->futureDirections.push(BeingState::StillWalk);
-	//	this->futureDirections.push(BeingState::Jumping);
-	//	this->futureDirections.push(BeingState::StillJump);
-	//	this->futureDirections.push(BeingState::WalkingLeft);
-	//	this->futureDirections.push(BeingState::StillWalk);
-	//	abort = 0;
-	//}
-	/*else*/ if (probs < 75) {
+	if (probs < 100) {
+		this->futureDirections.push(BeingState::Waiting);
+	}
+	else if (probs < 75) {
 #ifdef _DEBUG
 		log("New state elected: Walking Same Direction");
 #endif // _DEBUG
