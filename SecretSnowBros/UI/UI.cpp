@@ -38,10 +38,10 @@
 
 #define OnlineText "Online"
 
-#define BackX(w) (ControlX(w))
+#define BackX(w) (w *0.2)
 #define BackY(h) (ControlY(h))
 #define BackHeight(h) (ControlHeight(h))
-#define BackWidth(w) (2 * ControlWidth(w))
+#define BackWidth(w) ( ControlWidth(w))
 #define BackText "Go back"
 
 #define OnlineConfigBackground (TitleUIBackground)

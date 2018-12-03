@@ -10,8 +10,8 @@
 
 struct World {
 public:
-	World(std::string file_) {
-
+	World(std::string file_, uint16_t id) {
+		this->ID = id;
 		std::fstream file;
 		file.open(file_, std::ifstream::in);
 
@@ -55,4 +55,6 @@ public:
 	uint16_t const columna = COLS;
 	std::vector<uint16_t> x;
 	std::vector<uint16_t>y;
+
+	uint16_t ID;
 };
