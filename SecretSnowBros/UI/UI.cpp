@@ -31,7 +31,9 @@
 #define ControlText "    Controls    "
 
 
-#define ModeSelectionBackground (TitleUIBackground)
+#define ModeSelectionBackground ( "Images\\BackgroundControl.png")
+#define GameOverBackground ("Images\\GameOverBackground.png")
+#define WonBackground ("Images\\WonBackground.png")
 #define LocalText "Local mode"
 
 #define OnlineText "Online"
@@ -72,10 +74,10 @@
 
 
 
-
-#define WonSoundtrack "Music\\Soundtrack\\Day Man.ogg"
+///////////////////////////////////////////////////////////////////////////////////7
+#define WonSoundtrack "Music\\Soundtrack\\DayManWin.wav"
 #define TitleSoundtrack "Music\\Soundtrack\\intro.wav"
-#define GameOverSoundTrack "Music\\Soundtrack\\Law And Order Theme.ogg"
+#define GameOverSoundTrack "Music\\Soundtrack\\Night Man.ogg"
 #define InstructionsSoundtrack "Music\\Soundtrack\\Night Man.ogg"
 
 
@@ -189,16 +191,16 @@ GameOverUI::GameOverUI(AllegroSoundFactory & soundF, AllegroWindow & window, All
 
 	AllegroColorFactory colorF;
 	int w = window.getWidth(), h = window.getHeight();
-	this->layout = new AllegroLayout(w, h, ModeSelectionBackground, LayoutDrawMode::Slow);
+	this->layout = new AllegroLayout(w, h, GameOverBackground, LayoutDrawMode::Slow);
 	// LocalButton
 	this->boxes.addBox(new AllegroButton(ButtonX(w, 1) - (ButtonWidth(w) / 2.0), ButtonY(h), ButtonWidth(w), ButtonHeight(h), PlayAgainText,
 		font, colorF.create(ButtonColor), PlayAgainID));
-	this->boxes[PlayAgainID]->setBackgroundColor(colorF.create("hotpink"));
+	this->boxes[PlayAgainID]->setBackgroundColor(colorF.create("black"));
 	
 	// ExitButton
 	this->boxes.addBox(new AllegroButton(ExitX(w) - (ExitW(w) / 2.0), ExitY(h), ExitW(w), ExitH(h), ExitText,
 		font, colorF.create(ButtonColor), ExitID));
-	this->boxes[ExitID]->setBackgroundColor(colorF.create("hotpink"));
+	this->boxes[ExitID]->setBackgroundColor(colorF.create("black"));
 
 
 	this->layout->addBox(this->boxes[PlayAgainID]);
@@ -218,16 +220,20 @@ WonUI::WonUI(AllegroSoundFactory & soundF, AllegroWindow & window, AllegroFontFa
 
 	AllegroColorFactory colorF;
 	int w = window.getWidth(), h = window.getHeight();
-	this->layout = new AllegroLayout(w, h, ModeSelectionBackground, LayoutDrawMode::Slow);
+	this->layout = new AllegroLayout(w, h, WonBackground, LayoutDrawMode::Slow);
 	// LocalButton
 	this->boxes.addBox(new AllegroButton(ButtonX(w, 1) - (ButtonWidth(w) / 2.0), ButtonY(h), ButtonWidth(w), ButtonHeight(h), PlayAgainText,
 		font, colorF.create(ButtonColor), PlayAgainID));
-	this->boxes[PlayAgainID]->setBackgroundColor(colorF.create("hotpink"));
+	this->boxes[PlayAgainID]->setBackgroundColor(colorF.create("black"));
+	this->boxes[PlayAgainID]->setBorderColor(colorF.create("white"));
+	this->boxes[PlayAgainID]->setBorderThickness(1);
 	
 	// ExitButton
 	this->boxes.addBox(new AllegroButton(ExitX(w) - (ExitW(w) / 2.0), ExitY(h), ExitW(w), ExitH(h), ExitText,
 		font, colorF.create(ButtonColor), ExitID));
-	this->boxes[ExitID]->setBackgroundColor(colorF.create("hotpink"));
+	this->boxes[ExitID]->setBackgroundColor(colorF.create("black"));
+	this->boxes[ExitID]->setBorderColor(colorF.create("white"));
+	this->boxes[ExitID]->setBorderThickness(1);
 
 
 	this->layout->addBox(this->boxes[PlayAgainID]);
@@ -250,17 +256,23 @@ InstructionsUI::InstructionsUI(AllegroSoundFactory & soundF, AllegroWindow & win
 	// Button
 	this->boxes.addBox(new AllegroButton(BackX(w) - (BackWidth(w) / 2.0), BackY(h), BackWidth(w), BackHeight(h), BackText,
 		font, colorF.create(ButtonColor), BackID));
-	this->boxes[BackID]->setBackgroundColor(colorF.create("hotpink"));
+	this->boxes[BackID]->setBackgroundColor(colorF.create("black"));
+	this->boxes[BackID]->setBorderColor(colorF.create("white"));
+	this->boxes[BackID]->setBorderThickness(1);
+
 	// ExitButton
 	this->boxes.addBox(new AllegroButton(ExitX(w) - (ExitW(w) / 2.0), ExitY(h), ExitW(w), ExitH(h), ExitText,
 		font, colorF.create(ButtonColor), ExitID));
-	this->boxes[ExitID]->setBackgroundColor(colorF.create("hotpink"));
+	this->boxes[ExitID]->setBackgroundColor(colorF.create("black"));
+	this->boxes[ExitID]->setBorderColor(colorF.create("white"));
+	this->boxes[ExitID]->setBorderThickness(1);
+
 	// Controles P1
 
 	this->boxes.addBox(new AllegroWrittenBox(InstructionX(w) - (InstructionWidth(w) / 2.0), InstructionY(h, 2), InstructionWidth(w), InstructionHeight(h),
-		InstructionText1, font, colorF.create("white"), Inst1ID));
+		"", font, colorF.create("white"), Inst1ID));
 	this->boxes.addBox(new AllegroWrittenBox(InstructionX(w) - (InstructionWidth(w) / 2.0), InstructionY(h, 2), InstructionWidth(w), InstructionHeight(h),
-		InstructionText1, font, colorF.create("white"), Inst2ID));
+		"", font, colorF.create("white"), Inst2ID));
 
 
 	this->layout->addBox(this->boxes[BackID]);

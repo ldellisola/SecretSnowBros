@@ -346,6 +346,7 @@ KeepReturn Game::run(void * ptr)
 {
 	int keep = (int)KeepReturn::Start;
 	int mapCounter = 0;
+	mapCounter = 9;
 	bool alive = true;
 	while (mapCounter != this->allMaps.size() && (keep != (int)KeepReturn::Exit) && (keep != (int)KeepReturn::PlayersDead)) {//ESA ES LA NEGRADA, HAYQ UE DEFINIR VALORES DE SALIDA DE KEEP, ESE 1 DE AHI SERIA QUE PERDISTE NO GANASTE
 		this->selectNextMap();
