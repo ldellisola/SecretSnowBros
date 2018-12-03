@@ -24,9 +24,9 @@ std::vector<World> stringtoworld(std::vector<std::string> files);
 //#undef ShittyComputer
 
 #ifdef ShittyCompucter
-	#define Block (100)
+	#define Block (50)
 #else
-	#define Block (100)
+	#define Block (50)
 #endif
 
 #define Player1ID (123)

@@ -27,8 +27,10 @@ void CrazyGuy::chooseAction(void * ptr)
 }
 void CrazyGuy::next() {
 	uint16_t probs = rand()%100;
-	
-	if (probs < 75) {
+/*	if (probs < 100) {
+		this->futureDirections.push(BeingState::Waiting);
+	}
+	else*/ if (probs < 75) {
 
 		if (getHorizontalDir() == HorizontalDirection::Left)
 			this->futureDirections.push(BeingState::WalkingLeft);
