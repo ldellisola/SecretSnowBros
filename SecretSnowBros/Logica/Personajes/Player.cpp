@@ -109,7 +109,7 @@ void Player::MoveSnowBall(SnowBall * snowball, World * map)
 {
 	if (snowball->getY() == this->getY() && snowball->getState() == SnowBallState::Still) {
 		if (Being::beingState == BeingState::WalkingLeft) {
-			if (snowball->getX() == this->getX() && (map->map[getY()][getX() - 1] != 'F')) {
+			if (snowball->getX() == this->getX() && (map->map[getY()][getX() - 1] != 'F')) { //para mover la bola de nieve
 				snowball->setX(getX() - 1);
 			}
 		}
@@ -119,7 +119,7 @@ void Player::MoveSnowBall(SnowBall * snowball, World * map)
 			}
 		}
 		else if (Being::beingState == BeingState::Jumping && (getY()!=0)) {
-			if (snowball->getX() == this->getX() && (map->map[getY() - 1][getX()] != 'F')) {
+			if (snowball->getX() == this->getX() && (map->map[getY() - 1][getX()] != 'F')) { //para que se mueva cuando saltas
 				snowball->setY(getY() - 1);
 			}
 		}

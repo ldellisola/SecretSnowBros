@@ -29,7 +29,7 @@ void Slider::update(void * ptr)
 		break;
 	case HorizontalState::Moving:
 
-		if (this->getHorizontalTicks() == this->MaxHorizontalTicks) {
+		if (this->getHorizontalTicks() == this->MaxHorizontalTicks) { //cuanta los ticks horizontales y cuando llega al máximo lo mueve si es posible
 			
 			if (this->getHorizontalDir() == HorizontalDirection::Left) {
 				if (x - 1 >= 0 && map[x - 1] != 'F')
