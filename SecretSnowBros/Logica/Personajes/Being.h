@@ -39,7 +39,6 @@ public:
 	uint16_t getLives() { return lives; }
 	virtual void collition(Projectile * proy);
 
-	//CAncer
 	virtual bool isInmune() { return false; }
 	virtual bool isCarried() { return false; }
 	virtual void setCarry(bool){ }
