@@ -2,7 +2,7 @@
 
 #define TitleUIBackground "Images\\MenuSprite.jpg"
 
-#define FontPath "font.ttf"
+#define FontPath "Font\\LUCASR.ttf"
 #define FontSize 20
 
 #define ButtonY(w) (w * 0.75)
@@ -72,7 +72,7 @@
 
 
 #define WonSoundtrack "Music\\Soundtrack\\Day Man.ogg"
-#define TitleSoundtrack "Music\\Soundtrack\\I will smash your face into a jelly.ogg"
+#define TitleSoundtrack "Music\\Soundtrack\\intro.wav"
 #define GameOverSoundTrack "Music\\Soundtrack\\Law And Order Theme.ogg"
 #define InstructionsSoundtrack "Music\\Soundtrack\\Night Man.ogg"
 
@@ -144,16 +144,25 @@ TitleUI::TitleUI(AllegroSoundFactory & soundF, AllegroWindow & window)
 	// SinglePlayerButton
 	this->boxes.addBox(new AllegroButton(ButtonX(w, 1) - (ButtonWidth(w) / 2.0), ButtonY(h), ButtonWidth(w), ButtonHeight(h), SinglePlayerText,
 		font, colorF.create(ButtonColor), SinglePlayerID));
-	this->boxes[SinglePlayerID]->setBackgroundColor(colorF.create("hotpink"));
+	this->boxes[SinglePlayerID]->setBackgroundColor(colorF.create("black"));
+	this->boxes[SinglePlayerID]->setBorderColor(colorF.create("white"));
+	this->boxes[SinglePlayerID]->setBorderThickness(1);
+
 	//// ExitButton
 	this->boxes.addBox(new AllegroButton(ExitX(w) - (ExitW(w) / 2.0), ExitY(h), ExitW(w), ExitH(h), ExitText,
 		font, colorF.create(ButtonColor), ExitID));
-	this->boxes[ExitID]->setBackgroundColor(colorF.create("hotpink"));
+	this->boxes[ExitID]->setBackgroundColor(colorF.create("black"));
+	this->boxes[ExitID]->setBorderColor(colorF.create("white"));
+	this->boxes[ExitID]->setBorderThickness(1);
+
 	//ControlsButton
 
 	this->boxes.addBox(new AllegroButton(ControlX(w) - (ControlWidth(w) / 2.0), ControlY(h), ControlWidth(w), ControlHeight(h), ControlText,
 		font, colorF.create(ButtonColor), ControlID));
-	this->boxes[ControlID]->setBackgroundColor(colorF.create("hotpink"));
+	this->boxes[ControlID]->setBackgroundColor(colorF.create("black"));
+	this->boxes[ControlID]->setBorderColor(colorF.create("white"));
+	this->boxes[ControlID]->setBorderThickness(1);
+
 
 	this->layout->addBox(this->boxes[SinglePlayerID]);
 	this->layout->addBox(this->boxes[ExitID]);
