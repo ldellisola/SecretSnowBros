@@ -12,6 +12,7 @@
 #include "MVC/Observers/PlayerInfoObserver.h"
 #include "MVC/Observers/PlayerSound.h"
 #include "MVC/Observers/MonsterSound.h"
+#include "MVC/Observers/StageSound.h"
 
 #include "Logica/Personajes/Being.h"
 
@@ -104,6 +105,9 @@ int main(void) {
 
 	Monsteround monsterSoundObs(soundF);
 	snowbros.loadObserver(&monsterSoundObs);
+
+	StageSound stageSoundObs(soundF);
+	snowbros.loadObserver(&stageSoundObs);
 
 
 

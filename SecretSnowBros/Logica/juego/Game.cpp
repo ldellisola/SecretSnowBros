@@ -4,25 +4,82 @@
 
 Game::Game(uint32_t Player1ID, uint32_t Player2ID)
 	:Player1ID(Player1ID), Player2ID(Player2ID)
-
 {
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 }
 
 Game::~Game()
 {
 	for (int i = (int)players.size() - 1; i >= 0; i--)
-	{
 		delete players[i];
-	}
 
 	for (int i = 0; i < Enemies.size(); i++)
-	{
 		delete Enemies[i];
-	}
 
 	for (int i = 0; i < snowballs.size(); i++)
 		delete snowballs[i];
+}
+
+void Game::updateMonsters()
+{
+	for (Monster * monster : this->Enemies) {
+		if (monster->isAlive()) {
+			monster->chooseAction(getmap());
+			monster->update(this->getmap());
+			for (Player* player : players) {
+				monster->collition(player);
+				std::vector<Projectile*> tempProj = player->getProjectiles();
+				for (Projectile* proj : tempProj) {
+					monster->collition(proj);
+					createSnowBall(monster, proj->getScore());
+				}
+			}
+
+		}
+	}
+}
+
+void Game::updateSnowBalls()
+{
+	for (SnowBall * snowball : snowballs) {
+
+		for (SnowBall * snow2 : snowballs) {
+			snowball->collision(snow2);
+		}
+
+		for (Monster * monster : this->Enemies)
+			snowball->collision(monster);
+		for (Player * player : this->players) {
+			player->MoveSnowBall(snowball, getmap());
+			snowball->collision(player);
+			auto projs = player->getProjectiles();
+
+			for (Projectile * proj : projs) {
+				snowball->collision(proj);
+			}
+		}
+		snowball->update(getmap());
+	}
+
+	killSnowBalls();
+}
+
+void Game::updatePlayers()
+{
+	for (Player * player : this->players) {
+		if (player->isAlive())
+			player->update(this->getmap());
+		if (player->shouldRevive())
+			player->revive();
+		player->updateProjectiles(this->getmap());
+		for (Monster* mstr : this->Enemies) {
+			if (dynamic_cast<GreenFatty*>(mstr)) {
+				for (Projectile * proj : ((GreenFatty*)mstr)->getProjectiles())
+					player->collition(proj);
+			}
+
+		}
+	}
 }
 
 void Game::selectNextMap()
@@ -140,75 +197,19 @@ int Game::dispatchEvent(GameEvent * ev)
 			break;
 		case GameEventType::Timer:
 
-			// Actualizo la posicion de los malos
-			for (Monster * monster : this->Enemies) {
-				if (monster->isAlive()) {
-					monster->chooseAction(getmap());
-					monster->update(this->getmap());
-					for (Player* player : players) {
-						monster->collition(player);
-						std::vector<Projectile*> tempProj = player->getProjectiles();
-						for (Projectile* proj : tempProj) {
-							monster->collition(proj);
-							createSnowBall(monster, proj->getScore());
-						}
-					}
+			updateMonsters();
 
-				}
-			}
+			updatePlayers();
 
-			// Actualizo la posicion de todos mis chabones
-			for (Player * player : this->players) {
-				if (player->isAlive())
-					player->update(this->getmap());
-				if (player->shouldRevive())
-					player->revive();
-				player->updateProjectiles(this->getmap());
-				for (Monster* mstr : this->Enemies) {
-					if (dynamic_cast<GreenFatty*>(mstr)) {
-						for (Projectile * proj : ((GreenFatty*)mstr)->getProjectiles())
-							player->collition(proj);
-					}
-
-				}
-			}
-
-			for (SnowBall * snowball : snowballs) {
-
-				for (SnowBall * snow2 : snowballs) {
-					snowball->collision(snow2);
-				}
-
-				for (Monster * monster : this->Enemies)
-					snowball->collision(monster);
-				for (Player * player : this->players) {
-					player->MoveSnowBall(snowball, getmap());
-					snowball->collision(player);
-					auto projs = player->getProjectiles();
-
-					for (Projectile * proj : projs) {
-						snowball->collision(proj);
-					}
-				}
-				snowball->update(getmap());
-
-			}
-
-			killSnowBalls();
+			updateSnowBalls();
 
 			this->updateObservers(this);
 
-			if (this->checkIfMonstersAlive())
-			{
-				return 	(int)KeepReturn::LevelWon;
-				// Paso al proximo nivel
-			}
-			if (this->checkIfPlayersAlive())
-			{
-				return (int)KeepReturn::PlayersDead;// salgo del juego 
-			}
+			if (!this->checkIfMonstersAlive())
+				return (int)KeepReturn::LevelWon;
 
-
+			if (!this->checkIfPlayersAlive())
+				return (int)KeepReturn::PlayersDead;
 
 			break;
 
@@ -279,17 +280,16 @@ void Game::killSnowBalls()
 	}
 }
 
-
 std::vector <Player *>& Game::getPlayer() {
 
 	return this->players;
 }
 
-std::vector <Monster   *>& Game::getMonster() {
+std::vector <Monster *>& Game::getMonster() {
 	return this->Enemies;
 }
 
-std::vector<SnowBall*>& Game::getSnowballs()
+std::vector<SnowBall *>& Game::getSnowballs()
 {
 	return snowballs;
 }
@@ -317,32 +317,30 @@ World*  Game::getmap() {
 	return (this->currentMap);
 }
 
-
-
 bool Game::checkIfPlayersAlive() {
 	for (int i = 0; i < this->players.size(); i++) {
 		if (this->players[i]->isAlive()) {
 
-			return false;								//Me fijo si alguno tiene vida	
+			return true;								//Me fijo si alguno tiene vida	
 		}
 	}
 
-	return true;										//caso contrario estan muertos
+	return false;										//caso contrario estan muertos
 }
-
 
 bool Game::checkIfMonstersAlive() {
 	for (int i = 0; i < this->Enemies.size(); i++) {
 		if (this->Enemies[i]->isAlive() || this->snowballs.size()) {
 
 
-			return false;								//Me fijo si alguno tiene vida
+			return true;								//Me fijo si alguno tiene vida
 		}
 
 	}
 
-	return true; //caso contrario estan muertos
+	return false; //caso contrario estan muertos
 }
+
 KeepReturn Game::run(void * ptr)
 {
 	int keep = (int)KeepReturn::Start;
@@ -381,9 +379,5 @@ void Game::loadObserver(Observer * obs)
 	}
 }
 
-void Game::loadPlayer(Player * player)
-{
-	this->players.push_back(player);
 
-}
 

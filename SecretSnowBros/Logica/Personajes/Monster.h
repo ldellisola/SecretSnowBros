@@ -29,6 +29,10 @@ public:
 	void collition(Projectile* proy);
 
 protected:
+
+
+
+
 	std::queue<BeingState> futureDirections;
 
 	void updateWaitTick();
