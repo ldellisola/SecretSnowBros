@@ -14,13 +14,13 @@ FSM::~FSM()
 
 void FSM::setUp(AllegroWindow& window, AllegroSoundFactory& soundF,Game& game) {
 	if (this->wonMenu == nullptr)
-		wonMenu = new WonUI(soundF, window);
+		wonMenu = new WonUI(soundF, window, fontF);
 	if (this->instructionMenu == nullptr)
-		instructionMenu = new InstructionsUI(soundF, window);
+		instructionMenu = new InstructionsUI(soundF, window, fontF);
 	if (this->gameOverMenu == nullptr)
-		gameOverMenu = new GameOverUI(soundF, window);
+		gameOverMenu = new GameOverUI(soundF, window, fontF);
 	if (this->titleMenu == nullptr)
-		titleMenu = new TitleUI(soundF, window);
+		titleMenu = new TitleUI(soundF, window, fontF);
 
 	this->game = &game;
 }

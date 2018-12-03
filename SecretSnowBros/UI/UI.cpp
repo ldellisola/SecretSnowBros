@@ -3,6 +3,7 @@
 #define TitleUIBackground "Images\\MenuSprite.jpg"
 
 #define FontPath "Font\\LUCASR.ttf"
+
 #define FontSize 20
 
 #define ButtonY(w) (w * 0.75)
@@ -10,6 +11,8 @@
 #define ButtonHeight(h) (h * 0.1)
 #define ButtonWidth(w) (w * 0.3)
 #define ButtonColor "white"
+
+#define TitleText "The Gang Finishes the Assignment"
 
 #define SinglePlayerText "Single player"
 
@@ -37,7 +40,6 @@
 #define BackY(h) (ControlY(h))
 #define BackHeight(h) (ControlHeight(h))
 #define BackWidth(w) (2 * ControlWidth(w))
-//#define BackID (12)
 #define BackText "Go back"
 
 #define OnlineConfigBackground (TitleUIBackground)
@@ -82,8 +84,6 @@ UI::UI(AllegroWindow & window)
 
 UI::~UI()
 {
-	if (this->font != nullptr)
-		delete font;
 	if (layout != nullptr)
 		delete layout;
 }
@@ -131,16 +131,22 @@ int UI::run(void * eventH, void * data)
 
 
 
-TitleUI::TitleUI(AllegroSoundFactory & soundF, AllegroWindow & window)
+TitleUI::TitleUI(AllegroSoundFactory & soundF, AllegroWindow & window, AllegroFontFactory& fontF)
 	:UI(window)
 {
-	this->font = new AllegroFont(FontPath, FontSize, 0);
+	
+	
+	this->font = fontF.create(FontPath, FontSize, 0);
 
 	this->sound = soundF.create(TitleSoundtrack, PlayMode::Loop, 0);
 
 	AllegroColorFactory colorF;
 	int w = window.getWidth(), h = window.getHeight();
 	this->layout = new AllegroLayout(w, h, TitleUIBackground, LayoutDrawMode::Slow);
+
+	this->boxes.addBox(new AllegroWrittenBox(w*0.5, h*0.5, TitleText, font, colorF.create("white"), 3213));
+
+
 	// SinglePlayerButton
 	this->boxes.addBox(new AllegroButton(ButtonX(w, 1) - (ButtonWidth(w) / 2.0), ButtonY(h), ButtonWidth(w), ButtonHeight(h), SinglePlayerText,
 		font, colorF.create(ButtonColor), SinglePlayerID));
@@ -165,6 +171,7 @@ TitleUI::TitleUI(AllegroSoundFactory & soundF, AllegroWindow & window)
 
 
 	this->layout->addBox(this->boxes[SinglePlayerID]);
+	this->layout->addBox(boxes[3213]);
 	this->layout->addBox(this->boxes[ExitID]);
 	this->layout->addBox(this->boxes[ControlID]);
 
@@ -173,10 +180,10 @@ TitleUI::TitleUI(AllegroSoundFactory & soundF, AllegroWindow & window)
 
 
 
-GameOverUI::GameOverUI(AllegroSoundFactory & soundF, AllegroWindow & window)
+GameOverUI::GameOverUI(AllegroSoundFactory & soundF, AllegroWindow & window, AllegroFontFactory& fontF)
 	:UI(window)
 {
-	this->font = new AllegroFont(FontPath, FontSize, 0);
+	this->font = fontF.create(FontPath, FontSize, 432);
 
 	this->sound = soundF.create(GameOverSoundTrack, PlayMode::Loop, 0);
 
@@ -201,10 +208,10 @@ GameOverUI::GameOverUI(AllegroSoundFactory & soundF, AllegroWindow & window)
 	pertinetIDs = { PlayAgainID ,ExitID };
 }
 
-WonUI::WonUI(AllegroSoundFactory & soundF, AllegroWindow & window)
+WonUI::WonUI(AllegroSoundFactory & soundF, AllegroWindow & window, AllegroFontFactory& fontF)
 	:UI(window)
 {
-	this->font = new AllegroFont(FontPath, FontSize, 0);
+	this->font = fontF.create(FontPath, FontSize, 4345);
 
 
 	this->sound = soundF.create(WonSoundtrack, PlayMode::Loop, 0);
@@ -230,10 +237,10 @@ WonUI::WonUI(AllegroSoundFactory & soundF, AllegroWindow & window)
 	pertinetIDs = { PlayAgainID ,ExitID };
 }
 
-InstructionsUI::InstructionsUI(AllegroSoundFactory & soundF, AllegroWindow & window)
+InstructionsUI::InstructionsUI(AllegroSoundFactory & soundF, AllegroWindow & window, AllegroFontFactory& fontF)
 	:UI(window)
 {
-	this->font = new AllegroFont(FontPath, FontSize, 0);
+	this->font = fontF.create(FontPath, FontSize, 43445);
 
 	this->sound = soundF.create(InstructionsSoundtrack, PlayMode::Loop, 0);
 

@@ -34,70 +34,25 @@ protected:
 
 class TitleUI :public UI {
 public:
-	TitleUI(AllegroSoundFactory & soundF,AllegroWindow& window);
+	TitleUI(AllegroSoundFactory & soundF,AllegroWindow& window, AllegroFontFactory& fontF);
 	~TitleUI() {}
 };
 
-class ModeSelectionUI : public UI {
-public:
-	ModeSelectionUI(AllegroSoundFactory & soundF, AllegroWindow& window);
-	~ModeSelectionUI() {}
-};
-
-class OnlineConfigUI : public UI {
-public:
-	OnlineConfigUI(AllegroSoundFactory & soundF, AllegroWindow& window);
-	~OnlineConfigUI() {}
-};
-
-class WaitingToJoinUI : public UI {
-public:
-	WaitingToJoinUI(AllegroSoundFactory & soundF, AllegroWindow& window);
-	~WaitingToJoinUI() {}
-	int run(void * eventH,void *data) {
-		window.setDifferentSystemMouseCursor(CursorSprite::Busy);
-		int temp = UI::run(eventH, data);
-		window.setDifferentSystemMouseCursor(CursorSprite::Default);
-		return temp;
-	}
-};
-
-class WaitingToCreateUI : public UI {
-public:
-	WaitingToCreateUI(AllegroSoundFactory & soundF, AllegroWindow& window);
-	~WaitingToCreateUI() {}
-	int run(void * eventH,void * data) {
-		window.setDifferentSystemMouseCursor(CursorSprite::Busy);
-		int temp = UI::run(eventH,data );
-		window.setDifferentSystemMouseCursor(CursorSprite::Default);
-		return temp;
-	}
-};
-
-class JoinMenuUI : public UI {
-public:
-	JoinMenuUI(AllegroSoundFactory & soundF, AllegroWindow& window);
-	~JoinMenuUI() {}
-	int run(void * eventH, void* data);
-private:
-	std::string ip;
-	bool isIPValid(std::string ip);
-};
 
 class GameOverUI : public UI {
 public:
-	GameOverUI(AllegroSoundFactory & soundF, AllegroWindow& window);
+	GameOverUI(AllegroSoundFactory & soundF, AllegroWindow& window, AllegroFontFactory& fontF);
 	~GameOverUI() {}
 };
 
 class WonUI : public UI {
 public:
-	WonUI(AllegroSoundFactory & soundF, AllegroWindow& window);
+	WonUI(AllegroSoundFactory & soundF, AllegroWindow& window, AllegroFontFactory& fontF);
 	~WonUI() {}
 };
 
 class InstructionsUI : public UI {
 public:
-	InstructionsUI(AllegroSoundFactory & soundF, AllegroWindow& window);
+	InstructionsUI(AllegroSoundFactory & soundF, AllegroWindow& window, AllegroFontFactory& fontF);
 	~InstructionsUI() {}
 };

@@ -11,14 +11,14 @@ class PlayerInfoObserver
 	: public Observer {
 public:
 
-	PlayerInfoObserver(std::string fontPath,uint16_t totalWidth, uint16_t boxHeight, uint16_t startingHeight) {
+	PlayerInfoObserver(std::string fontPath,uint16_t Height, uint16_t boxWidth, uint16_t startingWidth) {
 
 		AllegroColorFactory colorF;
 		
 
-		scoreBox = new AllegroWrittenBox(0, startingHeight,totalWidth/2,boxHeight, "Score = 0", fontF.create(fontPath, boxHeight / 4, 1), colorF.create("white"), 1);
-		lifeBox = new AllegroWrittenBox(totalWidth/2, startingHeight, totalWidth / 2, boxHeight, "Score = 0", fontF.create(fontPath, boxHeight / 4, 2), colorF.create("white"), 2);
-		background = new AllegroBox(0, startingHeight, totalWidth, boxHeight, 90);
+		scoreBox = new AllegroWrittenBox(startingWidth, 0, boxWidth,Height/2, "Score = 0", fontF.create(fontPath, boxWidth / 4, 1), colorF.create("white"), 1);
+		lifeBox = new AllegroWrittenBox(startingWidth, Height / 2, boxWidth, Height / 2, "Score = 0", fontF.create(fontPath, boxWidth / 4, 2), colorF.create("white"), 2);
+		background = new AllegroBox(startingWidth,0 , boxWidth,Height , 90);
 	}
 	~PlayerInfoObserver()
 	{
