@@ -1,10 +1,13 @@
 #pragma once
+
 #include <functional>
-#include "Game.h"
+
+#include "Logica\juego\Game.h"
+#include "UI.h"
+
 #include "AllwBasics\AllegroEvent.h"
 #include "AllwBasics\AllegroSound.h"
 #include "AllwBasics\AllegroWindow.h"
-
 
 using namespace std::placeholders;
 
