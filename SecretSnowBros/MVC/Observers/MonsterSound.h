@@ -16,8 +16,8 @@ class Monsteround : public Observer {
 public:
 	Monsteround(AllegroSoundFactory& soundF) {
 
-		shootST = soundF.create("Music\\Character\\Shoot.wav", PlayMode::Once, 12312);
-		jumpST = soundF.create("Music\\Character\\Jump.ogg", PlayMode::Once, 1232);
+		shootST = soundF.create("Music\\Character\\ShootGM.wav", PlayMode::Once, 12312);
+		jumpST = soundF.create("Music\\Character\\Jump.wav", PlayMode::Once, 1232);
 
 		soundF.reserveMoreSamples(30);
 	}
