@@ -98,7 +98,7 @@ int main(void) {
 	WindowUpdater win(window);
 	snowbros.loadObserver(&win);
 	
-	snowbros.loadMaps(stringtoworld(getNames("map",".csv",10)));
+	snowbros.loadMaps(stringtoworld(getNames("Maps/map",".csv",10)));
 	snowbros.run(nullptr);
 
 	return 0;
