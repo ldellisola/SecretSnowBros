@@ -13,11 +13,11 @@ Player::Player(uint16_t x, uint16_t y, uint16_t ID)
 	:points(ID), 
 	Being(JumpTicks,WalkTicks,FallTicks,x,y,ID),
 	Shooter(ShootTicks)
-
-
 {
 	this->lives = 3;
 
+	this->setInmune(true);
+	resetInmuneTick();
 }
 
 Player::~Player()
@@ -135,8 +135,9 @@ void Player::kill()
 
 		Being::kill();
 
-
-
+		stopShooting();
+		stopCoolDown();
+		resetShootingTicks();
 		if (isAlive()) {
 			this->startWaitingToRevive();
 		}
@@ -164,6 +165,9 @@ void Player::revive()
 	setInmune(true);
 	stopWaitingToRevive();
 	resetReviveTick();
+	stopShooting();
+	stopCoolDown();
+	resetShootingTicks();
 
 	resetInmuneTick();
 }

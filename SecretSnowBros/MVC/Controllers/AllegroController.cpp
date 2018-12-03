@@ -50,6 +50,7 @@ void Local1PlayerController::runEv()
 			case ALLEGRO_KEY_A:	type = GameEventType::Left; id = Player1ID; start = true; break;
 			case ALLEGRO_KEY_D:	type = GameEventType::Right; id = Player1ID; start = true; break;
 			case ALLEGRO_KEY_C:	type = GameEventType::Shoot; id = Player1ID; start = true; break;
+			case ALLEGRO_KEY_ESCAPE: type = GameEventType::Exit; id = Player1ID; start = true; break;
 			}
 			break;
 		case ALLEGRO_EVENT_KEY_UP:
