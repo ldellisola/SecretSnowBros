@@ -4,19 +4,15 @@
 
 #define FontPath "Font\\TitleFont.ttf"
 
-#define FontSize 20
+#define FontSize 50
 
 #define ButtonY(w) (w * 0.75)
-#define ButtonX(h,pos) (pos * (0.5) * h)//changed
+#define ButtonX(h,pos) (pos * (0.5) * h)
 #define ButtonHeight(h) (h * 0.1)
-#define ButtonWidth(w) (w * 0.8)//changed
+#define ButtonWidth(w) (w * 0.8)
 #define ButtonColor "white"
 
-#define TitleText "The Gang Finishes the Assignment"
-
 #define SinglePlayerText "Play"
-
-#define DoublePlayerText "Dual Player"
 
 #define ExitX(w) (w * 0.8)
 #define ExitY(h) (h * 0.1)
@@ -28,15 +24,12 @@
 #define ControlY(h) (h *0.1)
 #define ControlWidth(w) (w*0.3)
 #define ControlHeight(h) (h*0.1)
-#define ControlText "    Controls    "
+#define ControlText "Controls"
 
 
 #define ModeSelectionBackground ( "Images\\BackgroundControl.png")
 #define GameOverBackground ("Images\\GameOverBackground.png")
 #define WonBackground ("Images\\WonBackground.png")
-#define LocalText "Local mode"
-
-#define OnlineText "Online"
 
 #define BackX(w) (ControlX(w))
 #define BackY(h) (ControlY(h))
@@ -44,11 +37,6 @@
 #define BackWidth(w) (2 * ControlWidth(w))
 #define BackText "Go back"
 
-#define OnlineConfigBackground (TitleUIBackground)
-
-#define JoinText "Join Game"
-
-#define CreateText "Create Game"
 
 #define InputY(h) (h *0.5)
 #define InputWidth(w) (w*0.3)
@@ -57,11 +45,9 @@
 #define ConnectY(h) (h * 0.8)
 #define ConnectWidth(w) (w *0.2)
 #define ConnectHeight(h) (h*0.1)
-#define ConnectText "Connect to IP" 
 
 #define PlayAgainText "Play Again"
 
-#define LeaveText "Leave"
 
 #define InstructionX(w) (w *0.5)
 #define InstructionY(h,pos) (h*0.2*pos)
@@ -69,8 +55,7 @@
 #define InstructionHeight(h) (h*0.2)
 #define InstructionText1 "El Jugador 1 se mueve con 'A' y 'S', salta con 'W' y ataca con 'C'"
 #define Inst1ID 32
-#define InstructionText2 "El Jugador 2 se mueve con las flechas y ataca con 'M'"
-#define Inst2ID 654
+
 
 
 
@@ -271,14 +256,12 @@ InstructionsUI::InstructionsUI(AllegroSoundFactory & soundF, AllegroWindow & win
 
 	this->boxes.addBox(new AllegroWrittenBox(InstructionX(w) - (InstructionWidth(w) / 2.0), InstructionY(h, 2), InstructionWidth(w), InstructionHeight(h),
 		"", font, colorF.create("white"), Inst1ID));
-	this->boxes.addBox(new AllegroWrittenBox(InstructionX(w) - (InstructionWidth(w) / 2.0), InstructionY(h, 2), InstructionWidth(w), InstructionHeight(h),
-		"", font, colorF.create("white"), Inst2ID));
+
 
 
 	this->layout->addBox(this->boxes[BackID]);
 	this->layout->addBox(this->boxes[ExitID]);
 	this->layout->addBox(this->boxes[Inst1ID]);
-	this->layout->addBox(this->boxes[Inst2ID]);
 
 	pertinetIDs = { BackID,ExitID };
 }
