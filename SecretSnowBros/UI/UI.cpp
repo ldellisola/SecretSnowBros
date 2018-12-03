@@ -2,7 +2,7 @@
 
 #define TitleUIBackground "Images\\MenuSprite.jpg"
 
-#define FontPath "Font\\LUCASR.ttf"
+#define FontPath "Font\\TitleFont.ttf"
 
 #define FontSize 20
 
