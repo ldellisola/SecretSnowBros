@@ -1,34 +1,34 @@
 #include "UI.h"
 
-#define TitleUIBackground "Images\\MenuSprite.jpg"
+#define TitleUIBackground "Images\\BackgroundMenu.png"
 
 #define FontPath "Font\\TitleFont.ttf"
 
 #define FontSize 20
 
 #define ButtonY(w) (w * 0.75)
-#define ButtonX(h,pos) (pos * (0.25) * h)
+#define ButtonX(h,pos) (pos * (0.5) * h)//changed
 #define ButtonHeight(h) (h * 0.1)
-#define ButtonWidth(w) (w * 0.3)
+#define ButtonWidth(w) (w * 0.8)//changed
 #define ButtonColor "white"
 
 #define TitleText "The Gang Finishes the Assignment"
 
-#define SinglePlayerText "Single player"
+#define SinglePlayerText "Play"
 
 #define DoublePlayerText "Dual Player"
 
-#define ExitX(w) (w * 0.9)
+#define ExitX(w) (w * 0.8)
 #define ExitY(h) (h * 0.1)
-#define ExitW(w) (w * 0.1)
+#define ExitW(w) (w * 0.3)
 #define ExitH(h) (h * 0.1)
 #define ExitText "Exit"
 
-#define ControlX(w) (w *0.1)
+#define ControlX(w) (w *0.2)
 #define ControlY(h) (h *0.1)
-#define ControlWidth(w) (w*0.1)
+#define ControlWidth(w) (w*0.3)
 #define ControlHeight(h) (h*0.1)
-#define ControlText "Controls"
+#define ControlText "    Controls    "
 
 
 #define ModeSelectionBackground (TitleUIBackground)
@@ -143,8 +143,7 @@ TitleUI::TitleUI(AllegroSoundFactory & soundF, AllegroWindow & window, AllegroFo
 	AllegroColorFactory colorF;
 	int w = window.getWidth(), h = window.getHeight();
 	this->layout = new AllegroLayout(w, h, TitleUIBackground, LayoutDrawMode::Slow);
-
-	this->boxes.addBox(new AllegroWrittenBox(w*0.5, h*0.5, TitleText, font, colorF.create("white"), 3213));
+	this->boxes.addBox(new AllegroWrittenBox(w*0.2, h*0.3,  "", font, colorF.create("white"), 3213));
 
 
 	// SinglePlayerButton
