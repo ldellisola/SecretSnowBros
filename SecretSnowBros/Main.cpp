@@ -69,6 +69,7 @@ int main(void) {
 	PlayerInfoObserver playerInfo("Font\\GameFont.ttf", BlockWidth * 16, InfoSpaceWidth, 0, InfoSpaceHeight);
 	FireBallProjectile test("Images/Projectiles/FireProj.png", BlockWidth, BlockHeight);
 	PlayerSound playerSoundObs(soundF);
+	StageSound stageSoundObs(soundF);
 	Monsteround monsterSoundObs(soundF);
 	EnemyDrawer enemyDrawer(BlockWidth, BlockHeight);
 	SnowBallObserver snowBallObs("Images/Frozen/FSS4.png", BlockWidth, BlockHeight);
@@ -86,13 +87,14 @@ int main(void) {
 	snowbros.loadObserver(&enemyDrawer);
 	snowbros.loadObserver(&playerSoundObs);
 	snowbros.loadObserver(&monsterSoundObs);
+	snowbros.loadObserver(&stageSoundObs);
 	snowbros.loadObserver(&playerDrawer);
 	snowbros.loadObserver(&snowBallObs);
 	snowbros.loadObserver(&win);
 
 
 	int ev = BackID;
-	void * ptr = nullptr;
+	void * ptr = &window;
 
 	do {
 		ev = menu.cycle(ev, ptr);

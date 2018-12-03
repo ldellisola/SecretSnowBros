@@ -47,16 +47,21 @@ int FSM::runWonMenu(void * data) {
 
 int FSM::runGame(void*data) {
 
+	AllegroWindow * window = (AllegroWindow*)data;
 	game->loadMaps(stringtoworld(getNames("Maps/map", ".csv", 10)));
+	window->hideMouseCursor();
+	int retValue = 0;
+	
 	switch (game->run(data)){
 	case KeepReturn::Exit:
-		return ExitID;
+		retValue= ExitID;
 	case KeepReturn::PlayersDead:
-		return LostGameID;
+		retValue= LostGameID;
 	case KeepReturn::LevelWon:
-		return WonGameID;
+		retValue= WonGameID;
 	}
-	return 0;
+	window->showMouseCursor();
+	return retValue;
 	
 }
 
