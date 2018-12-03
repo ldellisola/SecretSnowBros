@@ -56,7 +56,7 @@ int FSM::runGame(void*data) {
 	case KeepReturn::LevelWon:
 		return WonGameID;
 	}
-
+	return 0;
 	
 }
 

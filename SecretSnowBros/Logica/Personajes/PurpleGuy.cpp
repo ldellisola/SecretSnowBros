@@ -56,7 +56,7 @@ void PurpleGuy::chase(World&  map_) {
 	int distance = 0xFFFF;
 	int xdes, ydes;
 	for (int i = 0; i < map_.x.size(); i++) {
-		int temp = sqrt(pow(this->getX() - map_.x[i], 2) + pow(this->getY() - map_.y[i], 2));
+		int temp =(int) sqrt(pow(this->getX() - map_.x[i], 2) + pow(this->getY() - map_.y[i], 2));
 		if (distance > temp) {
 			distance = temp;//Se fija cual esta mas cerca del monstruo
 			xdes = map_.x[i];
@@ -116,7 +116,7 @@ void PurpleGuy::DijkstraComputePaths(vertex_t source,
 	std::vector<weight_t> &min_distance,
 	std::vector<vertex_t> &previous)
 {
-	int n = adjacency_list.size();
+	int n = (int)adjacency_list.size();
 	min_distance.clear();
 	min_distance.resize(n, max_weight);
 	min_distance[source] = 0;

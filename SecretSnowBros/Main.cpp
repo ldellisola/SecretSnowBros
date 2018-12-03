@@ -21,7 +21,6 @@
 
 #define WindowTitle "SnowBros!"
 #define WindowImage ""
-
 //#undef ShittyComputer
 
 #ifdef ShittyCompucter
@@ -29,6 +28,7 @@
 #else
 	#define Block (50)
 #endif
+
 
 #define Player1ID (123)
 
@@ -44,10 +44,10 @@ int main(void) {
 	window.open();
 	//window.setFullScreen();
 
-#define BlockX ((window.getWidth() * 0.7)/16)
-#define BlockY ((window.getHeight())/12)
-#define InfoSpaceX (window.getWidth() * 0.3)
-#define InfoSpaceY (window.getHeight())
+	const float BlockWidth = ((window.getWidth() * 0.7) / 16);
+	const float BlockHeight((window.getHeight()) / 12);
+	const float InfoSpaceWidth(window.getWidth() * 0.3);
+	const float InfoSpaceHeight(window.getHeight());
 
 
 	AllegroEventHandler eventHandler(allegro.getEventQueue());
@@ -68,11 +68,11 @@ int main(void) {
 
 	snowbros.loadEventHandler(&eventH);
 
-	StageObserver stageObserver(BlockY * 12, BlockX * 16, 'F');
+	StageObserver stageObserver(BlockHeight * 12, BlockWidth * 16, 'F');
 	snowbros.loadObserver(&stageObserver);
 
 
-	PlayerDrawer  playerDrawer(BlockX, BlockY);
+	PlayerDrawer  playerDrawer(BlockWidth, BlockHeight);
 
 	std::vector<std::string> a = getNames("Images/Player/Normal/PS", ".png", 12);
 	std::vector<std::string> b = getNames("Images/Player/Golden/PS", ".png", 12);
@@ -80,20 +80,20 @@ int main(void) {
 	playerDrawer.loadPlayerSprite(a);
 
 
-	ProyectileDrawer projDrawer("Images/Projectiles/IceProj.png", BlockX, BlockY);
-	PlayerInfoObserver playerInfo("Font\\GameFont.ttf", BlockX * 16, InfoSpaceX, 0, InfoSpaceY);
+	ProyectileDrawer projDrawer("Images/Projectiles/IceProj.png", BlockWidth, BlockHeight);
+	PlayerInfoObserver playerInfo("Font\\GameFont.ttf", BlockWidth * 16, InfoSpaceWidth, 0, InfoSpaceHeight);
 	playerDrawer.loadObserver(playerInfo);
 	playerDrawer.loadObserver(projDrawer);
 
 	snowbros.loadObserver(&playerDrawer);
 
-	EnemyDrawer enemyDrawer(BlockX, BlockY);
+	EnemyDrawer enemyDrawer(BlockWidth, BlockHeight);
 	enemyDrawer.loadCrazyGuySprite(getNames("Images/CrazyGuy/CGS", ".png", 9));
 	enemyDrawer.loadGreenFattySprite(getNames("Images/GreenFatty/GFS", ".png", 12));
 	enemyDrawer.loadPurpleGuySprite(getNames("Images/PurpleGuy/PGS", ".png", 9));
 	enemyDrawer.loadFrozenSprites(getNames("Images/Frozen/FSS", ".png", 4));
 
-	FireBallProjectile test("Images/Projectiles/FireProj.png", BlockX, BlockY);
+	FireBallProjectile test("Images/Projectiles/FireProj.png", BlockWidth, BlockHeight);
 	enemyDrawer.loadObserver(test);
 
 	snowbros.loadObserver(&enemyDrawer);
@@ -108,7 +108,7 @@ int main(void) {
 
 
 
-	SnowBallObserver snowBallObs("Images/Frozen/FSS4.png", BlockX, BlockY);
+	SnowBallObserver snowBallObs("Images/Frozen/FSS4.png", BlockWidth, BlockHeight);
 
 	snowbros.loadObserver(&snowBallObs);
 
