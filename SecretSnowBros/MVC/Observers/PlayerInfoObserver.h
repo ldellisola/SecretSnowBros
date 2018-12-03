@@ -11,14 +11,16 @@ class PlayerInfoObserver
 	: public Observer {
 public:
 
-	PlayerInfoObserver(std::string fontPath, uint16_t totalWidth, uint16_t boxHeight, uint16_t startingHeight) {
-		AllegroColorFactory colorF;
-		
+	PlayerInfoObserver(std::string fontPath, float startX, float width, float startY, float height) {
 
-		scoreBox = new AllegroWrittenBox(0, startingHeight, totalWidth / 2, boxHeight, "Score = 0", fontF.create(fontPath, boxHeight / 4, 1), colorF.create("white"), 1);
-		lifeBox = new AllegroWrittenBox(totalWidth / 2, startingHeight, totalWidth / 2, boxHeight, "Score = 0", fontF.create(fontPath, boxHeight / 4, 2), colorF.create("white"), 2);
-		background = new AllegroBox(0, startingHeight, totalWidth, boxHeight, 90);
+		AllegroColorFactory colorF;
+
+		scoreBox = new AllegroWrittenBox(startX, startY, width, height / 2, "Score = 0", fontF.create(fontPath, height / 16, 1), colorF.create("white"), 1);
+		lifeBox = new AllegroWrittenBox(startX, startY + height / 2, width, height / 2, "Score = 0", fontF.create(fontPath, height / 16, 2), colorF.create("white"), 2);
+		background = new AllegroBox(startX, startY, width, height, 93);
+		background->setBackgroundColor(colorF.create("black"));
 	}
+
 	~PlayerInfoObserver()
 	{
 		if (scoreBox)
@@ -34,7 +36,7 @@ public:
 		Player * player = (Player*)ptr;
 		AllegroColorFactory colorF;
 
-		background->setBackgroundColor(colorF.create("black"));
+
 		background->draw();
 
 		std::string score = std::to_string(player->getScoreCounter()->getActualScore());
@@ -46,10 +48,6 @@ public:
 		lifeBox->setText("Lives = " + lives);
 
 		lifeBox->draw();
-
-
-		
-
 	}
 
 

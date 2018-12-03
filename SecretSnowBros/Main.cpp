@@ -36,9 +36,21 @@ std::vector<World> stringtoworld(std::vector<std::string> files);
 int main(void) {
 	Allw allegro(Allegro::InitMode::Full, Allegro::NoValue, Allegro::NoValue, 50);
 
-	AllegroWindow window(16 * Block, 12 * Block +400, allegro.getEventQueue(), WindowTitle, WindowImage);
+	ALLEGRO_DISPLAY_MODE disp;
+
+	al_get_display_mode(al_get_num_display_modes() - 1, &disp);
+
+	AllegroWindow window(disp.width, disp.height, allegro.getEventQueue(), WindowTitle, WindowImage);
+
 	window.open();
-	//window.setFullScreen();
+	window.setFullScreen();
+
+#define BlockX ((window.getWidth() * 0.7)/16)
+#define BlockY ((window.getHeight())/12)
+#define InfoSpaceX (window.getWidth() * 0.3)
+#define InfoSpaceY (window.getHeight())
+
+
 	AllegroEventHandler eventHandler(allegro.getEventQueue());
 
 	Game snowbros(Player1ID);
@@ -57,11 +69,11 @@ int main(void) {
 
 	snowbros.loadEventHandler(&eventH);
 
-	StageObserver stageObserver((window.getHeight() - 400), window.getWidth(), 'F');
+	StageObserver stageObserver(BlockY * 12, BlockX * 16, 'F');
 	snowbros.loadObserver(&stageObserver);
 
 
-	PlayerDrawer  playerDrawer(window.getWidth() / 16, (window.getHeight() - 400) / 12);
+	PlayerDrawer  playerDrawer(BlockX, BlockY);
 
 	std::vector<std::string> a = getNames("Images/Player/Normal/PS", ".png", 12);
 	std::vector<std::string> b = getNames("Images/Player/Golden/PS", ".png", 12);
@@ -69,20 +81,20 @@ int main(void) {
 	playerDrawer.loadPlayerSprite(a);
 
 
-	ProyectileDrawer projDrawer("Images/Projectiles/IceProj.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
-	PlayerInfoObserver playerInfo("Font\\GameFont.ttf", window.getWidth(), 400, 12 * Block);
+	ProyectileDrawer projDrawer("Images/Projectiles/IceProj.png", BlockX, BlockY);
+	PlayerInfoObserver playerInfo("Font\\GameFont.ttf", BlockX * 16, InfoSpaceX, 0, InfoSpaceY);
 	playerDrawer.loadObserver(playerInfo);
 	playerDrawer.loadObserver(projDrawer);
 
 	snowbros.loadObserver(&playerDrawer);
 
-	EnemyDrawer enemyDrawer(window.getWidth() / 16, (window.getHeight() - 400) / 12);
-	enemyDrawer.loadCrazyGuySprite(getNames("Images/CrazyGuy/CGS", ".png", 9) );
+	EnemyDrawer enemyDrawer(BlockX, BlockY);
+	enemyDrawer.loadCrazyGuySprite(getNames("Images/CrazyGuy/CGS", ".png", 9));
 	enemyDrawer.loadGreenFattySprite(getNames("Images/GreenFatty/GFS", ".png", 12));
 	enemyDrawer.loadPurpleGuySprite(getNames("Images/PurpleGuy/PGS", ".png", 9));
 	enemyDrawer.loadFrozenSprites(getNames("Images/Frozen/FSS", ".png", 4));
 
-	FireBallProjectile test("Images/Projectiles/FireProj.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
+	FireBallProjectile test("Images/Projectiles/FireProj.png", BlockX, BlockY);
 	enemyDrawer.loadObserver(test);
 
 	snowbros.loadObserver(&enemyDrawer);
@@ -97,25 +109,22 @@ int main(void) {
 
 
 
-	SnowBallObserver snowBallObs("Images/Frozen/FSS4.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
+	SnowBallObserver snowBallObs("Images/Frozen/FSS4.png", BlockX, BlockY);
 
 	snowbros.loadObserver(&snowBallObs);
 
 	WindowUpdater win(window);
 	snowbros.loadObserver(&win);
-	
-	snowbros.loadMaps(stringtoworld(getNames("Maps/map",".csv",10)));
+
+	snowbros.loadMaps(stringtoworld(getNames("Maps/map", ".csv", 10)));
 
 	int ev = BackID;
 	void * ptr = nullptr;
 
 	do {
-		ev =  menu.cycle(ev, ptr);
+		ev = menu.cycle(ev, ptr);
 	} while (ev != ExitID);
 
-
-
-	//snowbros.run(nullptr);
 
 	return 0;
 }
