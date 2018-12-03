@@ -18,6 +18,8 @@ public:
 
 		shootST = soundF.create("Music\\Character\\Shoot.wav", PlayMode::Once, 12312);
 		jumpST = soundF.create("Music\\Character\\Jump.ogg", PlayMode::Once, 1232);
+
+		soundF.reserveMoreSamples(30);
 	}
 
 	inline void draw(void * ptr) {
