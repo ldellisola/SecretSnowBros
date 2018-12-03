@@ -196,6 +196,7 @@ int Game::dispatchEvent(GameEvent * ev)
 
 			killSnowBalls();
 
+			this->updateObservers(this);
 
 			if (this->checkIfMonstersAlive())
 			{
@@ -207,8 +208,8 @@ int Game::dispatchEvent(GameEvent * ev)
 				return (int)KeepReturn::PlayersDead;// salgo del juego 
 			}
 
-			// Imprimo todo en en pantalla
-			this->updateObservers(this);
+
+
 			break;
 
 		case GameEventType::Exit:
@@ -346,6 +347,7 @@ KeepReturn Game::run(void * ptr)
 {
 	int keep = (int)KeepReturn::Start;
 	int mapCounter = 0;
+	mapCounter = 9;
 	bool alive = true;
 	while (mapCounter != this->allMaps.size() && (keep != (int)KeepReturn::Exit) && (keep != (int)KeepReturn::PlayersDead)) {//ESA ES LA NEGRADA, HAYQ UE DEFINIR VALORES DE SALIDA DE KEEP, ESE 1 DE AHI SERIA QUE PERDISTE NO GANASTE
 		this->selectNextMap();
