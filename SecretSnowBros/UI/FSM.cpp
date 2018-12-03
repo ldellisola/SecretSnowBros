@@ -47,9 +47,8 @@ int FSM::runWonMenu(void * data) {
 
 int FSM::runGame(void*data) {
 
-
-	switch (game->run(data))
-	{
+	game->loadMaps(stringtoworld(getNames("Maps/map", ".csv", 10)));
+	switch (game->run(data)){
 	case KeepReturn::Exit:
 		return ExitID;
 	case KeepReturn::PlayersDead:
@@ -63,4 +62,25 @@ int FSM::runGame(void*data) {
 
 int FSM::runExit(void*data) {
 	return 0;
+}
+
+
+std::vector<std::string> getNames(std::string path, std::string ext, int quantinty)
+{
+	std::vector<std::string> names(quantinty, " ");
+	std::vector<World> maps;
+	for (int i = 0; i < quantinty; i++) {
+		names[i] = path + std::to_string(i + 1) + ext;
+
+	}
+	return names;
+}
+
+std::vector<World> stringtoworld(std::vector<std::string> files) {
+	std::vector<World> maps;
+	for (int i = 0; i < 10; i++) {
+		World map(files[i]);
+		maps.push_back(map);
+	}
+	return maps;
 }

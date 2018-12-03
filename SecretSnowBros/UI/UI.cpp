@@ -196,11 +196,16 @@ GameOverUI::GameOverUI(AllegroSoundFactory & soundF, AllegroWindow & window, All
 	this->boxes.addBox(new AllegroButton(ButtonX(w, 1) - (ButtonWidth(w) / 2.0), ButtonY(h), ButtonWidth(w), ButtonHeight(h), PlayAgainText,
 		font, colorF.create(ButtonColor), PlayAgainID));
 	this->boxes[PlayAgainID]->setBackgroundColor(colorF.create("black"));
-	
+	this->boxes[PlayAgainID]->setBorderColor(colorF.create("white"));
+	this->boxes[PlayAgainID]->setBorderThickness(1);
+
 	// ExitButton
 	this->boxes.addBox(new AllegroButton(ExitX(w) - (ExitW(w) / 2.0), ExitY(h), ExitW(w), ExitH(h), ExitText,
 		font, colorF.create(ButtonColor), ExitID));
 	this->boxes[ExitID]->setBackgroundColor(colorF.create("black"));
+	this->boxes[ExitID]->setBorderColor(colorF.create("white"));
+	this->boxes[ExitID]->setBorderThickness(1);
+
 
 
 	this->layout->addBox(this->boxes[PlayAgainID]);

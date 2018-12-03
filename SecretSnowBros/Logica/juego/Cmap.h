@@ -10,8 +10,7 @@
 
 struct World {
 public:
-	World(std::string file_, uint16_t id) {
-		this->ID = id;
+	World(std::string file_) {
 		std::fstream file;
 		file.open(file_, std::ifstream::in);
 

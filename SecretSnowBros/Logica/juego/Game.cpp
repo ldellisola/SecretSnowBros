@@ -39,11 +39,11 @@ void Game::selectNextMap()
 
 
 	for (Player * player : this->getPlayer()) {
-		if (player->getID() == this->Player1ID) {
+		if (player->getID() == this->Player1ID && player->getLives() > 0) {
 			player1lives = player->getLives();
 			player1score = player->getScoreCounter()->getActualScore();
 		}
-		else if (player->getID() == this->Player2ID) {
+		else if (player->getID() == this->Player2ID && player->getLives() > 0) {
 			player2lives = player->getLives();
 			player2score = player->getScoreCounter()->getActualScore();
 		}
@@ -346,7 +346,6 @@ KeepReturn Game::run(void * ptr)
 {
 	int keep = (int)KeepReturn::Start;
 	int mapCounter = 0;
-	mapCounter = 9;
 	bool alive = true;
 	while (mapCounter != this->allMaps.size() && (keep != (int)KeepReturn::Exit) && (keep != (int)KeepReturn::PlayersDead)) {//ESA ES LA NEGRADA, HAYQ UE DEFINIR VALORES DE SALIDA DE KEEP, ESE 1 DE AHI SERIA QUE PERDISTE NO GANASTE
 		this->selectNextMap();
@@ -361,6 +360,7 @@ KeepReturn Game::run(void * ptr)
 		//Aca si se quiere se puede poner una pantalla que muestre alguna transicion estilo nivel 2
 	}
 	currentMap = nullptr;
+	this->allMaps.clear();
 	return (KeepReturn)keep;
 
 }

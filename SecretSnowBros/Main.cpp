@@ -21,8 +21,7 @@
 
 #define WindowTitle "SnowBros!"
 #define WindowImage ""
-std::vector<std::string> getNames(std::string path, std::string ext, int quantinty);
-std::vector<World> stringtoworld(std::vector<std::string> files);
+
 //#undef ShittyComputer
 
 #ifdef ShittyCompucter
@@ -43,7 +42,7 @@ int main(void) {
 	AllegroWindow window(disp.width, disp.height, allegro.getEventQueue(), WindowTitle, WindowImage);
 
 	window.open();
-	window.setFullScreen();
+	//window.setFullScreen();
 
 #define BlockX ((window.getWidth() * 0.7)/16)
 #define BlockY ((window.getHeight())/12)
@@ -116,7 +115,6 @@ int main(void) {
 	WindowUpdater win(window);
 	snowbros.loadObserver(&win);
 
-	snowbros.loadMaps(stringtoworld(getNames("Maps/map", ".csv", 10)));
 
 	int ev = BackID;
 	void * ptr = nullptr;
@@ -129,23 +127,3 @@ int main(void) {
 	return 0;
 }
 
-
-std::vector<std::string> getNames(std::string path, std::string ext ,int quantinty)
-{
-	std::vector<std::string> names(quantinty, " ");
-	std::vector<World> maps;
-	for (int i = 0; i < quantinty; i++) {
-		names[i] = path + std::to_string(i + 1) + ext;
-
-	}
-	return names;
-}
-
-std::vector<World> stringtoworld(std::vector<std::string> files) {
-	std::vector<World> maps;
-	for (int i = 0; i < 10; i++) {
-		World map(files[i]);
-		maps.push_back(map);
-	}
-	return maps;
-}

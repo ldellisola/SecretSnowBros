@@ -9,6 +9,9 @@
 #include "AllwBasics\AllegroSound.h"
 #include "AllwBasics\AllegroWindow.h"
 
+std::vector<std::string> getNames(std::string path, std::string ext, int quantinty);
+std::vector<World> stringtoworld(std::vector<std::string> files);
+
 using namespace std::placeholders;
 
 class FSM;
@@ -73,4 +76,5 @@ private:
 		/*Exit*/					{ { stateTypes::Exit, nullptr },							{ stateTypes::Exit, nullptr },					{ stateTypes::Exit, nullptr },					{ stateTypes::Exit, nullptr },							{ stateTypes::Exit, nullptr },					{ stateTypes::Exit, nullptr },					{ stateTypes::Exit, nullptr } },
 	};
 };
+
 
