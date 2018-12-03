@@ -7,10 +7,7 @@ enum class GameEventType
 	Jump,Shoot,Left,Right,Timer,Exit,None
 };
 
-#ifdef _DEBUG
-const std::string gameEv[] = { "Jump","Shoot","Left","Right","Timer","Exit","Stop","None" };
 
-#endif
 
 
 class GameEvent

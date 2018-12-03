@@ -1,6 +1,6 @@
 #pragma once
-#include "../MVC/Observer.h"
-#include "../Logica/juego/Game.h"
+#include "Observer.h"
+#include "Logica/juego/Game.h"
 #include "AllwAnimation/AllegroSprite.h"
 #include "AllwInit/AllegroFactory.h"
 #include <stdint.h>

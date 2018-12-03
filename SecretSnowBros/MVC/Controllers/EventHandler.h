@@ -4,14 +4,10 @@
 #include <vector>
 #include <queue>
 
-#if _DEBUG
-#include "../Logger.h"
-#endif
+
 
 class EventHandler
-#if _DEBUG
-	: protected Logger
-#endif
+
 {
 public:
 	EventHandler();

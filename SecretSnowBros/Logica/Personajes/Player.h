@@ -8,18 +8,13 @@
 #include "Score.h"
 #include "Logica/Personajes/SnowBall.h"
 
-#ifdef _DEBUG
-#include "../../Logger.h"
 
-#endif
 
 class SnowBall;
 
 class Player :
 	public Being, public Shooter<SnowProjectile>
-#ifdef _DEBUG
-	, protected Logger
-#endif // _DEBUG
+
 {
 public:
 	Player(uint16_t x, uint16_t y, uint16_t ID);

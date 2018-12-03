@@ -1,5 +1,5 @@
 #pragma once
-#include "MVC/Observer.h"
+#include "Observer.h"
 #include <stdint.h>
 #include "Logica/juego/Game.h"
 #include "Logica/Personajes/SnowBall.h"

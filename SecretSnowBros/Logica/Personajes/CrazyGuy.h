@@ -14,19 +14,10 @@ por 0,5 segs.*/
 #define WaitingTimeCG 7
 
 
-#ifdef _DEBUG
-#include "../../Logger.h"
-#endif
+
 
 class CrazyGuy :
-	public Monster
-
-#ifdef _DEBUG
-	,Logger
-#endif // _DEBUG
-
-
-{
+	public Monster{
 public:
 	CrazyGuy(uint32_t x, uint32_t y,uint32_t ID=0);
 	virtual ~CrazyGuy(){}

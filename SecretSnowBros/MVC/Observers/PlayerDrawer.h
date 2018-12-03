@@ -1,8 +1,8 @@
 #pragma once
 #include "Observer.h"
 #include "AllwAnimation/AllegroAnimation.h"
-#include "../Logica/Personajes/Being.h"
-#include"../Logica/juego/Game.h"
+#include "Logica/Personajes/Being.h"
+#include"Logica/juego/Game.h"
 
 
 class PlayerDrawer :

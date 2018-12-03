@@ -4,7 +4,7 @@
 #include <AllwBasics/AllegroFont.h>
 #include <AllwInit/AllegroFactory.h>
 
-#include "MVC/Observer.h"
+#include "Observer.h"
 #include "Logica/Personajes/Player.h"
 
 class PlayerInfoObserver

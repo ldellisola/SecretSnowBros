@@ -17,7 +17,7 @@ SnowBall::SnowBall(Monster * monster, Score * PlayerScore)
 	this->playerScore = PlayerScore;
 	this->enemyHits = 0;
 	this->wallHits = 0;
-	this->playerScore += 500;
+	*(this->playerScore) += 500;
 }
 
 bool SnowBall::collision(Being * being)
@@ -30,7 +30,7 @@ bool SnowBall::collision(Being * being)
 				this->enemyHits++;
 				being->kill();
 				for (int i = 1; i <= enemyHits; i++) {
-					*playerScore += i * 1000;
+					*(playerScore) += i * 1000;
 				}
 			}
 			else  {
@@ -94,30 +94,30 @@ void SnowBall::update(void * ptr)
 				wallHits++;
 				for (Being * player : hijackedPlayers)
 					player->updateScore(200);
+				if (getY() == 10) 
+					wallHits = 123;
 			}
 			this->setHorizontalDir(HorizontalDirection::Right);
 
 
 
-			if (getY() == 10) {
-				wallHits = 123;
-			}
+
 		}
 
 		break;
 	case HorizontalDirection::Right:
 		if (world.map[getY()][getX() + 1] == 'F') {
-			if (getState() == SnowBallState::Rolling) {
-				wallHits++;
-				for (Being * player : hijackedPlayers)
-					player->updateScore(200);
+				if (getState() == SnowBallState::Rolling) {
+					wallHits++;
+					for (Being * player : hijackedPlayers)
+						player->updateScore(200);
+				if (getY() == 10) 
+					wallHits = 123;
 			}
 			this->setHorizontalDir(HorizontalDirection::Left);
 
 
-			if (getY() == 10) {
-				wallHits = 123;
-			}
+
 		}
 		break;
 

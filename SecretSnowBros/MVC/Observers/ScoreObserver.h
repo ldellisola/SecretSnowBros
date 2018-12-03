@@ -3,7 +3,7 @@
 #include "AllwUI/WrittenBox.h"
 #include "AllwBasics/AllegroFont.h"
 #include <cstdint>
-#include "../Logica/Personajes/Score.h"
+#include "Logica/Personajes/Score.h"
 class ScoreObserver :
 	public Observer
 {

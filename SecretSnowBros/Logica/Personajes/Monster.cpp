@@ -20,6 +20,7 @@ void Monster::freeze()
 	if (freezeState<4)
 	{
 		freezeState++;
+		setState(BeingState::Falling);
 	}
 
 }

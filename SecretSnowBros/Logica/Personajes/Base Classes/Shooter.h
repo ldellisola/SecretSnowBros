@@ -36,11 +36,22 @@ public:
 		}
 	}
 
+	bool isShooting() {
+		return shooting;
+	}
+
+	bool isCoolingDown() {		// Cuando pasan los ticks me dice que ya puedo disparar de vuelta
+		return cooldown;
+	}
 
 	virtual ~Shooter()
 	{
 		for (Projectile * proj : projectiles)
 			delete proj;
+	}
+
+	uint16_t getShootingTicks() {
+		return shootingTicks;
 	}
 
 protected:
@@ -55,18 +66,12 @@ protected:
 		this->shootingTicks = (this->shootingTicks + 1) % maxShootTicks;
 	}
 
-	uint16_t getShootingTicks() {
-		return shootingTicks;
-	}
 
 
-	bool isCoolingDown() {		// Cuando pasan los ticks me dice que ya puedo disparar de vuelta
-		return cooldown;
-	}
 
-	bool isShooting() {
-		return shooting;
-	}
+	
+
+	
 
 	void startShooting() {
 		shooting = true;

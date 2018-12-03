@@ -14,9 +14,7 @@ Player::Player(uint16_t x, uint16_t y, uint16_t ID)
 	Being(JumpTicks,WalkTicks,FallTicks,x,y,ID),
 	Shooter(ShootTicks)
 
-#ifdef _DEBUG
-	,Logger("Logs/Player ID -" + std::to_string(ID),true)
-#endif // _DEBUG
+
 {
 	this->lives = 3;
 
@@ -30,20 +28,7 @@ void Player::update(void * ptr)
 {
 	if (!isCarried() && isAlive() && !isWaitingToRevive()) {
 		Being::update(ptr);
-#ifdef _DEBUG
-		if (getVerticalState() == VerticalState::Jumping)
-			if (getVerticalTicks() == MaxJumpingTicks / 2)
-				log("Jumped halfway at [" + std::to_string(getX()) + "," + std::to_string(getY()) + "], to " + "[" + std::to_string(getX()) + ", " + std::to_string(getY() - 1) + "]");
-			else if (getVerticalState() == VerticalState::Falling)
-				if (getVerticalTicks() == 0)
-					log("Falling at [" + std::to_string(getX()) + "," + std::to_string(getY()) + "]");
 
-		if (getHorizontalState() == HorizontalState::Moving)
-			if (getHorizontalTicks() == 0)
-				log("Walked from [" + std::to_string(getX()) + "," + std::to_string(getY()) + "]");
-
-
-#endif // _DEBUG
 
 
 		if (isInmune() && !isWaitingToRevive()) {
@@ -61,10 +46,6 @@ void Player::update(void * ptr)
 
 
 		if (!isCoolingDown() && isShooting()) {
-#ifdef _DEBUG
-			log("Current score is:" + std::to_string(this->getScoreCounter()->getActualScore()));
-			log("Shoot at [" + std::to_string(getX()) + "," + std::to_string(getY()) + "]");
-#endif // _DEBUG
 
 			if (this->getHorizontalDir() == HorizontalDirection::Right && this->getX() + 1 < map.columna)
 				this->shoot(this->getX() + 1, this->getY(), HorizontalDirection::Right, this->getScoreCounter());
@@ -94,9 +75,6 @@ void Player::collition(Projectile * proy)
 {
 	if (proy->getX() == this->getX() && proy->getY() == this->getY() && !this->isInmune() && this->isAlive()) {
 		this->kill();
-#ifdef _DEBUG
-		log("Collision with projectile");
-#endif // _DEBUG
 	}
 }
 
@@ -154,9 +132,7 @@ void Player::kill()
 
 	if (!isInmune()) {
 
-#ifdef _DEBUG
-		log("Player Killed at [" + std::to_string(getX()) + ", " + std::to_string(getY()) + "]");
-#endif
+
 		Being::kill();
 
 
@@ -165,15 +141,6 @@ void Player::kill()
 			this->startWaitingToRevive();
 		}
 	}
-
-
-
-
-#ifdef _DEBUG
-	if (lives > 0) {
-		log("Player spawned at [" + std::to_string(getX()) + ", " + std::to_string(getY()) + "]");
-	}
-#endif
 }
 
 bool Player::shouldRevive()
@@ -204,14 +171,6 @@ void Player::revive()
 void Player::setInmune(bool set)
 {
 	inmune = set;
-
-#ifdef _DEBUG
-	if (inmune) {
-		log("Player is now inmune");
-	}
-	else
-		log("Player stopped being inmune");
-#endif
 }
 
 void Player::updateInmuneTick()
@@ -248,20 +207,14 @@ void Player::startWaitingToRevive()
 	this->setInmune(true);
 	resetReviveTick();
 	waitingToRevive = true;
-#ifdef _DEBUG
-		log("Player is waiting to revive");
 
-#endif
 }
 
 void Player::stopWaitingToRevive()
 {
 	resetReviveTick();
 	waitingToRevive = false;
-#ifdef _DEBUG
-	log("Player is will revive now");
 
-#endif
 }
 
 void Player::updateReviveTick()

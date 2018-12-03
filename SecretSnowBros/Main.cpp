@@ -1,16 +1,17 @@
 #include <AllwInit/Allw.h>
 #include <AllwBasics/AllegroWindow.h>
 #include <AllwBasics/AllegroEvent.h>
-#include "MVC/AllegroController.h"
-#include "MVC/StageObserver.h"
-#include "MVC/PlayerDrawer.h"
-#include "MVC/ProyectileDrawer.h"
-#include "MVC/EnemyDrawer.h"
-#include "MVC/WindowUpdater.h"
-#include "MVC/FattyLogger.h"
-#include "MVC/FireBallProjectile.h"
-#include "MVC/SnowBallObserver.h"
-#include "MVC/PlayerInfoObserver.h"
+#include "MVC/Controllers/AllegroController.h"
+#include "MVC/Observers/StageObserver.h"
+#include "MVC/Observers/PlayerDrawer.h"
+#include "MVC/Observers/ProyectileDrawer.h"
+#include "MVC/Observers/EnemyDrawer.h"
+#include "MVC/Observers/WindowUpdater.h"
+#include "MVC/Observers/FireBallProjectile.h"
+#include "MVC/Observers/SnowBallObserver.h"
+#include "MVC/Observers/PlayerInfoObserver.h"
+#include "MVC/Observers/PlayerSound.h"
+#include "MVC/Observers/MonsterSound.h"
 
 #include "Logica/Personajes/Being.h"
 
@@ -22,7 +23,7 @@ std::vector<std::string> getNames(std::string path, std::string ext, int quantin
 std::vector<World> stringtoworld(std::vector<std::string> files);
 //#undef ShittyComputer
 
-#ifdef ShittyComputer
+#ifdef ShittyCompucter
 	#define Block (100)
 #else
 	#define Block (100)
@@ -40,6 +41,8 @@ int main(void) {
 
 	Game snowbros(Player1ID);
 	EventHandler eventH;
+
+	AllegroSoundFactory soundF;
 
 
 
@@ -78,9 +81,15 @@ int main(void) {
 
 	snowbros.loadObserver(&enemyDrawer);
 
-	FattyLogger fatlog;
+	PlayerSound playerSoundObs(soundF);
 
-	snowbros.loadObserver(&fatlog);
+	snowbros.loadObserver(&playerSoundObs);
+
+	Monsteround monsterSoundObs(soundF);
+	snowbros.loadObserver(&monsterSoundObs);
+
+
+
 
 	SnowBallObserver snowBallObs("Images/Frozen/FSS4.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
 

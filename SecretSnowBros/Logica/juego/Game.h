@@ -1,26 +1,22 @@
 #pragma once
 #include <vector>
-#if _DEBUG
-#include "Logger.h"
-#endif
-#include "MVC/Controller.h"
+
+#include "MVC/Controllers/Controller.h"
 #include "Logica/Personajes/Monster.h"
 #include "Logica/Personajes/Player.h"
-#include "MVC/EventHandler.h"
+#include "MVC/Controllers/EventHandler.h"
 #include "Logica/Personajes/PurpleGuy.h"
 #include "Logica/Personajes/GreenFatty.h"
 #include "Logica/Personajes/CrazyGuy.h"
 #include "Logica/Personajes/SnowBall.h"
-#include "MVC/Event.h"
-#include "MVC/Observer.h"
+#include "MVC/Controllers/Event.h"
+#include "MVC/Observers/Observer.h"
 #include "Logica/juego/Cmap.h"
 
 
 enum class KeepReturn { Start, Exit,PlayersDead,LevelWon };
 class Game
-#ifdef _DEBUG
-	: protected Logger
-#endif // _DEBUG
+
 
 {
 public:

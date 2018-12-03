@@ -1,7 +1,7 @@
 #pragma once
 #include <cstdint>
 #include <vector>
-#include "../../MVC/ScoreObserver.h"
+#include "MVC/Observers/ScoreObserver.h"
 
 class Score
 {

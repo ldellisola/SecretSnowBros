@@ -4,9 +4,7 @@
 
 Game::Game(uint32_t Player1ID, uint32_t Player2ID)
 	:Player1ID(Player1ID), Player2ID(Player2ID)
-#if _DEBUG
-	, Logger("Logs/Game Model", true)
-#endif
+
 {
 	srand(time(NULL));
 }
@@ -34,10 +32,6 @@ void Game::selectNextMap()
 		while (this->currentMap != &allMaps[i++]);
 
 	this->currentMap = &allMaps[i];
-
-#if _DEBUG
-	log("Loaded map number " + std::to_string(i));
-#endif
 
 	for (Monster * monst : this->getMonster())
 		delete monst;
@@ -94,14 +88,6 @@ void Game::selectNextMap()
 
 	currentMap->purge();
 
-
-
-
-
-
-#if _DEBUG
-	log("Purged map number " + std::to_string(i));
-#endif
 }
 
 void Game::updateObservers(void * ptr)
@@ -240,20 +226,12 @@ void Game::createPlayer(uint32_t id, uint32_t x, uint32_t y)
 {
 	auto temp = new Player(x, y, id);
 	this->players.push_back(temp);
-
-#if _DEBUG
-	log("Created Player Id: " + std::to_string(id) + ", at location [" + std::to_string(x) + "," + std::to_string(y) + "]");
-#endif
 }
 
 void Game::createPurpleGuy(uint32_t x, uint32_t y)
 {
 	auto temp = new PurpleGuy(x, y,(uint32_t) Enemies.size());
 	this->Enemies.push_back(temp);
-
-#if _DEBUG
-	log("Created PurpleGuy at location [" + std::to_string(x) + "," + std::to_string(y) + "]");
-#endif
 }
 
 void Game::createGreenFatty(uint32_t x, uint32_t y)
@@ -261,9 +239,6 @@ void Game::createGreenFatty(uint32_t x, uint32_t y)
 	auto temp = new GreenFatty(x, y, (uint32_t)Enemies.size());
 	this->Enemies.push_back(temp);
 
-#if _DEBUG
-	log("Created GreenFatty at location [" + std::to_string(x) + "," + std::to_string(y) + "]");
-#endif
 }
 
 void Game::createCrazyGuy(uint32_t x, uint32_t y)
@@ -271,9 +246,6 @@ void Game::createCrazyGuy(uint32_t x, uint32_t y)
 	auto temp = new CrazyGuy(x, y, (uint32_t)Enemies.size());
 	this->Enemies.push_back(temp);
 
-#if _DEBUG
-	log("Created CrazyGuy at location [" + std::to_string(x) + "," + std::to_string(y) + "]");
-#endif
 }
 
 void Game::createSnowBall(Monster * monster, Score * playerScore)
@@ -325,9 +297,6 @@ void Game::loadMap(World map)
 {
 	this->allMaps.push_back(map);
 
-#if _DEBUG
-	log("Loaded 1 map");
-#endif
 }
 
 void Game::loadMaps(std::vector<World> maps)
@@ -335,9 +304,6 @@ void Game::loadMaps(std::vector<World> maps)
 	for (World& map : maps)
 		this->allMaps.push_back(map);
 
-#if _DEBUG
-	log("Loaded " + std::to_string(maps.size()) + " maps");
-#endif
 }
 
 World*  Game::getmap() {
@@ -355,16 +321,11 @@ World*  Game::getmap() {
 bool Game::checkIfPlayersAlive() {
 	for (int i = 0; i < this->players.size(); i++) {
 		if (this->players[i]->isAlive()) {
-#if _DEBUG
-			log("At least one player is alive");
-#endif
+
 			return false;								//Me fijo si alguno tiene vida	
 		}
 	}
 
-#if _DEBUG
-	log("All players are dead");
-#endif
 	return true;										//caso contrario estan muertos
 }
 
@@ -372,18 +333,12 @@ bool Game::checkIfPlayersAlive() {
 bool Game::checkIfMonstersAlive() {
 	for (int i = 0; i < this->Enemies.size(); i++) {
 		if (this->Enemies[i]->isAlive() || this->snowballs.size()) {
-#if _DEBUG
-			log("At least one enemy is alive");
-#endif
+
 
 			return false;								//Me fijo si alguno tiene vida
 		}
 
 	}
-
-#if _DEBUG
-	log("All enemies are dead");
-#endif
 
 	return true; //caso contrario estan muertos
 }
@@ -413,26 +368,19 @@ void Game::loadEventHandler(EventHandler * eventH)
 {
 	this->eventH = eventH;
 
-#if _DEBUG
-	log("Loaded event handler");
-#endif
 }
 
 void Game::loadObserver(Observer * obs)
 {
 	if (obs != nullptr) {
 		this->observers.push_back(obs);
-#if _DEBUG
-		log("Loaded observer");
-#endif
+
 	}
 }
 
 void Game::loadPlayer(Player * player)
 {
 	this->players.push_back(player);
-#if _DEBUG
-	log("Loaded player");
-#endif
+
 }
 

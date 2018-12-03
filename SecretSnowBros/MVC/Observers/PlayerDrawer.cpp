@@ -100,6 +100,8 @@ void PlayerDrawer::draw(void * data)
 				sprites[12]->draw(being->getX() * BlockWidth, being->getY() * BlockHeight);
 			}
 		}
+
+
 		for (Observer * obs : observers) {
 			obs->draw(being);
 		}
