@@ -10,7 +10,7 @@ no continúen en la dirección anterior, es equiprobable que salten,
 que se muevan en la dirección contraria o que se queden quietos
 por 0,5 segs.*/
 
-//	/		MONO AMARILLO		/	//
+//	/		Troll Toll		/	//
 #define WaitingTimeCG 7
 
 
