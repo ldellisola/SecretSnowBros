@@ -11,7 +11,7 @@
 
 enum UIIDs
 {
-	SinglePlayerID, DoublePlayerID, ExitID, ControlID, LocalID, OnlineID, BackID, JoinID, CreateID, ConnectID, PlayAgainID, LeaveID, ReadyID, WonGameID, LostGameID, InputID
+	ControlID, SinglePlayerID, ExitID,   BackID, WonGameID, LostGameID, PlayAgainID, 
 };
 
 class UI

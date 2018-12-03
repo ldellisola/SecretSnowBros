@@ -1,6 +1,6 @@
 #include "UI.h"
 
-#define TitleUIBackground "background.jpg"
+#define TitleUIBackground "Images\\MenuSprite.jpg"
 
 #define FontPath "font.ttf"
 #define FontSize 20
@@ -71,6 +71,10 @@
 
 
 
+#define WonSoundtrack "Music\\Soundtrack\\Day Man.ogg"
+#define TitleSoundtrack "Music\\Soundtrack\\I will smash your face into a jelly.ogg"
+#define GameOverSoundTrack "Music\\Soundtrack\\Law And Order Theme.ogg"
+#define InstructionsSoundtrack "Music\\Soundtrack\\Night Man.ogg"
 
 
 UI::UI(AllegroWindow & window)
@@ -86,7 +90,7 @@ UI::~UI()
 
 int UI::run(void * eventH, void * data)
 {
-	int retValue = 0;
+	int retValue = -1;
 	window.insertLayout(*this->layout);
 	if (this->sound != nullptr)
 		this->sound->play();
@@ -112,7 +116,7 @@ int UI::run(void * eventH, void * data)
 				break;
 			}
 		}
-	} while (retValue == 0);
+	} while (retValue == -1);
 
 	window.deleteLayout();
 	if (this->sound != nullptr)
@@ -124,12 +128,15 @@ int UI::run(void * eventH, void * data)
 }
 
 
+
+
+
 TitleUI::TitleUI(AllegroSoundFactory & soundF, AllegroWindow & window)
 	:UI(window)
 {
 	this->font = new AllegroFont(FontPath, FontSize, 0);
 
-	//this->sound = soundF.create("", PlayMode::Loop, 0);
+	this->sound = soundF.create(TitleSoundtrack, PlayMode::Loop, 0);
 
 	AllegroColorFactory colorF;
 	int w = window.getWidth(), h = window.getHeight();
@@ -138,11 +145,7 @@ TitleUI::TitleUI(AllegroSoundFactory & soundF, AllegroWindow & window)
 	this->boxes.addBox(new AllegroButton(ButtonX(w, 1) - (ButtonWidth(w) / 2.0), ButtonY(h), ButtonWidth(w), ButtonHeight(h), SinglePlayerText,
 		font, colorF.create(ButtonColor), SinglePlayerID));
 	this->boxes[SinglePlayerID]->setBackgroundColor(colorF.create("hotpink"));
-	// DoublePlayerButton
-	this->boxes.addBox(new AllegroButton(ButtonX(w, 3) - (ButtonWidth(w) / 2.0), ButtonY(h), ButtonWidth(w), ButtonHeight(h), DoublePlayerText,
-		font, colorF.create(ButtonColor), DoublePlayerID));
-	this->boxes[DoublePlayerID]->setBackgroundColor(colorF.create("hotpink"));
-	// ExitButton
+	//// ExitButton
 	this->boxes.addBox(new AllegroButton(ExitX(w) - (ExitW(w) / 2.0), ExitY(h), ExitW(w), ExitH(h), ExitText,
 		font, colorF.create(ButtonColor), ExitID));
 	this->boxes[ExitID]->setBackgroundColor(colorF.create("hotpink"));
@@ -153,228 +156,20 @@ TitleUI::TitleUI(AllegroSoundFactory & soundF, AllegroWindow & window)
 	this->boxes[ControlID]->setBackgroundColor(colorF.create("hotpink"));
 
 	this->layout->addBox(this->boxes[SinglePlayerID]);
-	this->layout->addBox(this->boxes[DoublePlayerID]);
 	this->layout->addBox(this->boxes[ExitID]);
 	this->layout->addBox(this->boxes[ControlID]);
 
-	pertinetIDs = { SinglePlayerID ,DoublePlayerID,ExitID ,ControlID };
+	pertinetIDs = { SinglePlayerID ,ExitID ,ControlID };
 }
 
 
-
-ModeSelectionUI::ModeSelectionUI(AllegroSoundFactory & soundF, AllegroWindow & window)
-	:UI(window)
-{
-	this->font = new AllegroFont(FontPath, FontSize, 0);
-
-	//this->sound = soundF.create("", PlayMode::Loop, 0);
-
-	AllegroColorFactory colorF;
-	int w = window.getWidth(), h = window.getHeight();
-	this->layout = new AllegroLayout(w, h, ModeSelectionBackground, LayoutDrawMode::Slow);
-	// LocalButton
-	this->boxes.addBox(new AllegroButton(ButtonX(w, 1) - (ButtonWidth(w) / 2.0), ButtonY(h), ButtonWidth(w), ButtonHeight(h), LocalText,
-		font, colorF.create(ButtonColor), LocalID));
-	this->boxes[LocalID]->setBackgroundColor(colorF.create("hotpink"));
-	// OnlineButton
-	this->boxes.addBox(new AllegroButton(ButtonX(w, 3) - (ButtonWidth(w) / 2.0), ButtonY(h), ButtonWidth(w), ButtonHeight(h), OnlineText,
-		font, colorF.create(ButtonColor), OnlineID));
-	this->boxes[OnlineID]->setBackgroundColor(colorF.create("hotpink"));
-	// ExitButton
-	this->boxes.addBox(new AllegroButton(ExitX(w) - (ExitW(w) / 2.0), ExitY(h), ExitW(w), ExitH(h), ExitText,
-		font, colorF.create(ButtonColor), ExitID));
-	this->boxes[ExitID]->setBackgroundColor(colorF.create("hotpink"));
-	//BackButto
-	this->boxes.addBox(new AllegroButton(BackX(w) - (BackWidth(w) / 2.0), BackY(h), BackWidth(w), BackHeight(h), BackText,
-		font, colorF.create(ButtonColor), BackID));
-	this->boxes[BackID]->setBackgroundColor(colorF.create("hotpink"));
-
-	this->layout->addBox(this->boxes[LocalID]);
-	this->layout->addBox(this->boxes[OnlineID]);
-	this->layout->addBox(this->boxes[ExitID]);
-	this->layout->addBox(this->boxes[BackID]);
-
-	pertinetIDs = { LocalID ,OnlineID,ExitID ,BackID };
-}
-
-
-
-OnlineConfigUI::OnlineConfigUI(AllegroSoundFactory & soundF, AllegroWindow & window)
-	:UI(window)
-{
-	this->font = new AllegroFont(FontPath, FontSize, 0);
-
-	//this->sound = soundF.create("", PlayMode::Loop, 0);
-
-	AllegroColorFactory colorF;
-	int w = window.getWidth(), h = window.getHeight();
-	this->layout = new AllegroLayout(w, h, ModeSelectionBackground, LayoutDrawMode::Slow);
-	// LocalButton
-	this->boxes.addBox(new AllegroButton(ButtonX(w, 1) - (ButtonWidth(w) / 2.0), ButtonY(h), ButtonWidth(w), ButtonHeight(h), JoinText,
-		font, colorF.create(ButtonColor), JoinID));
-	this->boxes[JoinID]->setBackgroundColor(colorF.create("hotpink"));
-	// OnlineButton
-	this->boxes.addBox(new AllegroButton(ButtonX(w, 3) - (ButtonWidth(w) / 2.0), ButtonY(h), ButtonWidth(w), ButtonHeight(h), CreateText,
-		font, colorF.create(ButtonColor), CreateID));
-	this->boxes[CreateID]->setBackgroundColor(colorF.create("hotpink"));
-	// ExitButton
-	this->boxes.addBox(new AllegroButton(ExitX(w) - (ExitW(w) / 2.0), ExitY(h), ExitW(w), ExitH(h), ExitText,
-		font, colorF.create(ButtonColor), ExitID));
-	this->boxes[ExitID]->setBackgroundColor(colorF.create("hotpink"));
-	//BackButto
-	this->boxes.addBox(new AllegroButton(BackX(w) - (BackWidth(w) / 2.0), BackY(h), BackWidth(w), BackHeight(h), BackText,
-		font, colorF.create(ButtonColor), BackID));
-	this->boxes[BackID]->setBackgroundColor(colorF.create("hotpink"));
-
-	this->layout->addBox(this->boxes[JoinID]);
-	this->layout->addBox(this->boxes[CreateID]);
-	this->layout->addBox(this->boxes[ExitID]);
-	this->layout->addBox(this->boxes[BackID]);
-
-	pertinetIDs = { JoinID ,CreateID,ExitID ,BackID };
-}
-
-WaitingToJoinUI::WaitingToJoinUI(AllegroSoundFactory & soundF, AllegroWindow & window)
-	:UI(window)
-{
-	this->font = new AllegroFont(FontPath, FontSize, 0);
-
-	//this->sound = soundF.create("", PlayMode::Loop, 0);
-
-	AllegroColorFactory colorF;
-	int w = window.getWidth(), h = window.getHeight();
-	this->layout = new AllegroLayout(w, h, ModeSelectionBackground, LayoutDrawMode::Slow);
-	
-	// ExitButton
-	this->boxes.addBox(new AllegroButton(ExitX(w) - (ExitW(w) / 2.0), ExitY(h), ExitW(w), ExitH(h), ExitText,
-		font, colorF.create(ButtonColor), ExitID));
-	this->boxes[ExitID]->setBackgroundColor(colorF.create("hotpink"));
-	//BackButton
-	this->boxes.addBox(new AllegroButton(BackX(w) - (BackWidth(w) / 2.0), BackY(h), BackWidth(w), BackHeight(h), BackText,
-		font, colorF.create(ButtonColor), BackID));
-	this->boxes[BackID]->setBackgroundColor(colorF.create("hotpink"));
-
-	this->layout->addBox(this->boxes[ExitID]);
-	this->layout->addBox(this->boxes[BackID]);
-
-	pertinetIDs = { ExitID ,BackID };
-}
-
-WaitingToCreateUI::WaitingToCreateUI(AllegroSoundFactory & soundF, AllegroWindow & window)
-	:UI(window)
-{
-	this->font = new AllegroFont(FontPath, FontSize, 0);
-
-	//this->sound = soundF.create("", PlayMode::Loop, 0);
-
-	AllegroColorFactory colorF;
-	int w = window.getWidth(), h = window.getHeight();
-	this->layout = new AllegroLayout(w, h, ModeSelectionBackground, LayoutDrawMode::Slow);
-
-	// ExitButton
-	this->boxes.addBox(new AllegroButton(ExitX(w) - (ExitW(w) / 2.0), ExitY(h), ExitW(w), ExitH(h), ExitText,
-		font, colorF.create(ButtonColor), ExitID));
-	this->boxes[ExitID]->setBackgroundColor(colorF.create("hotpink"));
-	//BackButton
-	this->boxes.addBox(new AllegroButton(BackX(w) - (BackWidth(w) / 2.0), BackY(h), BackWidth(w), BackHeight(h), BackText,
-		font, colorF.create(ButtonColor), BackID));
-	this->boxes[BackID]->setBackgroundColor(colorF.create("hotpink"));
-
-	this->layout->addBox(this->boxes[ExitID]);
-	this->layout->addBox(this->boxes[BackID]);
-
-	pertinetIDs = { ExitID ,BackID };
-}
-
-JoinMenuUI::JoinMenuUI(AllegroSoundFactory & soundF, AllegroWindow & window)
-	:UI(window)
-{
-	this->font = new AllegroFont(FontPath, FontSize, 0);
-
-	//this->sound = soundF.create("", PlayMode::Loop, 0);
-
-	AllegroColorFactory colorF;
-	int w = window.getWidth(), h = window.getHeight();
-	this->layout = new AllegroLayout(w, h, ModeSelectionBackground, LayoutDrawMode::Slow);
-
-	// ExitButton
-	this->boxes.addBox(new AllegroButton(ExitX(w) - (ExitW(w) / 2.0), ExitY(h), ExitW(w), ExitH(h), ExitText,
-		font, colorF.create(ButtonColor), ExitID));
-	this->boxes[ExitID]->setBackgroundColor(colorF.create("hotpink"));
-	//BackButton
-	this->boxes.addBox(new AllegroButton(BackX(w) - (BackWidth(w) / 2.0), BackY(h), BackWidth(w), BackHeight(h), BackText,
-		font, colorF.create(ButtonColor), BackID));
-	this->boxes[BackID]->setBackgroundColor(colorF.create("hotpink"));
-	// input
-	this->boxes.addBox(new AllegroWritableBox(KeyboardMode::Alphanumeric,ButtonX(w,2) - (InputWidth(w) / 2.0),InputY(h),InputWidth(w),
-		InputHeight(h),font,colorF.create(ButtonColor),InputID));
-	this->boxes[InputID]->setBackgroundColor(colorF.create("hotpink"));
-	// connect
-	this->boxes.addBox(new AllegroButton(ButtonX(w, 2) - (ConnectWidth(w) / 2.0), ConnectY(h), ConnectWidth(w), ConnectHeight(h), ConnectText,
-		font, colorF.create(ButtonColor), ConnectID));
-	this->boxes[ConnectID]->setBackgroundColor(colorF.create("hotpink"));
-
-	this->layout->addBox(this->boxes[ExitID]);
-	this->layout->addBox(this->boxes[BackID]);
-	this->layout->addBox(this->boxes[ConnectID]);
-	this->layout->addBox(this->boxes[InputID]);
-
-	pertinetIDs = { ExitID ,BackID ,InputID ,ConnectID };
-}
-
-int JoinMenuUI::run(void * eventH,void * data)
-{
-	int retValue = 0;
-	window.insertLayout(*this->layout);
-	if (this->sound != nullptr)
-		this->sound->play();
-
-	AllegroEventHandler& eventHandler = *(AllegroEventHandler *)eventH;
-
-	do {
-		eventHandler.getEvent();
-		if (eventHandler.isThereEvent()) {
-			AllegroEvent ev = eventHandler.ObtainEvent();
-			switch (ev.getType())
-			{
-			case EventType::DisplayClose:
-				retValue = -1;	break;
-			case EventType::MouseDown:
-				for (unsigned int id : pertinetIDs)
-					if ( this->boxes[id]->getType() == BoxType::Button && this->boxes[id]->click(ev.getX(), ev.getY(), ev.getTimestamp()))
-						retValue = id;
-				if (retValue == ConnectID && this->isIPValid(this->boxes[InputID]->getText())) {
-					this->ip = this->boxes[InputID]->getText();
-				}
-				else if(retValue == ConnectID){
-					retValue = 0;
-					this->boxes[InputID]->clearText();
-				}
-
-			case EventType::Timer:
-				this->window.update();
-				break;
-			}
-		}
-	} while (retValue == 0);
-
-	window.deleteLayout();
-	if (this->sound != nullptr)
-		this->sound->stop();
-	return retValue;
-}
-
-bool JoinMenuUI::isIPValid(std::string ip)
-{
-	return true;
-}
 
 GameOverUI::GameOverUI(AllegroSoundFactory & soundF, AllegroWindow & window)
 	:UI(window)
 {
 	this->font = new AllegroFont(FontPath, FontSize, 0);
 
-	//this->sound = soundF.create("", PlayMode::Loop, 0);
+	this->sound = soundF.create(GameOverSoundTrack, PlayMode::Loop, 0);
 
 
 	AllegroColorFactory colorF;
@@ -384,10 +179,7 @@ GameOverUI::GameOverUI(AllegroSoundFactory & soundF, AllegroWindow & window)
 	this->boxes.addBox(new AllegroButton(ButtonX(w, 1) - (ButtonWidth(w) / 2.0), ButtonY(h), ButtonWidth(w), ButtonHeight(h), PlayAgainText,
 		font, colorF.create(ButtonColor), PlayAgainID));
 	this->boxes[PlayAgainID]->setBackgroundColor(colorF.create("hotpink"));
-	// OnlineButton
-	this->boxes.addBox(new AllegroButton(ButtonX(w, 3) - (ButtonWidth(w) / 2.0), ButtonY(h), ButtonWidth(w), ButtonHeight(h), LeaveText,
-		font, colorF.create(ButtonColor), LeaveID));
-	this->boxes[LeaveID]->setBackgroundColor(colorF.create("hotpink"));
+	
 	// ExitButton
 	this->boxes.addBox(new AllegroButton(ExitX(w) - (ExitW(w) / 2.0), ExitY(h), ExitW(w), ExitH(h), ExitText,
 		font, colorF.create(ButtonColor), ExitID));
@@ -395,10 +187,9 @@ GameOverUI::GameOverUI(AllegroSoundFactory & soundF, AllegroWindow & window)
 
 
 	this->layout->addBox(this->boxes[PlayAgainID]);
-	this->layout->addBox(this->boxes[LeaveID]);
 	this->layout->addBox(this->boxes[ExitID]);
 
-	pertinetIDs = { PlayAgainID ,LeaveID,ExitID  };
+	pertinetIDs = { PlayAgainID ,ExitID };
 }
 
 WonUI::WonUI(AllegroSoundFactory & soundF, AllegroWindow & window)
@@ -406,7 +197,8 @@ WonUI::WonUI(AllegroSoundFactory & soundF, AllegroWindow & window)
 {
 	this->font = new AllegroFont(FontPath, FontSize, 0);
 
-	//this->sound = soundF.create("", PlayMode::Loop, 0);
+
+	this->sound = soundF.create(WonSoundtrack, PlayMode::Loop, 0);
 
 
 	AllegroColorFactory colorF;
@@ -416,10 +208,7 @@ WonUI::WonUI(AllegroSoundFactory & soundF, AllegroWindow & window)
 	this->boxes.addBox(new AllegroButton(ButtonX(w, 1) - (ButtonWidth(w) / 2.0), ButtonY(h), ButtonWidth(w), ButtonHeight(h), PlayAgainText,
 		font, colorF.create(ButtonColor), PlayAgainID));
 	this->boxes[PlayAgainID]->setBackgroundColor(colorF.create("hotpink"));
-	// OnlineButton
-	this->boxes.addBox(new AllegroButton(ButtonX(w, 3) - (ButtonWidth(w) / 2.0), ButtonY(h), ButtonWidth(w), ButtonHeight(h), LeaveText,
-		font, colorF.create(ButtonColor), LeaveID));
-	this->boxes[LeaveID]->setBackgroundColor(colorF.create("hotpink"));
+	
 	// ExitButton
 	this->boxes.addBox(new AllegroButton(ExitX(w) - (ExitW(w) / 2.0), ExitY(h), ExitW(w), ExitH(h), ExitText,
 		font, colorF.create(ButtonColor), ExitID));
@@ -427,10 +216,9 @@ WonUI::WonUI(AllegroSoundFactory & soundF, AllegroWindow & window)
 
 
 	this->layout->addBox(this->boxes[PlayAgainID]);
-	this->layout->addBox(this->boxes[LeaveID]);
 	this->layout->addBox(this->boxes[ExitID]);
 
-	pertinetIDs = { PlayAgainID ,LeaveID,ExitID };
+	pertinetIDs = { PlayAgainID ,ExitID };
 }
 
 InstructionsUI::InstructionsUI(AllegroSoundFactory & soundF, AllegroWindow & window)
@@ -438,7 +226,7 @@ InstructionsUI::InstructionsUI(AllegroSoundFactory & soundF, AllegroWindow & win
 {
 	this->font = new AllegroFont(FontPath, FontSize, 0);
 
-	//this->sound = soundF.create("", PlayMode::Loop, 0);
+	this->sound = soundF.create(InstructionsSoundtrack, PlayMode::Loop, 0);
 
 
 	AllegroColorFactory colorF;
@@ -447,7 +235,7 @@ InstructionsUI::InstructionsUI(AllegroSoundFactory & soundF, AllegroWindow & win
 	// Button
 	this->boxes.addBox(new AllegroButton(BackX(w) - (BackWidth(w) / 2.0), BackY(h), BackWidth(w), BackHeight(h), BackText,
 		font, colorF.create(ButtonColor), BackID));
-	this->boxes[LeaveID]->setBackgroundColor(colorF.create("hotpink"));
+	this->boxes[BackID]->setBackgroundColor(colorF.create("hotpink"));
 	// ExitButton
 	this->boxes.addBox(new AllegroButton(ExitX(w) - (ExitW(w) / 2.0), ExitY(h), ExitW(w), ExitH(h), ExitText,
 		font, colorF.create(ButtonColor), ExitID));
@@ -467,3 +255,4 @@ InstructionsUI::InstructionsUI(AllegroSoundFactory & soundF, AllegroWindow & win
 
 	pertinetIDs = { BackID,ExitID };
 }
+

@@ -17,6 +17,8 @@
 
 #include "Logica/juego/Game.h"
 
+#include "UI/FSM.h"
+
 #define WindowTitle "SnowBros!"
 #define WindowImage ""
 std::vector<std::string> getNames(std::string path, std::string ext, int quantinty);
@@ -43,6 +45,10 @@ int main(void) {
 	EventHandler eventH;
 
 	AllegroSoundFactory soundF;
+
+	FSM menu(&eventHandler);
+
+	menu.setUp(window, soundF, snowbros);
 
 
 
@@ -99,7 +105,17 @@ int main(void) {
 	snowbros.loadObserver(&win);
 	
 	snowbros.loadMaps(stringtoworld(getNames("Maps/map",".csv",10)));
-	snowbros.run(nullptr);
+
+	int ev = BackID;
+	void * ptr = nullptr;
+
+	do {
+		ev =  menu.cycle(ev, ptr);
+	} while (ev != ExitID);
+
+
+
+	//snowbros.run(nullptr);
 
 	return 0;
 }

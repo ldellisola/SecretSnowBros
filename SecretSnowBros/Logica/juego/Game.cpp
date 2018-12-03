@@ -342,7 +342,7 @@ bool Game::checkIfMonstersAlive() {
 
 	return true; //caso contrario estan muertos
 }
-int Game::run(void * ptr)
+KeepReturn Game::run(void * ptr)
 {
 	int keep = (int)KeepReturn::Start;
 	int mapCounter = 0;
@@ -360,7 +360,7 @@ int Game::run(void * ptr)
 		//Aca si se quiere se puede poner una pantalla que muestre alguna transicion estilo nivel 2
 	}
 	currentMap = nullptr;
-	return 0;
+	return (KeepReturn)keep;
 
 }
 

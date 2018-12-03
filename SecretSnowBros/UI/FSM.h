@@ -32,7 +32,7 @@ public:
 	FSM(AllegroEventHandler * eventHandler) :state(stateTypes::PrincipalScreen), eventH(eventHandler) {}
 	~FSM();
 
-	void setUp(AllegroWindow& window, AllegroSoundFactory& soundF);
+	void setUp(AllegroWindow& window, AllegroSoundFactory& soundF, Game& game);
 
 	int cycle(unsigned int ev, void * userData)
 	{
@@ -62,8 +62,8 @@ private:
 
 	AllegroEventHandler * eventH = nullptr;
 
-	const fsmCell fsmTable[6][7] = {	//instructionsButton											//playButton								//exitButton									//backScreenButton											//WonGame									//loseGame										//playAgainButton
-		/*PrincipalScreen*/			{ { stateTypes::InstructionScreen, TX(runInstructionMenu)}, { stateTypes::GameScreen, TX(runGame) },		{ stateTypes::Exit, TX(runExit) },				{ stateTypes::PrincipalScreen, nullptr },				{ stateTypes::PrincipalScreen, nullptr },		{ stateTypes::PrincipalScreen, nullptr },		{ stateTypes::PrincipalScreen, nullptr } },
+	const fsmCell fsmTable[6][7] = {					//ControlID											//SinglePlayerID								//ExitID									//BackID												//WonGame									//loseGame										//playAgainButton
+		/*PrincipalScreen*/			{ { stateTypes::InstructionScreen, TX(runInstructionMenu)}, { stateTypes::GameScreen, TX(runGame) },		{ stateTypes::Exit, TX(runExit) },				{ stateTypes::PrincipalScreen, TX(runTitleMenu) },		{ stateTypes::PrincipalScreen, nullptr },		{ stateTypes::PrincipalScreen, nullptr },		{ stateTypes::PrincipalScreen, nullptr } },
 		/*InstructionScreen*/		{ { stateTypes::InstructionScreen, nullptr },				{ stateTypes::InstructionScreen, nullptr },		{ stateTypes::InstructionScreen, nullptr },		{ stateTypes::PrincipalScreen, TX(runTitleMenu) },		{ stateTypes::InstructionScreen, nullptr },		{ stateTypes::InstructionScreen, nullptr },		{ stateTypes::InstructionScreen, nullptr } },
 		/*GameScreen*/				{ { stateTypes::GameScreen, nullptr },						{ stateTypes::GameScreen, nullptr },			{ stateTypes::GameScreen, nullptr },			{ stateTypes::GameScreen, nullptr },					{ stateTypes::Won, TX(runWonMenu) },			{ stateTypes::GameOver, TX(runGameOverMenu) },	{ stateTypes::GameScreen, nullptr } },
 		/*GameOver*/				{ { stateTypes::GameOver, nullptr },						{ stateTypes::GameOver, nullptr },				{ stateTypes::Exit, TX(runExit) },				{ stateTypes::GameOver, nullptr },						{ stateTypes::GameOver, nullptr },				{ stateTypes::GameOver, nullptr },				{ stateTypes::GameScreen, TX(runGame) } },

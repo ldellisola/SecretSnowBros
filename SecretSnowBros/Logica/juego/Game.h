@@ -24,7 +24,7 @@ public:
 
 	bool checkIfPlayersAlive();
 	bool checkIfMonstersAlive();
-	int run(void * ptr);
+	KeepReturn run(void * ptr);
 	void loadEventHandler(EventHandler* eventH);
 	void loadObserver(Observer * obs);
 	void loadPlayer(Player * player);

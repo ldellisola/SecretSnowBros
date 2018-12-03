@@ -1,7 +1,7 @@
 #include "Monster.h"
 
 #define ms50 (3)
-#define FrozenTicks (ms50 *20 ) // 10 segundos 200
+#define FrozenTicks (ms50 *200 ) // 10 segundos 200
 
 
 Monster::Monster(uint16_t maxJumpTick, uint16_t maxWalkTick, uint16_t maxWaitTicks, uint16_t maxFallTicks, uint16_t x, uint16_t y, uint16_t ID, uint16_t scorePoints)
