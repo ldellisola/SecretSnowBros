@@ -22,30 +22,24 @@ GreenFatty::GreenFatty(uint32_t x, uint32_t y, uint32_t ID)
 
 void GreenFatty::next() {
 	uint16_t probs = rand() % 100;
-	//uint16_t probs = 20;//DEBUG
-	if (probs < 30) {
-		// Dispara
+	if (probs < 30) {// Dispara
 		futureDirections.push(BeingState::Shooting);
 	}
-	else if (probs < 90) {
-		//se queda Camina hacia adelante
+	else if (probs < 90) {		//se queda Camina hacia adelante
 		if (getHorizontalDir() == HorizontalDirection::Left)
 			this->futureDirections.push(BeingState::WalkingLeft);
 		else if (getHorizontalDir() == HorizontalDirection::Right)
 			this->futureDirections.push(BeingState::WalkingRight);
 		this->futureDirections.push(BeingState::StillWalk);
 	}
-	else if (probs < 93) {
-		//salta
+	else if (probs < 93) {		//salta
 		this->futureDirections.push(BeingState::Jumping);
 		this->futureDirections.push(BeingState::StillJump);
 	}
-	else if (probs < 96) {
-		// se queda quieto
+	else if (probs < 96) {		// se queda quieto
 		this->futureDirections.push(BeingState::Waiting);
 	}
-	else {
-		// camina hacia el otro lado
+	else {		// camina hacia el otro lado
 		if (getHorizontalDir() == HorizontalDirection::Left)
 			this->futureDirections.push(BeingState::WalkingRight);
 		else if (getHorizontalDir() == HorizontalDirection::Right)
@@ -69,7 +63,7 @@ void GreenFatty::update(void * ptr){
 	else {
 		if (getHorizontalState() == HorizontalState::Still && getVerticalState() == VerticalState::Still) {
 			if (this->getHorizontalDir() == HorizontalDirection::Left && futureDirections.front() == BeingState::WalkingLeft && map.map[this->getY()][this->getX() - 1] == 'F') {
-				setState(BeingState::WalkingRight);
+				setState(BeingState::WalkingRight); //si estaba yendose contra la pared gira
 				futureDirections.pop();
 			}
 			else if (this->getHorizontalDir() == HorizontalDirection::Right && futureDirections.front() == BeingState::WalkingRight && map.map[this->getY()][this->getX() + 1] == 'F') {

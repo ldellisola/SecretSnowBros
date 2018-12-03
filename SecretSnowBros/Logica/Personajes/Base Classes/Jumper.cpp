@@ -14,12 +14,12 @@ Jumper::~Jumper(){
 
 void Jumper::update(void * ptr)
 {
-	if (getVerticalState() != VerticalState::Still)
+	if (getVerticalState() != VerticalState::Still) 
 		updateVerticalTicks();
 
 	char * column = (char*)ptr;
 
-	if (getVerticalState() == VerticalState::Still && column[y + 1] == 'E') {
+	if (getVerticalState() == VerticalState::Still && column[y + 1] == 'E') {//si estoy quieto y abajo hay aire debo caer
 		this->setVerticalState(VerticalState::Falling);
 	}
 

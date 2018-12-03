@@ -28,7 +28,8 @@ void PlayerDrawer::draw(void * data)
 
 	for (Player * being : ((Game*)data)->getPlayer()) {
 
-		if (being->isAlive() && !being->isWaitingToRevive() && !being->isInmune()) {
+		/*Si es inmune tiene las mismas animaciones pero doradas, dependiendo la accion va a ser una animacion o la otra a 5 ticks por animacion*/
+		if (being->isAlive() && !being->isWaitingToRevive() && !being->isInmune()) { 
 			if (being->getState()==BeingState::StillWalk && being->getHorizontalDir() == HorizontalDirection::Right) {
 				sprites[0]->draw(being->getX() * BlockWidth, being->getY() * BlockHeight);
 			}

@@ -11,7 +11,7 @@ SnowBall::SnowBall(Monster * monster, Score * PlayerScore)
 	:Slider(monster->getX(), WalkTicks),Jumper(monster->getY(), JumpTicks, FallTicks),MaxFrozenTick(FrozenTicks)
 {
 	
-	this->setHorizontalDir(HorizontalDirection::Left);
+	this->setHorizontalDir(HorizontalDirection::Left); //crea la bola de nieve
 	setState(SnowBallState::Still);
 	this->capturedMonster = monster;
 	this->playerScore = PlayerScore;

@@ -17,7 +17,7 @@ typedef double weight_t;
 
 const weight_t max_weight = std::numeric_limits<double>::infinity();
 
-struct neighbor {
+struct neighbor { //clase nodo.
 	vertex_t target;
 	weight_t weight;
 	neighbor(vertex_t arg_target, weight_t arg_weight)
@@ -31,7 +31,7 @@ typedef std::vector<std::vector<neighbor> > adjacency_list_t;
 hacia una dirección aleatoria(probabilidad 0.3) o se quedará quieto
 por 0.3s(probabilidad 0.1).
 */
-//	/		GORDO ROSA		/	//
+//	/		Night man		/	//
 class PurpleGuy :
 	public Monster 
 {

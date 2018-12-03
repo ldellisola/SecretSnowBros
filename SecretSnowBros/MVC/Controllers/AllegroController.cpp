@@ -27,7 +27,7 @@ void * Local1PlayerController::getEvent(void * data)
 
 	void * temp = nullptr;
 	if (events.size() != 0) {
-		temp = events.front();	// Le tengo miedo a esto. Puede que se borren solos
+		temp = events.front();	
 		events.pop();
 	}
 

@@ -1,12 +1,8 @@
 #include "PurpleGuy.h"
-#include <exception>
 
 #define ms50 (3)
-
 #define JumpTicks (ms50* 24)	// 1200ms
 #define WalkTicks (ms50*6)	// 300ms
-//#define WalkTicks (17)	// 270ms
-
 #define FallTick (ms50*6)	// 300ms
 #define StillTicks (ms50*6)	// 300ms
 
@@ -20,18 +16,17 @@ PurpleGuy::PurpleGuy(uint32_t x, uint32_t y, uint32_t ID)
 }
 void PurpleGuy::chooseAction(void * mapWithPj) {
 	World * map = (World*)mapWithPj;
-	if (this->futureDirections.size() == 0) {
+	if (this->futureDirections.size() == 0) { //si no tiene nada para hacer elige algo nuevo
 		next(*map);
 	}
 }
 
 void PurpleGuy::next(World&  map) {
 	uint16_t probs = rand() % 100;
-	//uint16_t probs = 30;
 	if (probs < 60)
 		chase(map);
 	else if (probs < 70) {
-		futureDirections.push(BeingState::WalkingLeft);
+		futureDirections.push(BeingState::WalkingLeft); //decide que hacer
 		futureDirections.push(BeingState::StillWalk);
 	}
 	else if (probs < 80) {
@@ -89,8 +84,8 @@ void PurpleGuy::chase(World&  map_) {
 					this->futureDirections.push(BeingState::Jumping);
 
 					if (((i + 2) < path.size()) && ((path[i] - path[i + 2]) == 32)) {
-						path.erase(path.begin() + i + 1);
-						if (((i + 2) < path.size()) && path[i + 1] - path[i + 2] == 1) {//uno para atras se movio
+						path.erase(path.begin() + i + 1); //Borra un comando de salto
+						if (((i + 2) < path.size()) && path[i + 1] - path[i + 2] == 1) {//Y agrega el comando de movimiento antes de un still
 							this->futureDirections.push(BeingState::WalkingLeft);
 							this->futureDirections.push(BeingState::StillWalk);
 							path.erase(path.begin() + i + 1);

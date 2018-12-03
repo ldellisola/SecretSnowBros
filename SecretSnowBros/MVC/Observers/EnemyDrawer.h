@@ -61,6 +61,8 @@ public:
 
 			if (enemy->isAlive()) {
 
+				/*Cambia la imagen cada 5 ticks dependiendo que esta haciendo*/
+
 				if (dynamic_cast<GreenFatty*>(enemy)) {
 					GreenFatty * guy = dynamic_cast<GreenFatty*>(enemy);
 					if (enemy->getState() == BeingState::WalkingRight && enemy->getHorizontalDir()== HorizontalDirection::Right) {

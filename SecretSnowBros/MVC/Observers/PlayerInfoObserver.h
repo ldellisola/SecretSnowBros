@@ -6,7 +6,7 @@
 
 #include "Observer.h"
 #include "Logica/Personajes/Player.h"
-
+ //Puntaje
 class PlayerInfoObserver
 	: public Observer {
 public:
