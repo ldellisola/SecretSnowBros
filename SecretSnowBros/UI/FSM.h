@@ -59,6 +59,8 @@ private:
 	int runGame(void*data);
 	int runExit(void*data);
 
+	AllegroFontFactory fontF;
+
 
 	AllegroEventHandler * eventH = nullptr;
 
