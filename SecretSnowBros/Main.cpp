@@ -70,7 +70,7 @@ int main(void) {
 
 
 	ProyectileDrawer projDrawer("Images/Projectiles/IceProj.png", window.getWidth() / 16, (window.getHeight() - 400) / 12);
-	PlayerInfoObserver playerInfo("font.ttf", window.getWidth(), 400, 12 * Block);
+	PlayerInfoObserver playerInfo("Font\\GameFont.ttf", window.getWidth(), 400, 12 * Block);
 	playerDrawer.loadObserver(playerInfo);
 	playerDrawer.loadObserver(projDrawer);
 
