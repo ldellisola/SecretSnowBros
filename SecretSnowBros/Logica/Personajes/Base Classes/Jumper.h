@@ -5,13 +5,21 @@ enum class VerticalState
 {
 	Still, Jumping, Falling
 };
+
+/*
+	This class allows the child to move up and down following the rules of the map
+*/
 class Jumper
 {
 public:
+
 	Jumper(uint16_t y, uint16_t maxJumpTicks, uint16_t maxFallTicks);
 	virtual ~Jumper();
 
+	// it updates the position, it should be called once per tick and the pointer should be to a array of chars
+	// that represents the vertical column
 	virtual void update(void * ptr);
+
 	uint16_t getY();
 	void setY(uint16_t y);
 

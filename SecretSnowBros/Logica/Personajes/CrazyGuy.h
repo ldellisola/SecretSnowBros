@@ -11,7 +11,7 @@ que se muevan en la dirección contraria o que se queden quietos
 por 0,5 segs.*/
 
 //	/		Troll Toll		/	//
-#define WaitingTimeCG 7
+
 
 
 
@@ -21,9 +21,12 @@ class CrazyGuy :
 public:
 	CrazyGuy(uint32_t x, uint32_t y,uint32_t ID=0);
 	virtual ~CrazyGuy(){}
+
+	// It chooses the next action to be taken if the monster hasn't decided any other action before
 	void chooseAction(void *ptr);
-	void next();//Define la proxima accion
+	
 
 private:
+	void next();
 };
 

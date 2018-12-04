@@ -19,6 +19,7 @@ public:
 
 	uint16_t getY() { return y; }
 
+	// it returns true if the projectile has to die duw to a collision or just going out of range
 	bool hasToDie() { 
 		uint16_t mod = (getX() - startX > 0 ? getX() - startX : startX - getX());
 
@@ -28,6 +29,7 @@ public:
 			return false;
 	
 	}
+
 	Score* getScore() {
 		return scoreboard;
 	}
@@ -41,37 +43,30 @@ public:
 			*scoreboard += add;
 	}
 
+	// It updates the position of the Projectile. It takes a pointes to the World class
 	void update(void *ptr) {
 
 			World & map = *(World*)ptr;
 			switch (getHorizontalDir())
 			{
 			case HorizontalDirection::Left:
-				if (map.map[y][getX() - 1] == 'F' || map.map[y][getX()] == 'F') {
+				if (map.map[y][getX() - 1] == 'F' || map.map[y][getX()] == 'F') 
 					this->kill();
-				}
 				break;
 			case HorizontalDirection::Right:
-				if (map.map[y][getX() + 1] == 'F' || map.map[y][getX()] == 'F') {
+				if (map.map[y][getX() + 1] == 'F' || map.map[y][getX()] == 'F') 
 					this->kill();
-				}
 				break;
 			}
-
-
-
 
 			std::unique_ptr<char> row(new char[map.columna]);
 
-			for (int i = 0; i < map.columna; i++) {
+			for (int i = 0; i < map.columna; i++) 
 				row.get()[i] = map.map[getY()][i];
-			}
 
 			Slider::update(row.get());
-
-
-			
 	}
+
 	void kill() { alive = false; }
 private:
 	Score* scoreboard;

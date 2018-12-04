@@ -117,6 +117,7 @@ void GreenFatty::chooseAction(void * ptr)
 	}
 }
 
+// this function had to be overrided so te mosnter could shootS
 void GreenFatty::setState(BeingState state)
 {
 	Monster::setState(state);
