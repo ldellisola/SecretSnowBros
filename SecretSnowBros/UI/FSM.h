@@ -8,7 +8,7 @@
 #include "AllwBasics\AllegroEvent.h"
 #include "AllwBasics\AllegroSound.h"
 #include "AllwBasics\AllegroWindow.h"
-
+//Fsm que controla la interaccion usuario programa a travez de una interfaz de usuario.
 std::vector<std::string> getNames(std::string path, std::string ext, int quantinty);
 std::vector<World> stringtoworld(std::vector<std::string> files);
 

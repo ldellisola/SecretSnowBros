@@ -89,7 +89,7 @@ void Local2PlayerController::runEv()
 			switch (eventFactory.getKeyboardEvent().keycode)
 			{
 			case ALLEGRO_KEY_W:	type = GameEventType::Jump; id = Player1ID; break;
-			case ALLEGRO_KEY_A:	type = GameEventType::Left; id = Player1ID; break;
+			case ALLEGRO_KEY_A:	type = GameEventType::Left; id = Player1ID; break; 
 			case ALLEGRO_KEY_D:	type = GameEventType::Right; id = Player1ID; break;
 			case ALLEGRO_KEY_C:	type = GameEventType::Shoot; id = Player1ID; break;
 			case ALLEGRO_KEY_UP:	type = GameEventType::Jump; id = Player2ID; break;

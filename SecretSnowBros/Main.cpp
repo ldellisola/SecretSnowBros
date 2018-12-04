@@ -97,7 +97,7 @@ int main(void) {
 	void * ptr = &window;
 
 	do {
-		ev = menu.cycle(ev, ptr);
+		ev = menu.cycle(ev, ptr); //Main loop in wich the fsm is used.
 	} while (ev != ExitID);
 
 

@@ -1,7 +1,7 @@
 #include "UI.h"
 
 #define TitleUIBackground "Images\\BackgroundMenu.png"
-
+//Actual User Interface
 #define FontPath "Font\\TitleFont.ttf"
 
 #define FontSize 50

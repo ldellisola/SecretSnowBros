@@ -3,7 +3,7 @@
 #include "Logica/Personajes/Projectiles/Projectile.h"
 #include <stdint.h>
 #include <vector>
-
+//class with the abulity to shoot
 template  <typename T>class Shooter
 {
 public:

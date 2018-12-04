@@ -9,7 +9,7 @@ enum class GameEventType
 
 
 
-
+ //Evento propio
 class GameEvent
 {
 public:

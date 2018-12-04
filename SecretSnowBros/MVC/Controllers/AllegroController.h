@@ -5,7 +5,7 @@
 
 #include <queue>
 #include <memory>
-
+//Clase encargada de la obtencion de inputs
 class Local1PlayerController: public Controller
 {
 public:

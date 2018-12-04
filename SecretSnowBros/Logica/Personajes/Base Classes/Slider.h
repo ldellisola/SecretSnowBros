@@ -1,7 +1,7 @@
 #pragma once
 #include <stdint.h>
 #include "Logica/juego/Cmap.h"
-
+ // This class is desinged to move horizontally
 enum class HorizontalState
 {
 	Moving, Still

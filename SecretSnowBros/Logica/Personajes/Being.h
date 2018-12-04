@@ -19,7 +19,7 @@ enum class BeingState
 
 
 
-
+//The fundamental character class
 
 class Being :public Slider,public Jumper
 {

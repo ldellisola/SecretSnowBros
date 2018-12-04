@@ -5,7 +5,7 @@
 #include <queue>
 
 
-
+ //clase encargada de manejar los eventos.
 class EventHandler
 
 {

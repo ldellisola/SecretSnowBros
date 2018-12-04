@@ -6,7 +6,7 @@
 #include <AllwAnimation/AllegroSprite.h>
 #include <string>
 #include <stdint.h>
-
+//Clase que dibuja al projectil enemigo
 
 class FireBallProjectile :
 	public Observer

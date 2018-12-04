@@ -4,7 +4,7 @@
 #include "AllwAnimation/AllegroSprite.h"
 #include "AllwInit/AllegroFactory.h"
 #include <stdint.h>
-
+//Encargado de dibujar el mapa
 class StageObserver :
 	public Observer
 {

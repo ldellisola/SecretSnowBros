@@ -4,7 +4,7 @@
 #include "Logica/Personajes/Being.h"
 #include"Logica/juego/Game.h"
 
-
+ //CLase que dibuja al jugador
 class PlayerDrawer :
 	public Observer
 {

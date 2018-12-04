@@ -5,7 +5,7 @@
 #include "Logica/juego/Game.h"
 
 
-
+//Sonidos del mapa-
 
 class StageSound : public Observer {
 

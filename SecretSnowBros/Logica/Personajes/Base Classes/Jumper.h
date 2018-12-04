@@ -1,6 +1,6 @@
 #pragma once
 #include <stdint.h>
-
+//Class that moves vertically
 enum class VerticalState
 {
 	Still, Jumping, Falling

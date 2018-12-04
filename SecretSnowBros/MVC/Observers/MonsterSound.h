@@ -8,7 +8,7 @@
 #include "Logica/juego/Game.h"
 
 
-
+//Clase que implementa los sonidos de los mosntruos
 
 class Monsteround : public Observer {
 

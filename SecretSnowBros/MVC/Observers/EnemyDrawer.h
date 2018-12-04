@@ -10,7 +10,7 @@
 #include "Logica/Personajes/GreenFatty.h"
 #include "Logica/juego/Game.h"
 
-
+//Clase dedicada al dibujo en pantalla de los enemigos
 class EnemyDrawer : public Observer
 {
 public:
@@ -30,7 +30,7 @@ public:
 		loadObserver(&obs);
 	}
 
-	void loadCrazyGuySprite(std::vector<std::string>list) {
+	void loadCrazyGuySprite(std::vector<std::string>list) { //carga los enemigos
 		for (std::string str : list) {
 			crazyGuy.push_back(new AllegroSprite(str, BlockHeight, BlockWidth));
 		}

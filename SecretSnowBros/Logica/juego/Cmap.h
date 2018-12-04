@@ -8,7 +8,7 @@
 
 
 
-struct World {
+struct World { //Basic structure in wich the world is build.
 public:
 	World(std::string file_) {
 		std::fstream file;

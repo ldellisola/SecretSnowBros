@@ -7,7 +7,7 @@
 
 
 
-
+//Sonidos del jugador.
 class PlayerSound : public Observer {
 
 

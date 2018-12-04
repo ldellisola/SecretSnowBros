@@ -3,7 +3,7 @@
 #include "Logica/Personajes/Projectiles/Projectile.h"
 #include "AllwAnimation/AllegroAnimation.h"
 #include "Observer.h"
-
+//Clase de la que heredan los proyectiles.
 class ProyectileDrawer :
 	public Observer
 {

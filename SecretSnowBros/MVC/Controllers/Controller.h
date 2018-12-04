@@ -7,3 +7,4 @@ public:
 	virtual void * getEvent(void * ptr) = 0;
 };
 
+//clase padre

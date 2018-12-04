@@ -7,7 +7,7 @@
 
 #include <AllwAnimation/AllegroSprite.h>
 
-
+//Clase que dibuja los proyectiles aliados
 class SnowBallObserver :public Observer
 {
 public:
