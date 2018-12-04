@@ -18,12 +18,17 @@ class GreenFatty :
 public:
 	GreenFatty(uint32_t x, uint32_t y, uint32_t ID = 0);
 	virtual ~GreenFatty() {}
-	void next();//Define la proxima accion
+	
+	// It updates the position of the monster and it shoots projectiles. It takes a pointer to the World class
 	void update(void * ptr);
+
+	// It chooses the next action to be taken if the monster hasn't decided any other action before
 	void chooseAction(void * ptr);
+
 	void setState(BeingState state);
 
-	friend class FattyLogger;
 	
+private:
+	void next();
 };
 

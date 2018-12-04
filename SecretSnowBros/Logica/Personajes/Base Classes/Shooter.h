@@ -8,19 +8,20 @@ template  <typename T>class Shooter
 {
 public:
 	Shooter(uint16_t maxShootTicks_)
-		:maxShootTicks(maxShootTicks_)
-	{
-	}
+		:maxShootTicks(maxShootTicks_){}
 
+	// It shoots a projectile in a given direction
 	void shoot(uint16_t x, uint16_t y, HorizontalDirection dir,void* score = nullptr) {
 		Projectile * temp = new T(x, y, dir,(Score*)score);
 		projectiles.push_back(temp);
 	}
 
+
 	std::vector<Projectile*>& getProjectiles() {
 		return projectiles;
 	}
 
+	// It updates all the projectiles fired from a Shooter every tick
 	void updateProjectiles(void * ptr) {
 
 		for (auto it = projectiles.begin(); it != projectiles.end(); it) {
@@ -62,16 +63,8 @@ protected:
 	}
 
 	void updateShootingTicks() {
-
 		this->shootingTicks = (this->shootingTicks + 1) % maxShootTicks;
 	}
-
-
-
-
-	
-
-	
 
 	void startShooting() {
 		shooting = true;

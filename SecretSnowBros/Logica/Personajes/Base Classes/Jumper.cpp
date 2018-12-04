@@ -14,14 +14,15 @@ Jumper::~Jumper(){
 
 void Jumper::update(void * ptr)
 {
+	// If the state is not still, then it should update the tick
 	if (getVerticalState() != VerticalState::Still) 
 		updateVerticalTicks();
 
 	char * column = (char*)ptr;
 
-	if (getVerticalState() == VerticalState::Still && column[y + 1] == 'E') {//si estoy quieto y abajo hay aire debo caer
+	if (getVerticalState() == VerticalState::Still && column[y + 1] == 'E') // If I'm still and there is air down, it should fall
 		this->setVerticalState(VerticalState::Falling);
-	}
+	
 
 	switch (getVerticalState())
 	{

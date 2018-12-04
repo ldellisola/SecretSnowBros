@@ -10,7 +10,7 @@
 
 
 
-class SnowBall;
+//class SnowBall;
 
 class Player :
 	public Being, public Shooter<SnowProjectile>
