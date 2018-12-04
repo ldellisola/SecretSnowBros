@@ -54,12 +54,13 @@ int FSM::runGame(void*data) {
 	
 	switch (game->run(data)){
 	case KeepReturn::Exit:
-		retValue= ExitID;
+		//retValue = ExitID;	break;
+		retValue= BackID;	break;
 	case KeepReturn::PlayersDead:
-		retValue= LostGameID;
+		retValue= LostGameID; break;
 	case KeepReturn::LevelWon:
-		retValue= WonGameID;
-	}
+		retValue= WonGameID; break;
+	}	
 	window->showMouseCursor();
 	return retValue;
 	
