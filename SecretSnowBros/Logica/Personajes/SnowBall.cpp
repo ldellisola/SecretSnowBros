@@ -83,7 +83,11 @@ void SnowBall::update(void * ptr)
 	if(state != SnowBallState::Rolling)
 		updateFrozenTick();
 
-	World& world = *(World *) ptr;
+	World& world = *(World *)ptr;
+
+		for (Being * player : hijackedPlayers) {
+			player->setInmune(true);
+		}
 
 	switch (getHorizontalDir())
 	{
@@ -120,6 +124,7 @@ void SnowBall::update(void * ptr)
 
 		}
 		break;
+
 
 	}
 
@@ -188,16 +193,23 @@ uint16_t SnowBall::getFrozenTick()
 {
 	return frozenTick;
 }
+#include <iostream>
 
 void SnowBall::releasePlayer(Being * player)
 {
-	player->setCarry(false);
-	player->setInmune(true);
+	try {
+		player->setCarry(false);
+		player->setInmune(true);
+		
 
-	for (int i = (int)hijackedPlayers.size() - 1; i >= 0; i--)
-	{
-		if(hijackedPlayers[i] == player)
-			hijackedPlayers.erase(hijackedPlayers.begin() + i);
+		for (int i = (int)hijackedPlayers.size() - 1; i >= 0; i--)
+		{
+			if (hijackedPlayers[i] == player)
+				hijackedPlayers.erase(hijackedPlayers.begin() + i);
+		}
+	}
+	catch (...) {
+		std::cout << "Fuck";
 	}
 
 
@@ -225,6 +237,9 @@ Monster * SnowBall::melt()
 	capturedMonster->revive();
 	capturedMonster->setX(getX());
 	capturedMonster->setY(getY());
+	for (Being * player : hijackedPlayers)
+		releasePlayer(player);
+
 	return this->capturedMonster;
 }
 

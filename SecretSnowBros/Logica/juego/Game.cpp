@@ -96,13 +96,22 @@ void Game::selectNextMap()
 
 
 	for (Player * player : this->getPlayer()) {
-		if (player->getID() == this->Player1ID && player->getLives() > 0) {
+		if ((player->getID() == this->Player1ID) && (player->getLives() > 0) && (i != 0)) {
 			player1lives = player->getLives();
 			player1score = player->getScoreCounter()->getActualScore();
 		}
-		else if (player->getID() == this->Player2ID && player->getLives() > 0) {
+		else if ((player->getID() == this->Player1ID)) {
+			player1score = 0;
+			player1lives = 3;
+		}
+
+		if (player->getID() == this->Player2ID && player->getLives() > 0) {
 			player2lives = player->getLives();
 			player2score = player->getScoreCounter()->getActualScore();
+		}
+		else if (player->getID() == this->Player2ID) {
+			player2lives = 3;
+			player2score = 0;
 		}
 		delete player;
 	}
@@ -197,11 +206,11 @@ int Game::dispatchEvent(GameEvent * ev)
 			break;
 		case GameEventType::Timer:
 
+			updateSnowBalls();
+
 			updateMonsters();
 
 			updatePlayers();
-
-			updateSnowBalls();
 
 			this->updateObservers(this);
 
@@ -345,7 +354,7 @@ KeepReturn Game::run(void * ptr)
 {
 	int keep = (int)KeepReturn::Start;
 	int mapCounter = 0;
-	mapCounter = 9;
+//	mapCounter = 9;
 	bool alive = true;
 	while (mapCounter != this->allMaps.size() && (keep != (int)KeepReturn::Exit) && (keep != (int)KeepReturn::PlayersDead)) {//ESA ES LA NEGRADA, HAYQ UE DEFINIR VALORES DE SALIDA DE KEEP, ESE 1 DE AHI SERIA QUE PERDISTE NO GANASTE
 		this->selectNextMap();
