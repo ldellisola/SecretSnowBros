@@ -13,10 +13,28 @@ public:
 
 	PlayerInfoObserver(std::string fontPath, float startX, float width, float startY, float height) {
 
-		AllegroColorFactory colorF;
+		std::string text;
 
-		scoreBox = new AllegroWrittenBox(startX, startY, width, height / 2, "Score = 0", fontF.create(fontPath, height / 16, 1), colorF.create("white"), 1);
-		lifeBox = new AllegroWrittenBox(startX, startY + height / 2, width, height / 2, "Score = 0", fontF.create(fontPath, height / 16, 2), colorF.create("white"), 2);
+		
+
+		ALLEGRO_CONFIG *config = al_load_config_file("config.ini");
+
+		if (config == nullptr) {
+			config = al_create_config();
+			al_add_config_section(config, "SnowBros");
+			al_set_config_value(config, "SnowBros", "highscore", "0");
+			al_save_config_file("config.ini", config);
+			currentHighScore = 0;
+		}
+		else {
+			currentHighScore = std::stoi(al_get_config_value(config, "SnowBros", "highscore"));
+			text = al_get_config_value(config, "SnowBros", "highscore");
+		}
+		al_destroy_config(config);
+
+		highScoreBox = new AllegroWrittenBox(startX, startY, width, height / 3.0, "Highscore = " + text, fontF.create(fontPath, height / 20,0), colorF.create("white"), 234);
+		scoreBox = new AllegroWrittenBox(startX, startY+ height / 3.0, width, height / 3, "Score = 0", fontF.create(fontPath, height / 16, 1), colorF.create("white"), 1);
+		lifeBox = new AllegroWrittenBox(startX, startY + height *2/ 3.0, width, height / 3, "Score = 0", fontF.create(fontPath, height / 16, 2), colorF.create("white"), 2);
 		background = new AllegroBox(startX, startY, width, height, 93);
 		background->setBackgroundColor(colorF.create("black"));
 	}
@@ -29,15 +47,19 @@ public:
 			delete lifeBox;
 		if (background)
 			delete background;
+		if (highScoreBox)
+			delete highScoreBox;
 	}
 
 	void draw(void * ptr) {
 
-		Player * player = (Player*)ptr;
-		AllegroColorFactory colorF;
 
+		Player * player = (Player*)ptr;
 
 		background->draw();
+
+		highScoreBox->setText("HighScore = " + std::to_string(currentHighScore));
+		highScoreBox->draw();
 
 		std::string score = std::to_string(player->getScoreCounter()->getActualScore());
 		scoreBox->setText("Score = " + score);
@@ -48,15 +70,38 @@ public:
 		lifeBox->setText("Lives = " + lives);
 
 		lifeBox->draw();
+
+		if (!player->isAlive()) {
+			int currentScore = player->getScoreCounter()->getActualScore();
+			if (currentScore > currentHighScore) {
+				saveHighScore(currentScore);
+				currentHighScore = currentScore;
+
+			}
+
+		}
 	}
 
 
-private:
 
+private:
+	bool firstTime = true;
+	void saveHighScore(int score) {
+		ALLEGRO_CONFIG * config = al_load_config_file("config.ini");
+		al_set_config_value(config, "SnowBros", "highscore",std::to_string(score).c_str());
+		al_save_config_file("config.ini", config);
+		al_destroy_config(config);
+
+	}
+
+
+	AllegroColorFactory colorF;
 	AllegroWrittenBox * scoreBox = nullptr;
 	AllegroWrittenBox * lifeBox = nullptr;
 	AllegroBox * background = nullptr;
+	AllegroWrittenBox * highScoreBox = nullptr;
 	AllegroFontFactory fontF;
 
+	int currentHighScore = 0;
 
 };

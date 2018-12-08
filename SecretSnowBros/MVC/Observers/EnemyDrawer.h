@@ -21,6 +21,17 @@ public:
 
 	~EnemyDrawer()
 	{
+		for (auto sprite : this->frozenSprites)
+			delete sprite;
+
+		for (auto sprite : this->crazyGuy)
+			delete sprite;
+
+		for (auto sprite : this->greenFatty)
+			delete sprite;
+		
+		for (auto sprite : this->purpleGuy)
+			delete sprite;
 	}
 	void loadObserver(Observer* obs) {
 		observers.push_back(obs);
