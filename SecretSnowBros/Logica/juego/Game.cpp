@@ -8,7 +8,6 @@ Game::Game(uint32_t Player1ID, uint32_t Player2ID)
 	srand((unsigned int)time(NULL));
 }
 
-#include "allegro5/allegro.h"
 
 Game::~Game()
 {

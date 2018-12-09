@@ -10,16 +10,20 @@
 
 //Clase que implementa los sonidos de los mosntruos
 
-class Monsteround : public Observer {
+class MonsterSound : public Observer {
 
 
 public:
-	Monsteround(AllegroSoundFactory& soundF) {
+	MonsterSound(AllegroSoundFactory& soundF) {
 
-		shootST = soundF.create("Music\\Character\\ShootGM.wav", PlayMode::Once, 12312);
-		jumpST = soundF.create("Music\\Character\\Jump.wav", PlayMode::Once, 1232);
+		ALLEGRO_CONFIG * config = al_load_config_file("config.ini");
 
-		soundF.reserveMoreSamples(30);
+		shootST = soundF.create(al_get_config_value(config, "MonsterMusic", "ShootMusicPath"), PlayMode::Once, 12312);
+		jumpST = soundF.create(al_get_config_value(config, "MonsterMusic", "JumpMusicPath"), PlayMode::Once, 1232);
+
+		soundF.reserveMoreSamples(15);
+
+
 	}
 
 	inline void draw(void * ptr) {

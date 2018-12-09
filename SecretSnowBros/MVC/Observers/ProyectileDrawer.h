@@ -3,13 +3,14 @@
 #include "Logica/Personajes/Projectiles/Projectile.h"
 #include "AllwAnimation/AllegroAnimation.h"
 #include "Observer.h"
-//Clase de la que heredan los proyectiles.
-class ProyectileDrawer :
+
+
+class SnowProyectileDrawer :
 	public Observer
 {
 public:
-	ProyectileDrawer(std::string proyectileSprite,uint16_t blockWidth, uint16_t blockHeight);
-	~ProyectileDrawer();
+	SnowProyectileDrawer(uint16_t blockWidth, uint16_t blockHeight);
+	~SnowProyectileDrawer();
 	void draw(void * ptr);
 private:
 	AllegroSprite * bullet = nullptr;

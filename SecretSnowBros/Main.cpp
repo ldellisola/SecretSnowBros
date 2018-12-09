@@ -20,10 +20,7 @@
 
 #include "UI/FSM.h"
 
-#define WindowTitle "SnowBros!"
-#define WindowImage ""
 
-#define Block (50)
 
 
 #define Player1ID (123)
@@ -33,7 +30,7 @@ int main(void) {
 	ALLEGRO_DISPLAY_MODE disp;
 	al_get_display_mode(al_get_num_display_modes() - 1, &disp);
 
-	AllegroWindow window(disp.width, disp.height, allegro.getEventQueue(), WindowTitle, WindowImage);
+	AllegroWindow window(disp.width, disp.height, allegro.getEventQueue());
 
 	window.open();
 	//window.setFullScreen();
@@ -59,31 +56,23 @@ int main(void) {
 
 
 	PlayerDrawer  playerDrawer(BlockWidth, BlockHeight); //Create player and load it
-	std::vector<std::string> a = getNames("Images/Player/Normal/PS", ".png", 12);
-	std::vector<std::string> b = getNames("Images/Player/Golden/PS", ".png", 12);
-	a.insert(std::end(a), std::begin(b), std::end(b));
-	playerDrawer.loadPlayerSprite(a);
-
 	StageObserver stageObserver(BlockHeight * 12, BlockWidth * 16, 'F'); //creating observers and loading them
-	ProyectileDrawer projDrawer("Images/Projectiles/IceProj.png", BlockWidth, BlockHeight);
-	PlayerInfoObserver playerInfo("Font\\GameFont.ttf", BlockWidth * 16, InfoSpaceWidth, 0, InfoSpaceHeight);
-	FireBallProjectile test("Images/Projectiles/FireProj.png", BlockWidth, BlockHeight);
+	SnowProyectileDrawer snowProjDrawer(BlockWidth, BlockHeight);
+	PlayerInfoObserver playerInfo(BlockWidth * 16, InfoSpaceWidth, 0, InfoSpaceHeight);
+	FireBallProjectile fireProjDrawer( BlockWidth, BlockHeight);
 	PlayerSound playerSoundObs(soundF);
 	StageSound stageSoundObs(soundF);
-	Monsteround monsterSoundObs(soundF);
+	MonsterSound monsterSoundObs(soundF);
+
 	EnemyDrawer enemyDrawer(BlockWidth, BlockHeight);
-	SnowBallObserver snowBallObs("Images/Frozen/FSS4.png", BlockWidth, BlockHeight);
+	SnowBallObserver snowBallObs(BlockWidth, BlockHeight);
 	WindowUpdater win(window);
-	enemyDrawer.loadCrazyGuySprite(getNames("Images/CrazyGuy/CGS", ".png", 9));
-	enemyDrawer.loadGreenFattySprite(getNames("Images/GreenFatty/GFS", ".png", 12));
-	enemyDrawer.loadPurpleGuySprite(getNames("Images/PurpleGuy/PGS", ".png", 9));
-	enemyDrawer.loadFrozenSprites(getNames("Images/Frozen/FSS", ".png", 4));
 
 
 	playerDrawer.loadObserver(playerInfo);
-	playerDrawer.loadObserver(projDrawer);
+	playerDrawer.loadObserver(snowProjDrawer);
 	snowbros.loadObserver(&stageObserver);
-	enemyDrawer.loadObserver(&test);
+	enemyDrawer.loadObserver(&fireProjDrawer);
 	snowbros.loadObserver(&enemyDrawer);
 	snowbros.loadObserver(&playerSoundObs);
 	snowbros.loadObserver(&monsterSoundObs);

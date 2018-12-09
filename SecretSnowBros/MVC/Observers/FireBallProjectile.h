@@ -12,10 +12,15 @@ class FireBallProjectile :
 	public Observer
 {
 public:
-	FireBallProjectile(std::string file, uint16_t blockWidth, uint16_t blockHeight) 
+	FireBallProjectile( uint16_t blockWidth, uint16_t blockHeight) 
 		:BlockHeight(blockHeight),BlockWidth(blockWidth)
 	{
-		sprite = new AllegroSprite(file, BlockHeight, BlockWidth);
+
+		ALLEGRO_CONFIG *config = al_load_config_file("config.ini");
+
+		sprite = new AllegroSprite(al_get_config_value(config,"FireProjectileSprite","Path"), BlockHeight, BlockWidth);
+
+		al_destroy_config(config);
 	}
 	~FireBallProjectile() {
 		if (sprite !=nullptr)

@@ -11,25 +11,17 @@ class PlayerInfoObserver
 	: public Observer {
 public:
 
-	PlayerInfoObserver(std::string fontPath, float startX, float width, float startY, float height) {
+	PlayerInfoObserver( float startX, float width, float startY, float height) {
 
 		std::string text;
 
-		
-
 		ALLEGRO_CONFIG *config = al_load_config_file("config.ini");
 
-		if (config == nullptr) {
-			config = al_create_config();
-			al_add_config_section(config, "SnowBros");
-			al_set_config_value(config, "SnowBros", "highscore", "0");
-			al_save_config_file("config.ini", config);
-			currentHighScore = 0;
-		}
-		else {
-			currentHighScore = std::stoi(al_get_config_value(config, "SnowBros", "highscore"));
-			text = al_get_config_value(config, "SnowBros", "highscore");
-		}
+		std::string fontPath = al_get_config_value(config, "Font", "GamePath");
+		
+		text = al_get_config_value(config, "SnowBros", "highscore");
+		currentHighScore = std::stoi(text);
+			
 		al_destroy_config(config);
 
 		highScoreBox = new AllegroWrittenBox(startX, startY, width, height / 3.0, "Highscore = " + text, fontF.create(fontPath, height / 20,0), colorF.create("white"), 234);

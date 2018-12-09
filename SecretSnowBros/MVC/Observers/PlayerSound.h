@@ -6,7 +6,7 @@
 #include "Logica/juego/Game.h"
 
 
-
+  
 //Sonidos del jugador.
 class PlayerSound : public Observer {
 
@@ -14,12 +14,16 @@ class PlayerSound : public Observer {
 public:
 	PlayerSound(AllegroSoundFactory& soundF) {
 		
+		ALLEGRO_CONFIG * config = al_load_config_file("config.ini");
 
-		shootST = soundF.create("Music\\Character\\ShootDM.wav", PlayMode::Once, 12312);
-		jumpST = soundF.create("Music\\Character\\Jump.wav", PlayMode::Once, 1232);
+		shootST = soundF.create(al_get_config_value(config,"PlayerMusic","ShootMusicPath"), PlayMode::Once, 12312);
+		jumpST = soundF.create(al_get_config_value(config, "PlayerMusic", "JumpMusicPath"), PlayMode::Once, 1232);
 
-		soundF.reserveMoreSamples(10);
+		soundF.reserveMoreSamples(4);
+
+		al_destroy_config(config);
 	}
+
 
 
 	inline void draw(void * ptr) {

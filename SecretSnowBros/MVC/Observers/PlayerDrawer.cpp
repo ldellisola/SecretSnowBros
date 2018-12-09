@@ -7,7 +7,14 @@ PlayerDrawer::PlayerDrawer(uint16_t blockWidth, uint16_t blockHeight)
 	:BlockHeight(blockHeight),BlockWidth(blockWidth)
 {
 	
+	loadPlayerSprite();
 
+}
+
+PlayerDrawer::~PlayerDrawer()
+{
+	for (auto sprite : sprites)
+		delete sprite;
 }
 
 void PlayerDrawer::loadObserver(Observer * obs)
@@ -19,6 +26,37 @@ void PlayerDrawer::loadObserver(Observer * obs)
 void PlayerDrawer::loadObserver(Observer & obs)
 {
 	this->loadObserver(&obs);
+}
+
+void PlayerDrawer::loadPlayerSprite()
+{
+	ALLEGRO_CONFIG * config = al_load_config_file("config.ini");
+
+	int quantinty = std::atoi(al_get_config_value(config, "RegularPlayerSprite", "Files"));
+	std::string path = al_get_config_value(config, "RegularPlayerSprite", "Path");
+	std::string ext = al_get_config_value(config, "RegularPlayerSprite", "Extension");
+
+	std::vector<std::string> names;
+
+	for (int i = 0; i < quantinty; i++) 
+		names.push_back(path + std::to_string(i + 1) + ext);
+	
+	quantinty = std::atoi(al_get_config_value(config, "InmunePlayerSprite", "Files"));
+	path = al_get_config_value(config, "InmunePlayerSprite", "Path");
+	ext = al_get_config_value(config, "InmunePlayerSprite", "Extension");
+
+
+	al_destroy_config(config);
+
+	for (int i = 0; i < quantinty; i++)
+		names.push_back(path + std::to_string(i + 1) + ext);
+
+
+
+
+	for (std::string str : names) {
+		sprites.push_back(new AllegroSprite(str, BlockHeight, BlockWidth));
+	}
 }
 
 

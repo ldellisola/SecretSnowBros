@@ -11,11 +11,16 @@
 class SnowBallObserver :public Observer
 {
 public:
-	SnowBallObserver(std::string file, uint16_t boxWidth, uint16_t boxHeight) 
+	SnowBallObserver( uint16_t boxWidth, uint16_t boxHeight) 
 		:BoxHeight(boxHeight),BoxWidth(boxWidth)
 	{
-		sprite = new AllegroSprite(file, boxHeight, boxWidth);
+		ALLEGRO_CONFIG * config = al_load_config_file("config.ini");
+
+		sprite = new AllegroSprite(al_get_config_value(config,"SnowBallSprite","Path"), boxHeight, boxWidth);
+
+		al_destroy_config(config);
 	}
+
 	~SnowBallObserver() {
 		delete sprite;
 	}

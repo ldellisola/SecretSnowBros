@@ -17,6 +17,10 @@ public:
 	EnemyDrawer(uint16_t blockWidth, uint16_t blockHeight)
 		: BlockHeight(blockHeight), BlockWidth(blockWidth)
 	{
+		loadCrazyGuySprite();
+		loadFrozenSprites();
+		loadGreenFattySprite();
+		loadPurpleGuySprite();
 	}
 
 	~EnemyDrawer()
@@ -33,6 +37,8 @@ public:
 		for (auto sprite : this->purpleGuy)
 			delete sprite;
 	}
+
+
 	void loadObserver(Observer* obs) {
 		observers.push_back(obs);
 	}
@@ -41,26 +47,87 @@ public:
 		loadObserver(&obs);
 	}
 
-	void loadCrazyGuySprite(std::vector<std::string>list) { //carga los enemigos
-		for (std::string str : list) {
+	void loadCrazyGuySprite() { 
+
+		ALLEGRO_CONFIG * config = al_load_config_file("config.ini");
+
+		int quantinty = std::atoi(al_get_config_value(config, "CrazyGuySprite", "Files"));
+		std::string path = al_get_config_value(config, "CrazyGuySprite", "Path");
+		std::string ext = al_get_config_value(config, "CrazyGuySprite", "Extension");
+
+		std::vector<std::string> names;
+
+		for (int i = 0; i < quantinty; i++)
+			names.push_back(path + std::to_string(i + 1) + ext);
+
+
+		for (std::string str : names) 
 			crazyGuy.push_back(new AllegroSprite(str, BlockHeight, BlockWidth));
-		}
-	}
-	void loadPurpleGuySprite(std::vector<std::string>list) {
-		for (std::string str : list) {
-			purpleGuy.push_back(new AllegroSprite(str, BlockHeight, BlockWidth));
-		}
-	}
-	void loadGreenFattySprite(std::vector<std::string>list) {
-		for (std::string str : list) {
-			greenFatty.push_back(new AllegroSprite(str, BlockHeight, BlockWidth));
-		}
+		
+		al_destroy_config(config);
 	}
 
-	void loadFrozenSprites(std::vector<std::string>list) {
-		for (std::string str : list) {
+	void loadPurpleGuySprite() {
+
+		ALLEGRO_CONFIG * config = al_load_config_file("config.ini");
+
+		int quantinty = std::atoi(al_get_config_value(config, "PurpleGuySprite", "Files"));
+		std::string path = al_get_config_value(config, "PurpleGuySprite", "Path");
+		std::string ext = al_get_config_value(config, "PurpleGuySprite", "Extension");
+
+		std::vector<std::string> names;
+
+		for (int i = 0; i < quantinty; i++)
+			names.push_back(path + std::to_string(i + 1) + ext);
+
+
+		for (std::string str : names)
+			purpleGuy.push_back(new AllegroSprite(str, BlockHeight, BlockWidth));
+
+		al_destroy_config(config);
+
+	}
+
+	void loadGreenFattySprite() {
+
+		ALLEGRO_CONFIG * config = al_load_config_file("config.ini");
+
+		int quantinty = std::atoi(al_get_config_value(config, "GreenFattySprite", "Files"));
+		std::string path = al_get_config_value(config, "GreenFattySprite", "Path");
+		std::string ext = al_get_config_value(config, "GreenFattySprite", "Extension");
+
+		std::vector<std::string> names;
+
+		for (int i = 0; i < quantinty; i++)
+			names.push_back(path + std::to_string(i + 1) + ext);
+
+
+		for (std::string str : names)
+			greenFatty.push_back(new AllegroSprite(str, BlockHeight, BlockWidth));
+
+		al_destroy_config(config);
+
+	}
+
+	void loadFrozenSprites() {
+
+		ALLEGRO_CONFIG * config = al_load_config_file("config.ini");
+
+		int quantinty = std::atoi(al_get_config_value(config, "FrozenStagesSprite", "Files"));
+		std::string path = al_get_config_value(config, "FrozenStagesSprite", "Path");
+		std::string ext = al_get_config_value(config, "FrozenStagesSprite", "Extension");
+
+		std::vector<std::string> names;
+
+		for (int i = 0; i < quantinty; i++)
+			names.push_back(path + std::to_string(i + 1) + ext);
+
+
+		for (std::string str : names)
 			frozenSprites.push_back(new AllegroSprite(str, BlockHeight, BlockWidth));
-		}
+
+		al_destroy_config(config);
+
 	}
 
 
