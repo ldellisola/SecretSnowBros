@@ -31,8 +31,8 @@ void Game::updateMonsters()
 				monster->collition(player);
 				std::vector<Projectile*> tempProj = player->getProjectiles();
 				for (Projectile* proj : tempProj) {
-					monster->collition(proj);
-					createSnowBall(monster, proj->getScore());
+					if(monster->collition(proj))
+						createSnowBall(monster, proj->getScore());
 				}
 			}
 
@@ -339,14 +339,9 @@ bool Game::checkIfPlayersAlive() {
 }
 
 bool Game::checkIfMonstersAlive() {
-	for (int i = 0; i < this->Enemies.size(); i++) {
-		if (this->Enemies[i]->isAlive() || this->snowballs.size()) {
-
-
+	for (int i = 0; i < this->Enemies.size(); i++) 
+		if (this->Enemies[i]->isAlive() || this->snowballs.size()) 
 			return true;								//Me fijo si alguno tiene vida
-		}
-
-	}
 
 	return false; //caso contrario estan muertos
 }
@@ -355,7 +350,7 @@ KeepReturn Game::run(void * ptr)
 {
 	int keep = (int)KeepReturn::Start;
 	int mapCounter = 0;
-	mapCounter = 9;
+	//mapCounter = 9;
 	bool alive = true;
 	while (mapCounter != this->allMaps.size() && (keep != (int)KeepReturn::Exit) && (keep != (int)KeepReturn::PlayersDead)) {//ESA ES LA NEGRADA, HAYQ UE DEFINIR VALORES DE SALIDA DE KEEP, ESE 1 DE AHI SERIA QUE PERDISTE NO GANASTE
 		this->selectNextMap();

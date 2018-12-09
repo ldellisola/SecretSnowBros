@@ -51,7 +51,7 @@ public:
 
 	uint16_t getLives() { return lives; }
 
-	virtual void collition(Projectile * proy);
+	virtual bool collition(Projectile * proy);
 
 	virtual bool isInmune() { return false; }
 	virtual bool isCarried() { return false; }

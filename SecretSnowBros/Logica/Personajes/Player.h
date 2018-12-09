@@ -22,7 +22,7 @@ public:
 
 	void update(void * ptr);
 
-	void collition(Projectile*proy);
+	//bool collition(Projectile*proy);
 	
 	void setState(BeingState state);
 
