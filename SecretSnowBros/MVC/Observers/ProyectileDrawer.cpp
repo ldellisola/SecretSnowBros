@@ -4,19 +4,23 @@ float transformCoord(int coord);
 
 
 
-ProyectileDrawer::ProyectileDrawer(std::string proyectileSprite, uint16_t blockWidth, uint16_t blockHeight)
+SnowProyectileDrawer::SnowProyectileDrawer( uint16_t blockWidth, uint16_t blockHeight)
 	:BlockHeight(blockHeight), BlockWidth(blockWidth)
 {
-	this->bullet = new AllegroSprite(proyectileSprite,blockHeight,blockWidth);
+	ALLEGRO_CONFIG * config = al_load_config_file("config.ini");
+
+	this->bullet = new AllegroSprite(al_get_config_value(config,"SnowProjectileSprite","Path"),blockHeight,blockWidth);
+
+	al_destroy_config(config);
 }
 
-ProyectileDrawer::~ProyectileDrawer()
+SnowProyectileDrawer::~SnowProyectileDrawer()
 {
 	if(bullet != nullptr)
 		delete bullet;
 }
 
-void ProyectileDrawer::draw(void * ptr)
+void SnowProyectileDrawer::draw(void * ptr)
 {
 	Player * shooter = (Player*)ptr;
 

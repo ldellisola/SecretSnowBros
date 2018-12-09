@@ -9,15 +9,21 @@ StageObserver::StageObserver(float screenH, float screenW, uint16_t groundID)
 {
 	AllegroColorFactory colorF;
 
+	ALLEGRO_CONFIG * config = al_load_config_file("config.ini");
+
 	this->screenHeigth = screenH;
 	this->screenWidth = screenW;
-	this->background = new AllegroSprite(BACKGROUNDIMG, screenH, screenW);
-	this->ground = new AllegroSprite(GROUNDIMG, this->screenHeigth/12, this->screenWidth/16);
+	this->background = new AllegroSprite(al_get_config_value(config,"GameSprite","BackgroundImagePath"), screenH, screenW);
+	this->ground = new AllegroSprite(al_get_config_value(config, "GameSprite", "GroundImagePath"), this->screenHeigth/12, this->screenWidth/16);
+
+	al_destroy_config(config);
 }
 
 
 StageObserver::~StageObserver()
 {
+	delete background;
+	delete ground;
 }
 
 void StageObserver::draw(void * ptr){

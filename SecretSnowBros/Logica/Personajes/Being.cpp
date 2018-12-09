@@ -96,11 +96,13 @@ void Being::update(void * ptr)
 }
 
 
-void Being::collition(Projectile * proy)
+bool Being::collition(Projectile * proy)
 {
 	if (proy->getX() == this->getX() && proy->getY() == this->getY()) {
 		this->kill();
+		return true;
 	}
+	return false;
 }
 
 

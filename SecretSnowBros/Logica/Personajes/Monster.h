@@ -30,7 +30,7 @@ public:
 
 	
 	void collition(Being * player);
-	void collition(Projectile* proy);
+	bool collition(Projectile* proy);
 
 protected:
 

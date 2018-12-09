@@ -8,6 +8,7 @@ Game::Game(uint32_t Player1ID, uint32_t Player2ID)
 	srand((unsigned int)time(NULL));
 }
 
+
 Game::~Game()
 {
 	for (int i = (int)players.size() - 1; i >= 0; i--)
@@ -30,8 +31,8 @@ void Game::updateMonsters()
 				monster->collition(player);
 				std::vector<Projectile*> tempProj = player->getProjectiles();
 				for (Projectile* proj : tempProj) {
-					monster->collition(proj);
-					createSnowBall(monster, proj->getScore());
+					if(monster->collition(proj))
+						createSnowBall(monster, proj->getScore());
 				}
 			}
 
@@ -338,14 +339,9 @@ bool Game::checkIfPlayersAlive() {
 }
 
 bool Game::checkIfMonstersAlive() {
-	for (int i = 0; i < this->Enemies.size(); i++) {
-		if (this->Enemies[i]->isAlive() || this->snowballs.size()) {
-
-
+	for (int i = 0; i < this->Enemies.size(); i++) 
+		if (this->Enemies[i]->isAlive() || this->snowballs.size()) 
 			return true;								//Me fijo si alguno tiene vida
-		}
-
-	}
 
 	return false; //caso contrario estan muertos
 }
@@ -354,7 +350,7 @@ KeepReturn Game::run(void * ptr)
 {
 	int keep = (int)KeepReturn::Start;
 	int mapCounter = 0;
-//	mapCounter = 9;
+	//mapCounter = 9;
 	bool alive = true;
 	while (mapCounter != this->allMaps.size() && (keep != (int)KeepReturn::Exit) && (keep != (int)KeepReturn::PlayersDead)) {//ESA ES LA NEGRADA, HAYQ UE DEFINIR VALORES DE SALIDA DE KEEP, ESE 1 DE AHI SERIA QUE PERDISTE NO GANASTE
 		this->selectNextMap();
@@ -368,6 +364,15 @@ KeepReturn Game::run(void * ptr)
 		} while (keep == (int)KeepReturn::Start);
 		//Aca si se quiere se puede poner una pantalla que muestre alguna transicion estilo nivel 2
 	}
+
+	for (Monster * monst : this->getMonster())
+		delete monst;
+
+	this->Enemies.clear();
+	for (Player* play : getPlayer())
+		play->setLives(0);
+
+	updateObservers(this);
 	currentMap = nullptr;
 	this->allMaps.clear();
 	return (KeepReturn)keep;

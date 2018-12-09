@@ -71,12 +71,13 @@ void Player::update(void * ptr)
 
 
 
-void Player::collition(Projectile * proy)
-{
-	if (proy->getX() == this->getX() && proy->getY() == this->getY() && !this->isInmune() && this->isAlive()) {
-		this->kill();
-	}
-}
+//bool Player::collition(Projectile * proy)
+//{
+//	if (proy->getX() == this->getX() && proy->getY() == this->getY() && !this->isInmune() && this->isAlive()) {
+//		this->kill();
+//		ret
+//	}
+//}
 
 void Player::setState(BeingState state)
 {

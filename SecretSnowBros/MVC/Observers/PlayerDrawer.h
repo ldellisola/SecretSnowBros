@@ -10,17 +10,13 @@ class PlayerDrawer :
 {
 public:
 	PlayerDrawer(uint16_t blockWidth, uint16_t blockHeight);
-	~PlayerDrawer(){}
+	~PlayerDrawer();
 
 	void loadObserver(Observer* obs);
 
 	void loadObserver(Observer&obs);
 	
-	void loadPlayerSprite(std::vector<std::string>list) {
-		for (std::string str : list) {
-			sprites.push_back(new AllegroSprite(str, BlockHeight, BlockWidth));
-		}
-	}
+	void loadPlayerSprite();
 
 	void draw(void * data);
 private:

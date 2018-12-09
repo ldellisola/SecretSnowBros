@@ -12,8 +12,11 @@ class StageSound : public Observer {
 
 public:
 	StageSound(AllegroSoundFactory& soundF) {
+		ALLEGRO_CONFIG * config = al_load_config_file("config.ini");
 
-		backgroundMusic = soundF.create("Music\\Soundtrack\\Day Man.ogg", PlayMode::Loop, 111);
+		backgroundMusic = soundF.create(al_get_config_value(config, "GameMusic", "MusicPath"), PlayMode::Loop, 111);
+
+		al_destroy_config(config);
 
 	}
 

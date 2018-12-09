@@ -74,7 +74,6 @@ int FSM::runExit(void*data) {
 std::vector<std::string> getNames(std::string path, std::string ext, int quantinty)
 {
 	std::vector<std::string> names(quantinty, " ");
-	std::vector<World> maps;
 	for (int i = 0; i < quantinty; i++) {
 		names[i] = path + std::to_string(i + 1) + ext;
 
