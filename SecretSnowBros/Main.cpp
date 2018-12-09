@@ -27,13 +27,11 @@
 
 int main(void) {
 	Allw allegro(Allegro::InitMode::Full, Allegro::NoValue, Allegro::NoValue, 50);
-	ALLEGRO_DISPLAY_MODE disp;
-	al_get_display_mode(al_get_num_display_modes() - 1, &disp);
 
-	AllegroWindow window(disp.width, disp.height, allegro.getEventQueue());
 
-	window.open();
-	//window.setFullScreen();
+	AllegroWindow window(1000, 1000, allegro.getEventQueue());
+
+	window.setFullScreen();
 
 	const float BlockWidth = ((window.getWidth() * 0.7) / 16);
 	const float BlockHeight((window.getHeight()) / 12);
